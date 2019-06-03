@@ -1,5 +1,6 @@
 #!/bin/bash
 source constants.sh
+set -ev
 
 if [ "${DOSYNC}" == "false" ]
 then

@@ -1,81 +1,14 @@
 #!/bin/bash
 source constants.sh
+set -ev
 
 sqlite3 $DB << EOF
+-- PRAGMA foreign_keys = ON;
 
-CREATE TABLE od_diagnosis_long (
-  "CASE_NUMBER",
-  "DOD" TEXT,
-  "CODE_SYSTEM" TEXT,
-  "CODE_NAME" TEXT,
-  "PHYS_TIME" TEXT,
-  "SUD_DX_FLAG" TEXT,
-  "OPIOID_DX_FLAG" TEXT,
-  "SHORT_DESC" TEXT,
-  "LONG_DESC" TEXT,
-  "THREE_DIGIT" TEXT,
-  "MAJOR" TEXT,
-  "SUB_CHAPTER" TEXT,
-  "CHAPTER" TEXT,
-  "STUDY_TEAM_CODE_USE" TEXT
-);
-
-CREATE TABLE od_encounters_long (
-  "CASE_NUMBER" TEXT,
-  "DOD" TEXT,
-  "ENCOUNTER_ID" TEXT,
-  "ADMIT_TIME" TEXT,
-  "DISCHARGE_TIME" TEXT,
-  "CARE_SETTING_CODE" TEXT
-);
-CREATE TABLE od_lab_long(
-  "CASE_NUMBER" TEXT,
-  "DOD" TEXT,
-  "LAB_NAME" TEXT,
-  "PHYS_TIME" TEXT,
-  "CODE_VALUE" TEXT,
-  "CODE_VALUE_TYPE" TEXT,
-  "VALUE_TEXT_FOR_DISPLAY" TEXT,
-  "NORMAL_RANGE_TEXT" TEXT,
-  "LOINC_LAB_TYPE" TEXT,
-  "LOINC_TEST_TYPE" TEXT,
-  "LOINC_CODE" TEXT,
-  "LOINC_NAME" TEXT
-);
-CREATE TABLE od_medication_long(
-  "CASE_NUMBER" TEXT,
-  "DOD" TEXT,
-  "PHYS_TIME" TEXT,
-  "DRUG_NAME" TEXT,
-  "PRESCRIBER_NUMBER" TEXT,
-  "DISPENSE_AMOUNT" TEXT,
-  "NUMBER_OF_DAYS_SUPPLY" TEXT,
-  "NDC_CODE" TEXT,
-  "GPI_GENERIC_NAME" TEXT,
-  "DRUG_CLASS_NAME" TEXT,
-  "DRUG_SUB_CLASS_NAME" TEXT,
-  "STUDY_TEAM_CODE_USE" TEXT,
-  "STUDY_TEAM_CODING" TEXT,
-  "OPIOID_FLAG" TEXT,
-  "BENZO_FLAG" TEXT
-);
-CREATE TABLE od_procedures_long(
-  "CASE_NUMBER" TEXT,
-  "DOD" TEXT,
-  "PHYS_TIME" TEXT,
-  "CPT4_CODE" TEXT,
-  "CODE_NAME" TEXT,
-  "STUDY_TEAM_CODE_USE" TEXT
-);
-CREATE TABLE od_referrals_long(
-  "CASE_NUMBER" TEXT,
-  "DOD" TEXT,
-  "PHYS_TIME" TEXT,
-  "REFERRAL_NAME" TEXT,
-  "STUDY_TEAM_CODE_USE" TEXT
-);
-CREATE TABLE death_main(
-  "CASE_NUMBER" TEXT,
+-- Opioid Deaths (Marion_OD_Dataset-4_22_2019.csv) --
+DROP TABLE IF EXISTS deaths;
+CREATE TABLE deaths (
+  "CASE_NUMBER" TEXT PRIMARY KEY,
   "YEAR" TEXT,
   "LAST_NAME" TEXT,
   "FIRST_NAME" TEXT,
@@ -325,7 +258,229 @@ CREATE TABLE death_main(
   "METHADONE_AMOUNT" TEXT,
   "AMPHETAMINE_AMOUNT" TEXT,
   "METHAMPHETAMINE_AMOUNT" TEXT,
-  "NOTES" TEXT,
+  "NOTES" TEXT
+);
+INSERT INTO deaths
+  SELECT "CASE_NUMBER", "YEAR", "LAST_NAME", "FIRST_NAME", "SSN", "SEX", "RACE", "DOB", "DOD", "AGE", "MILITARY", "EMPLOYMENT", "EDUCATION", "MARITAL_STATUS", "HOME_ADDRESS", "HOME_CITY", "HOME_ZIP", "HOME_STATE", "INJURY_ADDRESS", "INJURY_CITY", "INJURY_ZIP", "PLACE_OF_DEATH", "SPECIFIC_PLACE_OF_DEATH", "PLACE_OF_INJURY", "SPECIFIC_PLACE_OF_INJURY", "DESCRIBE_INJURY", "MEDICAL_HISTORY", "DRUG_PARAPHERNALIA", "NEEDLES_OR_HEROIN", "WITNESS_MENTION_DRUGS", "CAUSE_OF_DEATH", "PRIMARY_TOX_LAB", "ALCOHOLS", "ETHANOL", "ACETONE", "ISOPROPANOL", "METHANOL", "AMPHETAMINES", "AMPHETAMINE", "METHAMPHETAMINE", "EPHEDRINE", "MDMA", "MDA", "PHENYLPROPANOLAMINE", "PHENTERMINE", "ANALGESICS", "ACETAMINOPHEN", "SALICYLATES", "NAPROXEN", "ANTIBIOTICS", "AZITHROMYCIN", "PIPERACILLIN", "LEVOFLOXACIN", "ANTICONVULSANTS", "GABAPENTIN", "OXCARBAZEPINE", "TOPIRAMATE", "LAMOTRIGINE", "LEVETIRACETAM", "PREGABALIN", "ZONISAMIDE", "VALPROICACID", "ANTIDEPRESSANTS", "PAROXETINE", "FLUOXETINE", "NORFLUOXETINE", "MIRTAZAPINE", "CITALOPRAM", "TRAZODONE", "CHLOROPHENYLPIPERAZINE", "DOXEPIN", "NORDOXEPIN", "FLUVOXAMINE", "SERTRALINE", "NORSERTRALINE", "DESMETHYLSERTRALINE", "AMITRIPTYLINE", "NORTRIPTYLINE", "DULOXETINE", "NORVENLAFAXINE", "BUPROPION", "HYDROXYBUPRIOPION", "VENLAFAXINE", "ODESMETHYLVENLAFAXINE", "MCPP", "DESMETHYLDOXEPIN", "ANTIHISTAMINES", "HYDROXYZINE", "DIPHENHYDRAMINE", "DOXYLAMINE", "CHLOROPHENIRAMINE", "GUAIFENESIN", "ANTIPSYCOTICS", "CLOZAPINE", "NORCLOZAPINE", "QUETIAPINE", "AMLODIPINE", "ARIPIPRAZOLE", "OLANZAPINE", "BUSPIRONE", "BENZATROPINE", "RISPERIDONE", "9_HYDROXYRISPERIDONE", "BARBITUATES", "PHENOBARBITAL", "BUTALBITAL", "BENZODIAZEPINE", "LORAZEPAM", "CLONAZEPAM", "NORDIAZAPAM", "DIAZEPAM", "ALPRAZOLAM", "7AMINOCLONAZEPAM", "AOHALPRAZOLAM", "TEMAZEPAM", "OXAZEPAM", "CHLORDIAZEPOXIDE", "ALPHAHYDROXYALPRAZOLAM", "DEMOXEPAM", "MIDAZOLAM", "FLUBRAMAZOLAM", "PHENAZEPAM", "DELORAZEPAM", "DICLAZEPAM", "CARDIOVASCULAR", "VERAPAMIL", "METOPROLOL", "DILTIAZEM", "PROPRANOLOL", "HYDROCHLOROTHIAZIDE", "LIDOCAINE", "CLONIDINE", "GASTROINTESTIONALS", "PROMETHAZINE", "DICYCLOMINE", "LOPERAMIDE", "DESMETHYLLOPERAMIDE", "ILLICITS", "6_MAM", "HEROIN_FROM_COMBO", "COCAINE", "BENZOYLECGONINE", "COCAETHYLENE", "PCP", "THC", "THC_COOH", "CARBOXY_THC", "DELTA_9_THC", "DELTA_9_CARBOXY_THC", "11_HYDROXY_DELTA_9_THC", "5F_ADB_THC_SYNTHETIC", "CANNIBIDIOL_AGGREGATE", "OPIOIDS", "MORPHINE", "CODEINE", "FENTANYL", "NORFENTANYL", "ACETYLFETANYL", "ACRYLFENTANYL", "PARA_FLUOROBUTYRYL_FENTANYL", "FENTANYL_4_ANPP", "METHOXYACETYL_FENTANYL", "FURANYL_FETANYL", "CARFENTANIL", "OXYCODONE", "HYDROCODONE", "OXYMORPHONE", "HYDROMORPHONE", "DIHYDROCODEINE", "OPIATES", "BUPRENORPHINE", "NORBUPRENORPHINE", "NORMEPERIDINE", "U477", "TRAMADOL", "NORTRAMADOL", "O-DESMETHYLTRAMADOL", "TRAMADOL_AGGREGATE", "METHADONE", "EDDP", "MITRAGYNINE", "NORCODEINE", "OPIOID_ANTAGONIST", "NALOXONE", "MISCELLANEOUS", "HYDROXYCHLOROQUINE", "ATENOLOL", "NARCOTICS", "GLUCOSE", "CARBOXYHEMOGLOBIN", "PSYCHOACTIVESUBSTANCES", "DIFLUOROETHANE", "AMIODARONE", "YOHIMBINE", "GILIPIZIDE", "SILDENAFIL", "QUININE", "LEVAMISOLE", "N_DESMETHYLSILDENAFIL", "6_BETA_NALTREXOL", "MUSCLE_RELAXANTS", "METHOCARBAMOL", "TIZANADINE", "CYCLOBENZAPRINE", "CARISOPRODOL", "MEPROBAMATE", "ORPHENADRINE", "NEUROLOGICALS", "BENZTROPINE", "OTC_COLD_REMEDIES", "DEXTROMETHORPHAN", "PSEUDOEPHEDRINE", "NORPSEUDOEPHEDRINE", "SEDATIVES_HYPNOTICS", "ESZOPICLONE", "ZOLPIDEM", "STIMULANTS", "CAFFEINE", "NICOTINE", "COTININE", "DRUGS_OF_INTEREST", "ANY_HEROIN", "ANY_FENTANYL", "ANY_ILLICIT_OPIOID", "ANY_PRESCRIPTION_OPIOID", "ANY_OPIOID", "ANY_BENZODIAZEPINE", "ANY_COCAINE", "ANY_METHAMPHETAMINE", "DRUG_CONCENTRATIONS", "6_MAM_AMOUNT", "MORPHINE_AMOUNT", "CODEINE_AMOUNT", "FENTANYL_AMOUNT", "NORFENTANYL_AMOUNT", "FENTANYL_ACETYL_AMOUNT", "FENTANYL_4ANPP_AMOUNT", "FURANYL_FENANTYL_AMOUNT", "FIBF_FENTANYL_AMOUNT", "CARFENTANYL_AMOUNT", "OXYCODONE_AMOUNT", "HYDROCODONE_AMOUNT", "OXYMORPHONE_AMOUNT", "HYDROMORPHONE_AMOUNT", "DIHYDROCODEINE_AMOUNT", "COCAINE_AMOUNT", "BENZOYLECGONINE_AMOUNT", "METHADONE_AMOUNT", "AMPHETAMINE_AMOUNT", "METHAMPHETAMINE_AMOUNT", "NOTES"
+  FROM od_deaths_raw;
+CREATE UNIQUE INDEX deaths_pk ON deaths("CASE_NUMBER");
+
+
+-- EMS Incidents (Long Datasets/Linked_EMS_Data.csv) --
+DROP TABLE IF EXISTS ems_incidents;
+CREATE TABLE ems_incidents (
+  "EMS_ID" TEXT, -- PRIMARY KEY,
+  "CASE_NUMBER" TEXT,
+  "YEAR" TEXT,
+  "YOB" TEXT,
+  "PatientID" TEXT,
+  "LAST" TEXT,
+  "FIRST" TEXT,
+  "DOB" TEXT,
+  "MiddleName" TEXT,
+  "GENDER" TEXT,
+  "Race_Ethnicity" TEXT,
+  "RACE_ONLY" TEXT,
+  "PCRDateTime" TEXT,
+  "IncidentNumber" TEXT,
+  "IncidentLocationTypeAll_TEXT" TEXT,
+  "IncidentLocationTypeAll_CATEGORIES" TEXT,
+  "IncidentAddressLine1_A" TEXT,
+  "IncidentAddressLine2_A" TEXT,
+  "IncidentState" TEXT,
+  "IncidentCity" TEXT,
+  "IncidentCounty" TEXT,
+  "IncidentZip" TEXT,
+  "HomeAddressLine1" TEXT,
+  "HomeAddressLine2" TEXT,
+  "HomeZip" TEXT,
+  "HomeCity" TEXT,
+  "HomeCounty" TEXT,
+  "HomeState" TEXT,
+  "ChiefComplaint_TEXT" TEXT,
+  "SecondaryComplaintsAll_TEXT" TEXT,
+  "FirstMOI_TEXT" TEXT,
+  "FirstMOI_CATEGORIES" TEXT,
+  "FirstMOI_Collapsed_CATEGORIES" TEXT,
+  "FirstMOIDetails_TEXT" TEXT,
+  "ResponseOutcomeAll_TEXT" TEXT,
+  "ResponseOutcomeAll_CATEGORIES" TEXT,
+  "ReceivingFacility_TEXT" TEXT,
+  "OVERDOSE_DUMMY" TEXT,
+  "OVERDOSE_CC_MOI" TEXT,
+  "NALOXONE_DUMMY" TEXT,
+  "LAST_NAME" TEXT,
+  "FIRST_NAME" TEXT,
+  "MIN_INCIDENT_DATE" TEXT,
+  "MAX_INCIDENT_DATE" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO ems_incidents
+  SELECT *
+  FROM Linked_EMS_Data_raw;
+CREATE INDEX ems_incidents_fk ON ems_incidents("CASE_NUMBER");
+
+
+-- Incarcerations (Long Datasets/Linked_Jail_Data.csv) --
+DROP TABLE IF EXISTS incarcerations;
+CREATE TABLE incarcerations (
+  "JAIL_ID" TEXT,
+  "CASE_NUMBER" TEXT,
+  "ADMISSION" TEXT,
+  "PERMANENT_NO" TEXT,
+  "BOOKING_NO" TEXT,
+  "LAST_NAME" TEXT,
+  "FIRST_NAME" TEXT,
+  "MIDDLE_NAME" TEXT,
+  "OFFENSE_DESCRIPTION" TEXT,
+  "JAIL_CASE_NUMBER" TEXT,
+  "GENDER" TEXT,
+  "DOB" TEXT,
+  "YOB" TEXT,
+  "AGE" TEXT,
+  "RACE" TEXT,
+  "BOOKING_DATE" TEXT,
+  "BOOKING_YEAR" TEXT,
+  "RELEASE_DATE" TEXT,
+  "RELEASE_YEAR" TEXT,
+  "MIN_BOOKING_DATE" TEXT,
+  "MAX_RELEASE_DATE" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO incarcerations
+  SELECT *
+  FROM Linked_Jail_Data_raw;
+CREATE INDEX incarcerations_fk ON incarcerations("CASE_NUMBER");
+
+
+-- Diagnoses (Long Datasets/od_diagnosis_long.csv) --
+DROP TABLE IF EXISTS diagnoses;
+CREATE TABLE diagnoses (
+  "CASE_NUMBER" TEXT,
+  "DOD" TEXT,
+  "CODE_SYSTEM" TEXT,
+  "CODE_NAME" TEXT,
+  "PHYS_TIME" TEXT,
+  "SUD_DX_FLAG" TEXT,
+  "OPIOID_DX_FLAG" TEXT,
+  "SHORT_DESC" TEXT,
+  "LONG_DESC" TEXT,
+  "THREE_DIGIT" TEXT,
+  "MAJOR" TEXT,
+  "SUB_CHAPTER" TEXT,
+  "CHAPTER" TEXT,
+  "STUDY_TEAM_CODE_USE" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO diagnoses
+  SELECT *
+  FROM od_diagnosis_long_raw;
+CREATE INDEX diagnoses_fk ON diagnoses("CASE_NUMBER");
+
+
+-- Hospital Encounters (Long Datasets/od_encounters_long.csv) --
+DROP TABLE IF EXISTS encounters;
+CREATE TABLE encounters (
+  "CASE_NUMBER" TEXT,
+  "DOD" TEXT,
+  "ENCOUNTER_ID" TEXT, -- PRIMARY KEY,
+  "ADMIT_TIME" TEXT,
+  "DISCHARGE_TIME" TEXT,
+  "CARE_SETTING_CODE" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO encounters
+  SELECT *
+  FROM od_encounters_long_raw;
+CREATE INDEX encounters_fk ON encounters("CASE_NUMBER");
+
+
+-- Labs (Long Datasets/od_lab_long.csv) --
+DROP TABLE IF EXISTS labs;
+CREATE TABLE labs (
+  "CASE_NUMBER" TEXT,
+  "DOD" TEXT,
+  "LAB_NAME" TEXT,
+  "PHYS_TIME" TEXT,
+  "CODE_VALUE" TEXT,
+  "CODE_VALUE_TYPE" TEXT,
+  "VALUE_TEXT_FOR_DISPLAY" TEXT,
+  "NORMAL_RANGE_TEXT" TEXT,
+  "LOINC_LAB_TYPE" TEXT,
+  "LOINC_TEST_TYPE" TEXT,
+  "LOINC_CODE" TEXT,
+  "LOINC_NAME" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO labs
+  SELECT *
+  FROM od_lab_long_raw;
+CREATE INDEX labs_fk ON labs("CASE_NUMBER");
+
+
+-- Medications Prescribed (Long Datasets/od_medication_long.csv) --
+DROP TABLE IF EXISTS medications;
+CREATE TABLE medications (
+  "CASE_NUMBER" TEXT,
+  "DOD" TEXT,
+  "PHYS_TIME" TEXT,
+  "DRUG_NAME" TEXT,
+  "PRESCRIBER_NUMBER" TEXT,
+  "DISPENSE_AMOUNT" TEXT,
+  "NUMBER_OF_DAYS_SUPPLY" TEXT,
+  "NDC_CODE" TEXT,
+  "GPI_GENERIC_NAME" TEXT,
+  "DRUG_CLASS_NAME" TEXT,
+  "DRUG_SUB_CLASS_NAME" TEXT,
+  "STUDY_TEAM_CODE_USE" TEXT,
+  "STUDY_TEAM_CODING" TEXT,
+  "OPIOID_FLAG" TEXT,
+  "BENZO_FLAG" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO medications
+  SELECT *
+  FROM od_medication_long_raw;
+CREATE INDEX medications_fk ON medications("CASE_NUMBER");
+
+
+-- Procedures done (Long Datasets/od_procedures_long.csv) --
+DROP TABLE IF EXISTS procedures;
+CREATE TABLE procedures (
+  "CASE_NUMBER" TEXT,
+  "DOD" TEXT,
+  "PHYS_TIME" TEXT,
+  "CPT4_CODE" TEXT,
+  "CODE_NAME" TEXT,
+  "STUDY_TEAM_CODE_USE" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO procedures
+  SELECT *
+  FROM od_procedures_long_raw;
+CREATE INDEX procedures_fk ON procedures("CASE_NUMBER");
+
+
+-- Dr. Referrals (Long Datasets/od_referrals_long.csv) --
+DROP TABLE IF EXISTS referrals;
+CREATE TABLE referrals (
+  "CASE_NUMBER" TEXT,
+  "DOD" TEXT,
+  "PHYS_TIME" TEXT,
+  "REFERRAL_NAME" TEXT,
+  "STUDY_TEAM_CODE_USE" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO referrals
+  SELECT case_number, dod, phys_time, referral_name, study_team_code_use
+  FROM od_referrals_long_raw;
+CREATE INDEX referrals_fk ON referrals("CASE_NUMBER");
+
+
+-- Summary data for analysts, extract 1 (Marion_OD_Dataset-4_22_2019.csv) --
+DROP TABLE IF EXISTS rollup1;
+CREATE TABLE rollup1 (
+  "CASE_NUMBER" TEXT,
   "EPISODIC_MOOD_DISORDERS_1YR" TEXT,
   "EPISODIC_MOOD_DISORDERS_ANY" TEXT,
   "OTHER_1YR" TEXT,
@@ -594,6 +749,12 @@ CREATE TABLE death_main(
   "DRUG_CLASS_3__LAB_ANY" TEXT,
   "DRUG_CLASS_2__LAB_ANY" TEXT,
   "DRUG_CLASS_1__LAB_ANY" TEXT,
-  "HAS_INPC_LAB_DATA" TEXT
+  "HAS_INPC_LAB_DATA" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
+INSERT INTO rollup1
+  SELECT case_number, episodic_mood_disorders_1yr, episodic_mood_disorders_any, other_1yr, other_any, anxiety__dissociative_and__1yr, anxiety__dissociative_and__any, nondependent_abuse_of_drug_1yr, nondependent_abuse_of_drug_any, adjustment_reaction_1yr, adjustment_reaction_any, alcohol_dependence_syndrom_1yr, alcohol_dependence_syndrom_any, drug_dependence_1yr, drug_dependence_any, drug_induced_mental_disord_1yr, drug_induced_mental_disord_any, sexual_and_gender_identity_1yr, sexual_and_gender_identity_any, alcohol_induced_mental_dis_1yr, alcohol_induced_mental_dis_any, schizophrenic_disorders_1yr, schizophrenic_disorders_any, disturbance_of_conduct__no_1yr, disturbance_of_conduct__no_any, personality_disorders_1yr, personality_disorders_any, hyperkinetic_syndrome_of_c_1yr, hyperkinetic_syndrome_of_c_any, other_nonorganic_psychoses_1yr, other_nonorganic_psychoses_any, delusional_disorders_1yr, delusional_disorders_any, persistent_mental_disorder_1yr, persistent_mental_disorder_any, transient_mental_disorders_1yr, transient_mental_disorders_any, dementias_1yr, dementias_any, pervasive_developmental_di_1yr, pervasive_developmental_di_any, special_symptoms_or_syndro_1yr, special_symptoms_or_syndro_any, organic_sleep_disorders_1yr, organic_sleep_disorders_any, depressive_disorder__not_e_1yr, depressive_disorder__not_e_any, specific_nonpsychotic_ment_1yr, specific_nonpsychotic_ment_any, disturbance_of_emotions_sp_1yr, disturbance_of_emotions_sp_any, mild_intellectual_disabili_1yr, mild_intellectual_disabili_any, acute_reaction_to_stress_1yr, acute_reaction_to_stress_any, other_specified_intellectu_1yr, other_specified_intellectu_any, unspecified_intellectual_d_1yr, unspecified_intellectual_d_any, psychic_factors_associated_1yr, psychic_factors_associated_any, specific_delays_in_develop_1yr, specific_delays_in_develop_any, physiological_malfunction__1yr, physiological_malfunction__any, has_inpc_dx_data, hypnotic_1year, benzodiazepine_1year, antidepressant_1year, antipsychotic_1year, hydrocodone_1year, antianxiety_1year, fentanyl_1year, oxycodone_1year, oxymorphone_1year, morphine_1year, hydromorphone_1year, other_opioid_1year, bipolar_1year, anxianxiety_1year, methadone_1year, codeine_1year, stimulant_1year, naloxone_1year, hepatitis_1year, amphetamine_1year, other_psychotherapeutic_1year, adhd_1year, antiretroviral_1year, buprenorphine_1year, antiretrovial_1year, barbituate_1year, disulfiram_1year, benzodiazepine_1week, hydrocodone_1week, fentanyl_1week, oxycodone_1week, oxymorphone_1week, morphine_1week, hydromorphone_1week, other_opioid_1week, methadone_1week, codeine_1week, naloxone_1week, benzodiazepine_1month, hydrocodone_1month, fentanyl_1month, oxycodone_1month, oxymorphone_1month, morphine_1month, hydromorphone_1month, other_opioid_1month, methadone_1month, codeine_1month, naloxone_1month, has_inpc_med_data, any_coprescription, any_concurrent, prescribed_any_opioid, prescribed_any_benzo, n_prescriptions, n_opioid_prescriptions, n_prescribers, n_opioid_prescribers, n_opioid_px_g7d, cumulative_opioid_days, cumulative_mme, adjusted_mme, has_inpc_opioid_data, e_csc_1year, o_csc_1year, i_csc_1year, e_csc_1_month, o_csc_1_month, i_csc_1_month, e_csc_2_month, o_csc_2_month, i_csc_2_month, e_csc_3_month, o_csc_3_month, i_csc_3_month, e_csc_4_month, o_csc_4_month, i_csc_4_month, e_csc_5_month, o_csc_5_month, i_csc_5_month, e_csc_6_month, o_csc_6_month, i_csc_6_month, e_csc_7_month, o_csc_7_month, i_csc_7_month, e_csc_8_month, o_csc_8_month, i_csc_8_month, e_csc_9_month, o_csc_9_month, i_csc_9_month, e_csc_10_month, o_csc_10_month, i_csc_10_month, e_csc_11_month, o_csc_11_month, i_csc_11_month, e_csc_12_month, o_csc_12_month, i_csc_12_month, has_inpc_enc_data, emergency_dept_visit__proc_1yr, office_consultation__proc_1yr, psytx__off__45_50_min__proc_1yr, office_outpatient_visit_est__proc_1yr, urinalysis_nonauto_w_o_scope__proc_1yr, office_outpatient_visit_new__proc_1yr, drug_screen_single__proc_1yr, subsequent_hospital_care__proc_1yr, hospital_discharge_day__proc_1yr, medication_management__proc_1yr, drug_screen_qualitate_multi__proc_1yr, intac_group_psytx__proc_1yr, critical_care_first_hour__proc_1yr, initial_hospital_care__proc_1yr, psy_dx_interview__proc_1yr, urinalysis_auto_w_o_scope__proc_1yr, inpatient_consultation__proc_1yr, urinalysis_nonauto_w_scope__proc_1yr, urinalysis_auto_w_scope__proc_1yr, psytx__office__20_30_min__proc_1yr, critical_care_addl_30_min__proc_1yr, initial_observation_care__proc_1yr, group_psychotherapy__proc_1yr, family_psytx_w_patient__proc_1yr, observ_hosp_same_date__proc_1yr, psytx__off__20_30_min_w_e_m__proc_1yr, observation_care_discharge__proc_1yr, drug_confirmation__proc_1yr, urinalysis__proc_1yr, alcohol_detoxification__proc_1yr, psycho_testing_by_psych_phys__proc_1yr, drug_screen_single_class__proc_1yr, psytx__off__45_50_min_w_e_m__proc_1yr, drug_scrn_1__class_nonchromo__proc_1yr, drug_screen_multi_drug_class__proc_1yr, psytx_pt__family_45_minutes__proc_1yr, psych_diagnostic_evaluation__proc_1yr, emergency_dept_visit__proc_any, office_consultation__proc_any, psytx__off__45_50_min__proc_any, office_outpatient_visit_est__proc_any, urinalysis_nonauto_w_o_scope__proc_any, office_outpatient_visit_new__proc_any, drug_screen_single__proc_any, subsequent_hospital_care__proc_any, hospital_discharge_day__proc_any, medication_management__proc_any, drug_screen_qualitate_multi__proc_any, intac_group_psytx__proc_any, critical_care_first_hour__proc_any, initial_hospital_care__proc_any, psy_dx_interview__proc_any, urinalysis_auto_w_o_scope__proc_any, inpatient_consultation__proc_any, urinalysis_nonauto_w_scope__proc_any, urinalysis_auto_w_scope__proc_any, psytx__office__20_30_min__proc_any, critical_care_addl_30_min__proc_any, initial_observation_care__proc_any, group_psychotherapy__proc_any, family_psytx_w_patient__proc_any, observ_hosp_same_date__proc_any, psytx__off__20_30_min_w_e_m__proc_any, observation_care_discharge__proc_any, drug_confirmation__proc_any, urinalysis__proc_any, alcohol_detoxification__proc_any, psycho_testing_by_psych_phys__proc_any, drug_screen_single_class__proc_any, psytx__off__45_50_min_w_e_m__proc_any, drug_scrn_1__class_nonchromo__proc_any, drug_screen_multi_drug_class__proc_any, psytx_pt__family_45_minutes__proc_any, psych_diagnostic_evaluation__proc_any, has_inpc_proc_data, psychiatry_consult__ref_1yr, integrative_pain_program_consult__ref_1yr, social_work_consult__ref_1yr, psychiatry_medical_consultation__ref_1yr, pain_mgmt_md_op_h_p_init_consult__ref_1yr, psychiatry_consult__ref_any, integrative_pain_program_consult__ref_any, social_work_consult__ref_any, psychiatry_medical_consultation__ref_any, pain_mgmt_md_op_h_p_init_consult__ref_any, has_inpc_ref_data, drug_class_10__lab_1yr, drug_class_8__lab_1yr, drug_class_11__lab_1yr, drug_class_7__lab_1yr, drug_class_3__lab_1yr, drug_class_2__lab_1yr, drug_class_1__lab_1yr, drug_class_10__lab_any, drug_class_8__lab_any, drug_class_11__lab_any, drug_class_7__lab_any, drug_class_3__lab_any, drug_class_2__lab_any, drug_class_1__lab_any, has_inpc_lab_data
+  FROM od_deaths_raw;
+CREATE INDEX rollup1_fk ON rollup1("CASE_NUMBER");
+
 EOF

@@ -2,7 +2,7 @@
 
 DROP TABLE IF EXISTS test;
 CREATE TABLE test (
-  "CASE_NUMBER" INTEGER CHECK(typeof(CASE_NUMBER) = 'integer'), -- primary case number
+  "CASE_NUMBER" INTEGER COMMENT 'Testing' CHECK(typeof(CASE_NUMBER) = 'integer'), -- primary case number
   "DOD" DATE CHECK(typeof(DOD) = 'text' AND LENGTH(DATE(DOD)) > 0), -- date of death
   "CODE_SYSTEM" TEXT,
   "CODE_NAME" TEXT,
@@ -33,7 +33,7 @@ INSERT INTO test
     SUB_CHAPTER,
     CHAPTER,
     STUDY_TEAM_CODE_USE
-  FROM od_diagnosis_long;
+  FROM diagnoses;
 
 .schema test
 SELECT case_number, dod, OPIOID_DX_FLAG FROM test;

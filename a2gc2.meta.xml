@@ -1,0 +1,27 @@
+<schemaMeta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemaspy.org/xsd/6/schemameta.xsd" >
+    <comments>The A2GC2 database is generated using code available on GitHub at [https://github.com/cns-iu/a2gc2-dataset](https://github.com/cns-iu/a2gc2-dataset).</comments>
+    <tables>
+        <table name="deaths" comments="Opioid Deaths (Marion_OD_Dataset-4_22_2019.csv)">
+            <column name="CASE_NUMBER" comments="Primary Key"/>
+            <column name="YEAR" comments="Year of Death"/>
+        </table>
+        <table name="ems_incidents" comments="EMS Incidents (Long Datasets/Linked_EMS_Data.csv)">
+        </table>
+        <table name="incarcerations" comments="Incarcerations (Long Datasets/Linked_Jail_Data.csv)">
+        </table>
+        <table name="diagnoses" comments="Diagnoses (Long Datasets/od_diagnosis_long.csv)">
+        </table>
+        <table name="encounters" comments="Hospital Encounters (Long Datasets/od_encounters_long.csv)">
+        </table>
+        <table name="labs" comments="Labs (Long Datasets/od_lab_long.csv)">
+        </table>
+        <table name="medications" comments="Medications Prescribed (Long Datasets/od_medication_long.csv)">
+        </table>
+        <table name="procedures" comments="Procedures done (Long Datasets/od_procedures_long.csv)">
+        </table>
+        <table name="referrals" comments="Dr. Referrals (Long Datasets/od_referrals_long.csv)">
+        </table>
+        <table name="rollup1" comments="Summary data for analysts, extract 1 (Marion_OD_Dataset-4_22_2019.csv)">
+        </table>
+    </tables>
+</schemaMeta>
