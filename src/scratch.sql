@@ -1,0 +1,40 @@
+-- SQLite
+
+DROP TABLE IF EXISTS test;
+CREATE TABLE test (
+  "CASE_NUMBER" INTEGER CHECK(typeof(CASE_NUMBER) = 'integer'), -- primary case number
+  "DOD" DATE CHECK(typeof(DOD) = 'text' AND LENGTH(DATE(DOD)) > 0), -- date of death
+  "CODE_SYSTEM" TEXT,
+  "CODE_NAME" TEXT,
+  "PHYS_TIME" TEXT,
+  "SUD_DX_FLAG" BOOLEAN CHECK(typeof(SUD_DX_FLAG) = 'integer') DEFAULT false,
+  "OPIOID_DX_FLAG" BOOLEAN CHECK(typeof(OPIOID_DX_FLAG) = 'integer') DEFAULT false,
+  "SHORT_DESC" TEXT,
+  "LONG_DESC" TEXT,
+  "THREE_DIGIT" INTEGER CHECK(typeof(THREE_DIGIT) = 'integer' AND THREE_DIGIT < 1000),
+  "MAJOR" TEXT,
+  "SUB_CHAPTER" TEXT,
+  "CHAPTER" TEXT,
+  "STUDY_TEAM_CODE_USE" TEXT
+);
+INSERT INTO test
+  SELECT
+    CAST(CASE_NUMBER AS INT),
+    date(DOD),
+    CODE_SYSTEM,
+    CODE_NAME,
+    PHYS_TIME,
+    CAST(SUD_DX_FLAG AS BOOLEAN),
+    CAST(OPIOID_DX_FLAG AS BOOLEAN),
+    SHORT_DESC,
+    LONG_DESC,
+    CAST(THREE_DIGIT AS INT),
+    MAJOR,
+    SUB_CHAPTER,
+    CHAPTER,
+    STUDY_TEAM_CODE_USE
+  FROM od_diagnosis_long;
+
+.schema test
+SELECT case_number, dod, OPIOID_DX_FLAG FROM test;
+
