@@ -1,9 +1,9 @@
-site_name: A2GC2 Dataset
+site_name: A2AGC Dataset
 site_url: https://demo.cns.iu.edu/agc2
-site_description: A2GC2 Dataset documentation
+site_description: A2AGC Dataset documentation
 site_author: CNS & Regenstrief Institute
 
-repo_url: https://github.com/cns-iu/a2gc2-dataset/
+repo_url: https://github.com/cns-iu/a2agc-dataset/
 edit_uri: ""
 
 use_directory_urls: false
@@ -22,7 +22,7 @@ plugins:
   # turn PDF generation off.
   # TODO: Report bugs to mkpdfs-mkdocs repo.
   # - mkpdfs:
-  #     output_path: pdf/a2gc2-documentation.pdf
+  #     output_path: pdf/a2agc-documentation.pdf
 
 theme: readthedocs
 

@@ -1,6 +1,6 @@
-# A2GC2 Dataset
+# Advanced Analytics for IU’s Addictions Grand Challenge (A2AGC) Dataset
 
-Scripts for compiling, validating, and documenting the A2GC2 Dataset.
+Scripts for compiling, validating, and documenting the A2AGC Dataset.
 
 ## Base Requirements
 
@@ -15,7 +15,7 @@ Scripts for compiling, validating, and documenting the A2GC2 Dataset.
 
 ## Singularity
 
-A Singularity 3 container is provided that installs all the dependencies needed for building the A2GC2 dataset. You can build the container using this command as root: `singularity build container.sif Singularity`. This will create a `container.sif` file that can be invoked on command line: `$ ./container.sif` which will bring you into the container with all dependencies installed and at a shell prompt.
+A Singularity 3 container is provided that installs all the dependencies needed for building the A2AGC dataset. You can build the container using this command as root: `singularity build container.sif Singularity`. This will create a `container.sif` file that can be invoked on command line: `$ ./container.sif` which will bring you into the container with all dependencies installed and at a shell prompt.
 
 ### Building the container without root
 

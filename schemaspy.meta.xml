@@ -1,5 +1,5 @@
 <schemaMeta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemaspy.org/xsd/6/schemameta.xsd" >
-    <comments>The A2GC2 database is generated using code available on GitHub at [https://github.com/cns-iu/a2gc2-dataset](https://github.com/cns-iu/a2gc2-dataset).</comments>
+    <comments>The Advanced Analytics for IU’s Addictions Grand Challenge (A2AGC) database is generated using code available on GitHub at [https://github.com/cns-iu/a2agc-dataset](https://github.com/cns-iu/a2agc-dataset).</comments>
     <tables>
         <table name="deaths" comments="Opioid Deaths (Marion_OD_Dataset-4_22_2019.csv) -- A dataset of coroner data was provided by the study team. This dataset contained every incidence of lethal overdose recorded by the coroner in Marion County from 2010-2018. This included variables such as the patients name, SSN, demographics, toxicology results at time of death, and other details about death such as location. To obtain clinical data on these individuals, variables such as name, SSN, and date of birth were used to match patients from the coroner data to the INPCR database.">
             <column name="CASE_NUMBER" comments="Unique Coroner Case Number (Primary Key)"/>
