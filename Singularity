@@ -9,7 +9,7 @@ From: ubuntu:18.04
     apt-get -y update
 
     # Install dependenceis
-    apt-get -y install aptitude openjdk-8-jre python3 sqlite3 wget unzip python3-pip tcl lftp build-essential libssl-dev nano git gpg
+    apt-get -y install aptitude openjdk-8-jre python3 sqlite3 wget zip unzip python3-pip tcl lftp build-essential libssl-dev nano git gpg
 
     # Install latest nodejs/npm
     pip3 install nodeenv
