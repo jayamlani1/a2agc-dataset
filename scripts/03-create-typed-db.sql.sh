@@ -3,7 +3,7 @@ source constants.sh
 set -ev
 
 sqlite3 $DB << EOF
--- PRAGMA foreign_keys = ON;
+PRAGMA foreign_keys = ON;
 
 -- Opioid Deaths (Marion_OD_Dataset-4_22_2019.csv) --
 DROP TABLE IF EXISTS deaths;
@@ -261,7 +261,7 @@ CREATE TABLE deaths (
   "NOTES" TEXT
 );
 INSERT INTO deaths
-  SELECT "CASE_NUMBER", "YEAR", "LAST_NAME", "FIRST_NAME", "SSN", "SEX", "RACE", "DOB", "DOD", "AGE", "MILITARY", "EMPLOYMENT", "EDUCATION", "MARITAL_STATUS", "HOME_ADDRESS", "HOME_CITY", "HOME_ZIP", "HOME_STATE", "INJURY_ADDRESS", "INJURY_CITY", "INJURY_ZIP", "PLACE_OF_DEATH", "SPECIFIC_PLACE_OF_DEATH", "PLACE_OF_INJURY", "SPECIFIC_PLACE_OF_INJURY", "DESCRIBE_INJURY", "MEDICAL_HISTORY", "DRUG_PARAPHERNALIA", "NEEDLES_OR_HEROIN", "WITNESS_MENTION_DRUGS", "CAUSE_OF_DEATH", "PRIMARY_TOX_LAB", "ALCOHOLS", "ETHANOL", "ACETONE", "ISOPROPANOL", "METHANOL", "AMPHETAMINES", "AMPHETAMINE", "METHAMPHETAMINE", "EPHEDRINE", "MDMA", "MDA", "PHENYLPROPANOLAMINE", "PHENTERMINE", "ANALGESICS", "ACETAMINOPHEN", "SALICYLATES", "NAPROXEN", "ANTIBIOTICS", "AZITHROMYCIN", "PIPERACILLIN", "LEVOFLOXACIN", "ANTICONVULSANTS", "GABAPENTIN", "OXCARBAZEPINE", "TOPIRAMATE", "LAMOTRIGINE", "LEVETIRACETAM", "PREGABALIN", "ZONISAMIDE", "VALPROICACID", "ANTIDEPRESSANTS", "PAROXETINE", "FLUOXETINE", "NORFLUOXETINE", "MIRTAZAPINE", "CITALOPRAM", "TRAZODONE", "CHLOROPHENYLPIPERAZINE", "DOXEPIN", "NORDOXEPIN", "FLUVOXAMINE", "SERTRALINE", "NORSERTRALINE", "DESMETHYLSERTRALINE", "AMITRIPTYLINE", "NORTRIPTYLINE", "DULOXETINE", "NORVENLAFAXINE", "BUPROPION", "HYDROXYBUPRIOPION", "VENLAFAXINE", "ODESMETHYLVENLAFAXINE", "MCPP", "DESMETHYLDOXEPIN", "ANTIHISTAMINES", "HYDROXYZINE", "DIPHENHYDRAMINE", "DOXYLAMINE", "CHLOROPHENIRAMINE", "GUAIFENESIN", "ANTIPSYCOTICS", "CLOZAPINE", "NORCLOZAPINE", "QUETIAPINE", "AMLODIPINE", "ARIPIPRAZOLE", "OLANZAPINE", "BUSPIRONE", "BENZATROPINE", "RISPERIDONE", "9_HYDROXYRISPERIDONE", "BARBITUATES", "PHENOBARBITAL", "BUTALBITAL", "BENZODIAZEPINE", "LORAZEPAM", "CLONAZEPAM", "NORDIAZAPAM", "DIAZEPAM", "ALPRAZOLAM", "7AMINOCLONAZEPAM", "AOHALPRAZOLAM", "TEMAZEPAM", "OXAZEPAM", "CHLORDIAZEPOXIDE", "ALPHAHYDROXYALPRAZOLAM", "DEMOXEPAM", "MIDAZOLAM", "FLUBRAMAZOLAM", "PHENAZEPAM", "DELORAZEPAM", "DICLAZEPAM", "CARDIOVASCULAR", "VERAPAMIL", "METOPROLOL", "DILTIAZEM", "PROPRANOLOL", "HYDROCHLOROTHIAZIDE", "LIDOCAINE", "CLONIDINE", "GASTROINTESTIONALS", "PROMETHAZINE", "DICYCLOMINE", "LOPERAMIDE", "DESMETHYLLOPERAMIDE", "ILLICITS", "6_MAM", "HEROIN_FROM_COMBO", "COCAINE", "BENZOYLECGONINE", "COCAETHYLENE", "PCP", "THC", "THC_COOH", "CARBOXY_THC", "DELTA_9_THC", "DELTA_9_CARBOXY_THC", "11_HYDROXY_DELTA_9_THC", "5F_ADB_THC_SYNTHETIC", "CANNIBIDIOL_AGGREGATE", "OPIOIDS", "MORPHINE", "CODEINE", "FENTANYL", "NORFENTANYL", "ACETYLFETANYL", "ACRYLFENTANYL", "PARA_FLUOROBUTYRYL_FENTANYL", "FENTANYL_4_ANPP", "METHOXYACETYL_FENTANYL", "FURANYL_FETANYL", "CARFENTANIL", "OXYCODONE", "HYDROCODONE", "OXYMORPHONE", "HYDROMORPHONE", "DIHYDROCODEINE", "OPIATES", "BUPRENORPHINE", "NORBUPRENORPHINE", "NORMEPERIDINE", "U477", "TRAMADOL", "NORTRAMADOL", "O-DESMETHYLTRAMADOL", "TRAMADOL_AGGREGATE", "METHADONE", "EDDP", "MITRAGYNINE", "NORCODEINE", "OPIOID_ANTAGONIST", "NALOXONE", "MISCELLANEOUS", "HYDROXYCHLOROQUINE", "ATENOLOL", "NARCOTICS", "GLUCOSE", "CARBOXYHEMOGLOBIN", "PSYCHOACTIVESUBSTANCES", "DIFLUOROETHANE", "AMIODARONE", "YOHIMBINE", "GILIPIZIDE", "SILDENAFIL", "QUININE", "LEVAMISOLE", "N_DESMETHYLSILDENAFIL", "6_BETA_NALTREXOL", "MUSCLE_RELAXANTS", "METHOCARBAMOL", "TIZANADINE", "CYCLOBENZAPRINE", "CARISOPRODOL", "MEPROBAMATE", "ORPHENADRINE", "NEUROLOGICALS", "BENZTROPINE", "OTC_COLD_REMEDIES", "DEXTROMETHORPHAN", "PSEUDOEPHEDRINE", "NORPSEUDOEPHEDRINE", "SEDATIVES_HYPNOTICS", "ESZOPICLONE", "ZOLPIDEM", "STIMULANTS", "CAFFEINE", "NICOTINE", "COTININE", "DRUGS_OF_INTEREST", "ANY_HEROIN", "ANY_FENTANYL", "ANY_ILLICIT_OPIOID", "ANY_PRESCRIPTION_OPIOID", "ANY_OPIOID", "ANY_BENZODIAZEPINE", "ANY_COCAINE", "ANY_METHAMPHETAMINE", "DRUG_CONCENTRATIONS", "6_MAM_AMOUNT", "MORPHINE_AMOUNT", "CODEINE_AMOUNT", "FENTANYL_AMOUNT", "NORFENTANYL_AMOUNT", "FENTANYL_ACETYL_AMOUNT", "FENTANYL_4ANPP_AMOUNT", "FURANYL_FENANTYL_AMOUNT", "FIBF_FENTANYL_AMOUNT", "CARFENTANYL_AMOUNT", "OXYCODONE_AMOUNT", "HYDROCODONE_AMOUNT", "OXYMORPHONE_AMOUNT", "HYDROMORPHONE_AMOUNT", "DIHYDROCODEINE_AMOUNT", "COCAINE_AMOUNT", "BENZOYLECGONINE_AMOUNT", "METHADONE_AMOUNT", "AMPHETAMINE_AMOUNT", "METHAMPHETAMINE_AMOUNT", "NOTES"
+  SELECT case_number, year, last_name, first_name, ssn, sex, race, dob, dod, age, military, employment, education, marital_status, home_address, home_city, home_zip, home_state, injury_address, injury_city, injury_zip, place_of_death, specific_place_of_death, place_of_injury, specific_place_of_injury, describe_injury, medical_history, drug_paraphernalia, needles_or_heroin, witness_mention_drugs, cause_of_death, primary_tox_lab, alcohols, ethanol, acetone, isopropanol, methanol, amphetamines, amphetamine, methamphetamine, ephedrine, mdma, mda, phenylpropanolamine, phentermine, analgesics, acetaminophen, salicylates, naproxen, antibiotics, azithromycin, piperacillin, levofloxacin, anticonvulsants, gabapentin, oxcarbazepine, topiramate, lamotrigine, levetiracetam, pregabalin, zonisamide, valproicacid, antidepressants, paroxetine, fluoxetine, norfluoxetine, mirtazapine, citalopram, trazodone, chlorophenylpiperazine, doxepin, nordoxepin, fluvoxamine, sertraline, norsertraline, desmethylsertraline, amitriptyline, nortriptyline, duloxetine, norvenlafaxine, bupropion, hydroxybupriopion, venlafaxine, odesmethylvenlafaxine, mcpp, desmethyldoxepin, antihistamines, hydroxyzine, diphenhydramine, doxylamine, chloropheniramine, guaifenesin, antipsycotics, clozapine, norclozapine, quetiapine, amlodipine, aripiprazole, olanzapine, buspirone, benzatropine, risperidone, "9_HYDROXYRISPERIDONE", barbituates, phenobarbital, butalbital, benzodiazepine, lorazepam, clonazepam, nordiazapam, diazepam, alprazolam, "7AMINOCLONAZEPAM", aohalprazolam, temazepam, oxazepam, chlordiazepoxide, alphahydroxyalprazolam, demoxepam, midazolam, flubramazolam, phenazepam, delorazepam, diclazepam, cardiovascular, verapamil, metoprolol, diltiazem, propranolol, hydrochlorothiazide, lidocaine, clonidine, gastrointestionals, promethazine, dicyclomine, loperamide, desmethylloperamide, illicits, "6_MAM", heroin_from_combo, cocaine, benzoylecgonine, cocaethylene, pcp, thc, thc_cooh, carboxy_thc, delta_9_thc, delta_9_carboxy_thc, "11_HYDROXY_DELTA_9_THC", "5F_ADB_THC_SYNTHETIC", cannibidiol_aggregate, opioids, morphine, codeine, fentanyl, norfentanyl, acetylfetanyl, acrylfentanyl, para_fluorobutyryl_fentanyl, fentanyl_4_anpp, methoxyacetyl_fentanyl, furanyl_fetanyl, carfentanil, oxycodone, hydrocodone, oxymorphone, hydromorphone, dihydrocodeine, opiates, buprenorphine, norbuprenorphine, normeperidine, u477, tramadol, nortramadol, "O-DESMETHYLTRAMADOL", tramadol_aggregate, methadone, eddp, mitragynine, norcodeine, opioid_antagonist, naloxone, miscellaneous, hydroxychloroquine, atenolol, narcotics, glucose, carboxyhemoglobin, psychoactivesubstances, difluoroethane, amiodarone, yohimbine, gilipizide, sildenafil, quinine, levamisole, n_desmethylsildenafil, "6_BETA_NALTREXOL", muscle_relaxants, methocarbamol, tizanadine, cyclobenzaprine, carisoprodol, meprobamate, orphenadrine, neurologicals, benztropine, otc_cold_remedies, dextromethorphan, pseudoephedrine, norpseudoephedrine, sedatives_hypnotics, eszopiclone, zolpidem, stimulants, caffeine, nicotine, cotinine, drugs_of_interest, any_heroin, any_fentanyl, any_illicit_opioid, any_prescription_opioid, any_opioid, any_benzodiazepine, any_cocaine, any_methamphetamine, drug_concentrations, "6_MAM_AMOUNT", morphine_amount, codeine_amount, fentanyl_amount, norfentanyl_amount, fentanyl_acetyl_amount, fentanyl_4anpp_amount, furanyl_fenantyl_amount, fibf_fentanyl_amount, carfentanyl_amount, oxycodone_amount, hydrocodone_amount, oxymorphone_amount, hydromorphone_amount, dihydrocodeine_amount, cocaine_amount, benzoylecgonine_amount, methadone_amount, amphetamine_amount, methamphetamine_amount, notes
   FROM od_deaths_raw;
 CREATE UNIQUE INDEX deaths_pk ON deaths("CASE_NUMBER");
 
@@ -316,7 +316,7 @@ CREATE TABLE ems_incidents (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO ems_incidents
-  SELECT *
+  SELECT ems_id, case_number, year, yob, patientid, last, first, dob, middlename, gender, race_ethnicity, race_only, pcrdatetime, incidentnumber, incidentlocationtypeall_text, incidentlocationtypeall_categories, incidentaddressline1_a, incidentaddressline2_a, incidentstate, incidentcity, incidentcounty, incidentzip, homeaddressline1, homeaddressline2, homezip, homecity, homecounty, homestate, chiefcomplaint_text, secondarycomplaintsall_text, firstmoi_text, firstmoi_categories, firstmoi_collapsed_categories, firstmoidetails_text, responseoutcomeall_text, responseoutcomeall_categories, receivingfacility_text, overdose_dummy, overdose_cc_moi, naloxone_dummy, last_name, first_name, min_incident_date, max_incident_date
   FROM Linked_EMS_Data_raw;
 CREATE INDEX ems_incidents_fk ON ems_incidents("CASE_NUMBER");
 
@@ -348,7 +348,7 @@ CREATE TABLE incarcerations (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO incarcerations
-  SELECT *
+  SELECT jail_id, case_number, admission, permanent_no, booking_no, last_name, first_name, middle_name, offense_description, jail_case_number, gender, dob, yob, age, race, booking_date, booking_year, release_date, release_year, min_booking_date, max_release_date
   FROM Linked_Jail_Data_raw;
 CREATE INDEX incarcerations_fk ON incarcerations("CASE_NUMBER");
 
@@ -373,7 +373,7 @@ CREATE TABLE diagnoses (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO diagnoses
-  SELECT *
+  SELECT case_number, dod, code_system, code_name, phys_time, sud_dx_flag, opioid_dx_flag, short_desc, long_desc, three_digit, major, sub_chapter, chapter, study_team_code_use
   FROM od_diagnosis_long_raw;
 CREATE INDEX diagnoses_fk ON diagnoses("CASE_NUMBER");
 
@@ -390,7 +390,7 @@ CREATE TABLE encounters (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO encounters
-  SELECT *
+  SELECT case_number, dod, encounter_id, admit_time, discharge_time, care_setting_code
   FROM od_encounters_long_raw;
 CREATE INDEX encounters_fk ON encounters("CASE_NUMBER");
 
@@ -413,7 +413,7 @@ CREATE TABLE labs (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO labs
-  SELECT *
+  SELECT case_number, dod, lab_name, phys_time, code_value, code_value_type, value_text_for_display, normal_range_text, loinc_lab_type, loinc_test_type, loinc_code, loinc_name
   FROM od_lab_long_raw;
 CREATE INDEX labs_fk ON labs("CASE_NUMBER");
 
@@ -439,7 +439,7 @@ CREATE TABLE medications (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO medications
-  SELECT *
+  SELECT case_number, dod, phys_time, drug_name, prescriber_number, dispense_amount, number_of_days_supply, ndc_code, gpi_generic_name, drug_class_name, drug_sub_class_name, study_team_code_use, study_team_coding, opioid_flag, benzo_flag
   FROM od_medication_long_raw;
 CREATE INDEX medications_fk ON medications("CASE_NUMBER");
 
@@ -456,7 +456,7 @@ CREATE TABLE procedures (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO procedures
-  SELECT *
+  SELECT case_number, dod, phys_time, cpt4_code, code_name, study_team_code_use
   FROM od_procedures_long_raw;
 CREATE INDEX procedures_fk ON procedures("CASE_NUMBER");
 

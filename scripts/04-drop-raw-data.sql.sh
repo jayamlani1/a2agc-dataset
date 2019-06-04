@@ -2,6 +2,8 @@
 source constants.sh
 set -ev
 
+exit
+
 for f in "${DATA_SOURCES}/Long Datasets/"*.csv
 do
 

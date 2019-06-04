@@ -120,3 +120,6 @@ env.sh
 
 # Raw Data
 /raw-data
+
+# Scratch code (not to be committed)
+/scratch
