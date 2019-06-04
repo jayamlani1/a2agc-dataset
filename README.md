@@ -11,6 +11,7 @@ Scripts for compiling, validating, and documenting the A2GC2 Dataset.
 * sqlite3
 * sqlcipher
 * GraphViz (dot)
+* MkDocs
 
 ## Singularity
 

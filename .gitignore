@@ -115,11 +115,14 @@ env.sh
 # Singularity container
 /container.sif
 
-# Documentation directory
-/docs
+# Schemaspy-generated schema docs
+/docs/schema
 
 # Raw Data
 /raw-data
 
 # Scratch code (not to be committed)
 /scratch
+
+# Generated documentation site
+/site

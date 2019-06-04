@@ -1,0 +1,31 @@
+site_name: A2GC2 Dataset
+site_url: https://demo.cns.iu.edu/agc2
+site_description: A2GC2 Dataset documentation
+site_author: CNS & Regenstrief Institute
+
+repo_url: https://github.com/cns-iu/a2gc2-dataset/
+edit_uri: ""
+
+use_directory_urls: false
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Schema:
+    - '&#x1F517; Generated Schema Docs': schema/index.html
+
+plugins:
+  - search
+
+  # MkPDFs doesn't work with readthedocs theme and 
+  # the generated schema html. So for now, we'll
+  # turn PDF generation off.
+  # TODO: Report bugs to mkpdfs-mkdocs repo.
+  # - mkpdfs:
+  #     output_path: pdf/a2gc2-documentation.pdf
+
+theme: readthedocs
+
+markdown_extensions:
+  - toc:
+      permalink: True

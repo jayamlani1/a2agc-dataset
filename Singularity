@@ -18,6 +18,14 @@ From: ubuntu:18.04
     # Install a simple file server for testing
     npm install -g http-server
 
+    # Install python requirements
+    pip3 install mkdocs mkpdfs-mkdocs click-man
+    
+    # Install man pages for mkdocs
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+    click-man --target /usr/local/man/man1 mkdocs
+
     # Build GraphViz
     mkdir -p /opt/graphviz
     cd /opt/graphviz
@@ -45,7 +53,8 @@ From: ubuntu:18.04
     rm -rf /opt
 
 %environment
-    export LC_ALL=C
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
 
 %runscript
     exec /bin/bash "$@"
