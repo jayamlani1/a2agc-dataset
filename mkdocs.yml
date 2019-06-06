@@ -4,15 +4,28 @@ site_description: A2AGC Dataset documentation
 site_author: CNS & Regenstrief Institute
 
 repo_url: https://github.com/cns-iu/a2agc-dataset/
-edit_uri: ""
+
+# Set edit_uri to "" to remove the "Edit on GitHub" link
+# edit_uri: ""
 
 use_directory_urls: false
 
 nav:
-  - Home: index.md
-  - About: about.md
-  - Schema:
-    - '&#x1F517; Generated Schema Docs': schema/index.html
+  - About: index.md
+  - Dataset:
+    - Overview: dataset/index.md
+    - Data Access Requirements: dataset/access.md
+    - '&#x1F517; Schema Browser': schema/index.html
+    - ER Diagram: schema/relationships.html
+    - Data Tables: dataset/tables.md
+    - Validation Results: dataset/validation.md
+  - Source Code:
+    - Dataset Generation: dataset/workflow.md
+    - Data Analytics: analytics.md
+  - Examples:
+    - Getting Started: examples/getting_started.md
+    - Geographic Map of Opioid Deaths: examples/geo-opioid/index.md
+    - '# Opioid Prescriptions and Death Correlation': examples/n-opioid-death/index.md
 
 plugins:
   - search
