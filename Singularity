@@ -20,6 +20,9 @@ From: ubuntu:18.04
 
     # Install python requirements
     pip3 install mkdocs mkpdfs-mkdocs click-man
+
+    # Install datasette for exploring the db during development
+    pip3 install datasette datasette-vega datasette-cluster-map
     
     # Install man pages for mkdocs
     export LC_ALL=C.UTF-8
