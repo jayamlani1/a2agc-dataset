@@ -8,6 +8,11 @@ DB=$OUT/a2agc.db
 EDB=$OUT/a2agc.db.e
 DATA_SOURCES="$ORIG/box-health/Final Datasets"
 
+SCHEMA_DIR=./docs/schema
+SCHEMA_NAME=A2AGC
+
+COLUMN_COUNTS=$OUT/column_counts.csv
+
 alias sqlite="sqlite3 $DB"
 alias sqlite3="sqlcipher"
 
