@@ -13,7 +13,7 @@ SCHEMA_NAME=A2AGC
 
 COLUMN_COUNTS=$OUT/column_counts.csv
 
-alias sqlite="sqlite3 $DB"
+alias sqlite="sqlcipher $DB"
 alias sqlite3="sqlcipher"
 
 source env.sh
