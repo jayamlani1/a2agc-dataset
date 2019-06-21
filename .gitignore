@@ -126,3 +126,6 @@ env.sh
 
 # Generated documentation site
 /site
+
+# Node module dependencies
+node_modules

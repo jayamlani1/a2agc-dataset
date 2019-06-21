@@ -2,7 +2,7 @@ shopt -s expand_aliases
 
 ORIG=./raw-data/original
 OUT=./raw-data/derived/2019-05-31
-mkdir -p $ORIG $OUT
+mkdir -p $ORIG $OUT/site-data
 
 DB=$OUT/a2agc.db
 EDB=$OUT/a2agc.db.e
