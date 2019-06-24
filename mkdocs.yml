@@ -24,7 +24,7 @@ nav:
     - Data Analytics: analytics.md
   - Examples:
     - Getting Started: examples/getting_started.md
-    - Geographic Map of Opioid Deaths: examples/geo-opioid/index.md
+    - Geographic Map of Opioid Deaths: examples/vis-geomap-opioid-deaths.md
     - '# Opioid Prescriptions and Death Correlation': examples/n-opioid-death/index.md
 
 plugins:

@@ -1,8 +1,8 @@
-import { ProjectSerializer, DefaultGraphicSymbol, ScatterplotVisualization } from '@dvl-fw/core';
+import { ProjectSerializer, DefaultGraphicSymbol, ScatterplotVisualization, DefaultRawData } from '@dvl-fw/core';
 import { readFileSync, writeFileSync } from 'fs';
 import { basename } from 'path';
 
-async function read(inData: string) {
+async function read(inData: string, baseRef: string) {
     try {
         const fileContents = readFileSync(inData, 'utf8');
         const fileName = basename(inData);
@@ -70,15 +70,23 @@ async function read(inData: string) {
             }, project),
         )
         
+        const rawDataId = 'csvData1';
+        const rawData = new DefaultRawData({
+            id: rawDataId, template: 'csv', url: baseRef + fileName
+        });
+        project.rawData[0] = rawData;
+        project.dataSources[0].properties.rawData = rawDataId;
+
         const yamlString = await ProjectSerializer.toYAML(project);
-        return yamlString;
+        return [yamlString, fileName.split('.').slice(0, -1).join('.')];
     } catch (e) {
-        console.log(e);
-        return undefined
+        console.error(e);
+        return [];
     }
 }
 
-read(process.argv[2]).then((project) => {
-    writeFileSync('data.yml', project, 'utf8');
+// input arguments - 1) this script 2) path to csv 3) output directory path 4) basepath 
+read(process.argv[2],process.argv[4]).then((ret: string[]) => {
+    writeFileSync(process.argv[3] + ret[1] + '.yml', ret[0], 'utf8');
     process.exit()
 });

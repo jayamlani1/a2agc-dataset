@@ -118,6 +118,9 @@ env.sh
 # Schemaspy-generated schema docs
 /docs/schema
 
+# Data folder for site
+/docs/data/
+
 # Raw Data
 /raw-data
 
