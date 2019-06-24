@@ -1,0 +1,13 @@
+# Table - {{ table.name }}
+
+TODO table details
+
+## Columns
+{% for column in table.columns.values() %}
+<details>
+    <summary>{{ column.name }}</summary>
+
+    TODO column details
+</details>
+
+{% endfor %}

@@ -4,7 +4,7 @@ From: ubuntu:18.04
 %post
     # Enable common packages and repositories for installation
     apt-get -y update
-    apt-get -y install software-properties-common 
+    apt-get -y install software-properties-common
     add-apt-repository -y universe
     apt-get -y update
 
@@ -19,11 +19,15 @@ From: ubuntu:18.04
     npm install -g http-server
 
     # Install python requirements
-    pip3 install mkdocs mkpdfs-mkdocs click-man
+    pip3 install pyyaml Jinja2
+    pip3 install mkdocs mkpdfs-mkdocs click-man mkdocs-macros-plugin
 
     # Install datasette for exploring the db during development
     pip3 install datasette datasette-vega datasette-cluster-map
-    
+
+    # Install python development tools
+    pip3 install mypy
+
     # Install man pages for mkdocs
     export LC_ALL=C.UTF-8
     export LANG=C.UTF-8

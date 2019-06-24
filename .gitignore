@@ -117,6 +117,7 @@ env.sh
 
 # Schemaspy-generated schema docs
 /docs/schema
+/docs/dataset/tables/*.md
 
 # Raw Data
 /raw-data
