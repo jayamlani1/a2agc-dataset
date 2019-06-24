@@ -9,7 +9,7 @@ From: ubuntu:18.04
     apt-get -y update
 
     # Install dependenceis
-    apt-get -y install aptitude openjdk-8-jre python3 sqlite3 wget zip unzip python3-pip tcl lftp build-essential libssl-dev nano git gpg
+    apt-get -y install aptitude openjdk-8-jre python3 sqlite3 wget zip unzip python3-pip tcl lftp build-essential libssl-dev nano git gpg libreadline-dev libncurses-dev
 
     # Install latest nodejs/npm
     pip3 install nodeenv
@@ -50,7 +50,7 @@ From: ubuntu:18.04
     wget https://github.com/sqlcipher/sqlcipher/archive/v4.1.0.zip
     unzip v4.1.0.zip
     cd sqlcipher-4.1.0
-    ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto"
+    ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto" --enable-readline
     make
     make install
 

@@ -16,7 +16,7 @@ SCHEMA="$SCHEMA_DIR/$SCHEMA_NAME.public.xml"
 
 AGGREGATE_DATA="$OUT/aggregate-table-data.yml"
 
-alias sqlite="sqlite3 $DB"
+alias sqlite="sqlcipher $DB"
 alias sqlite3="sqlcipher"
 
 source env.sh
