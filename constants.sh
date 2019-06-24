@@ -1,6 +1,7 @@
 shopt -s expand_aliases
 
 export PYTHONPATH=./src
+export GPG_TTY=$(tty)
 
 ORIG=./raw-data/original
 OUT=./raw-data/derived/2019-05-31
