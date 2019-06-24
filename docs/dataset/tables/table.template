@@ -1,13 +1,8 @@
-# Table - {{ table.name }}
+{{ table.remarks }}
 
-TODO table details
-
-## Columns
 {% for column in table.columns.values() %}
-<details>
-    <summary>{{ column.name }}</summary>
-
-    TODO column details
-</details>
-
+## {{ column.name }}
+* Type - {{ column.type }}
+* Description - {{ column.remarks }}
+* Missing values - {{ '{:.8}'.format(100 * column.pct_missing) }}%
 {% endfor %}

@@ -1,6 +1,6 @@
 shopt -s expand_aliases
 
-PYTHONPATH=./src
+export PYTHONPATH=./src
 
 ORIG=./raw-data/original
 OUT=./raw-data/derived/2019-05-31
