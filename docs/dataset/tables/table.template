@@ -1,0 +1,8 @@
+{{ table.remarks }}
+
+{% for column in table.columns.values() %}
+## {{ column.name }}
+* Type - {{ column.type }}
+* Description - {{ column.remarks }}
+* Missing values - {{ '{:.8}'.format(100 * column.pct_missing) }}%
+{% endfor %}

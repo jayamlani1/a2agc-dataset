@@ -117,6 +117,7 @@ env.sh
 
 # Schemaspy-generated schema docs
 /docs/schema
+/docs/dataset/tables/*.md
 
 # Data folder for site
 /docs/data/

@@ -1,0 +1,53 @@
+-- EMS Incidents (Long Datasets/Linked_EMS_Data.csv) --
+DROP TABLE IF EXISTS ems_incidents;
+CREATE TABLE ems_incidents (
+  "EMS_ID" TEXT, -- PRIMARY KEY,
+  "CASE_NUMBER" TEXT,
+  "YEAR" TEXT,
+  "YOB" TEXT,
+  "PatientID" TEXT,
+  "LAST" TEXT,
+  "FIRST" TEXT,
+  "DOB" TEXT,
+  "MiddleName" TEXT,
+  "GENDER" TEXT,
+  "Race_Ethnicity" TEXT,
+  "RACE_ONLY" TEXT,
+  "PCRDateTime" TEXT,
+  "IncidentNumber" TEXT,
+  "IncidentLocationTypeAll_TEXT" TEXT,
+  "IncidentLocationTypeAll_CATEGORIES" TEXT,
+  "IncidentAddressLine1_A" TEXT,
+  "IncidentAddressLine2_A" TEXT,
+  "IncidentState" TEXT,
+  "IncidentCity" TEXT,
+  "IncidentCounty" TEXT,
+  "IncidentZip" TEXT,
+  "HomeAddressLine1" TEXT,
+  "HomeAddressLine2" TEXT,
+  "HomeZip" TEXT,
+  "HomeCity" TEXT,
+  "HomeCounty" TEXT,
+  "HomeState" TEXT,
+  "ChiefComplaint_TEXT" TEXT,
+  "SecondaryComplaintsAll_TEXT" TEXT,
+  "FirstMOI_TEXT" TEXT,
+  "FirstMOI_CATEGORIES" TEXT,
+  "FirstMOI_Collapsed_CATEGORIES" TEXT,
+  "FirstMOIDetails_TEXT" TEXT,
+  "ResponseOutcomeAll_TEXT" TEXT,
+  "ResponseOutcomeAll_CATEGORIES" TEXT,
+  "ReceivingFacility_TEXT" TEXT,
+  "OVERDOSE_DUMMY" TEXT,
+  "OVERDOSE_CC_MOI" TEXT,
+  "NALOXONE_DUMMY" TEXT,
+  "LAST_NAME" TEXT,
+  "FIRST_NAME" TEXT,
+  "MIN_INCIDENT_DATE" TEXT,
+  "MAX_INCIDENT_DATE" TEXT,
+  FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
+);
+INSERT INTO ems_incidents
+  SELECT ems_id, case_number, year, yob, patientid, last, first, dob, middlename, gender, race_ethnicity, race_only, pcrdatetime, incidentnumber, incidentlocationtypeall_text, incidentlocationtypeall_categories, incidentaddressline1_a, incidentaddressline2_a, incidentstate, incidentcity, incidentcounty, incidentzip, homeaddressline1, homeaddressline2, homezip, homecity, homecounty, homestate, chiefcomplaint_text, secondarycomplaintsall_text, firstmoi_text, firstmoi_categories, firstmoi_collapsed_categories, firstmoidetails_text, responseoutcomeall_text, responseoutcomeall_categories, receivingfacility_text, overdose_dummy, overdose_cc_moi, naloxone_dummy, last_name, first_name, min_incident_date, max_incident_date
+  FROM Linked_EMS_Data_raw;
+CREATE INDEX ems_incidents_fk ON ems_incidents("CASE_NUMBER");
