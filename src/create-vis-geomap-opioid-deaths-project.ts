@@ -8,6 +8,7 @@ async function read(inData: string, baseRef: string) {
         const fileName = basename(inData);
         const project = await ProjectSerializer.createProject('csv', fileContents, fileName);
 
+        // adds a `GraphicSymbol`in the `Project` object with all the graphic-variable mappings.
         project.graphicSymbols.push(
             new DefaultGraphicSymbol({
                 id: 'opioidDeaths',
@@ -54,6 +55,8 @@ async function read(inData: string, baseRef: string) {
             }, project),
         )
 
+        /* adds a `ScatterplotVisualization` (**Geomap coming soon**) object as an attribute of the `Project`,
+        with all the options needed to be enabled for the visualization. */
         project.visualizations.push(
             new ScatterplotVisualization({
                 id: 'SG01',
@@ -70,13 +73,15 @@ async function read(inData: string, baseRef: string) {
             }, project),
         )
         
+        // adds a `RawData` object with its `url` set to the path of the `csv` to the `rawData` attribute of the `Project` object.  
         const rawDataId = 'csvData1';
         const rawData = new DefaultRawData({
             id: rawDataId, template: 'csv', url: baseRef + fileName
         });
         project.rawData[0] = rawData;
-        project.dataSources[0].properties.rawData = rawDataId;
+        project.dataSources[0].properties.rawData = rawDataId; // assigns the right rawDataId to the dataSources
 
+        // makes a yaml string
         const yamlString = await ProjectSerializer.toYAML(project);
         return [yamlString, fileName.split('.').slice(0, -1).join('.')];
     } catch (e) {
@@ -87,6 +92,6 @@ async function read(inData: string, baseRef: string) {
 
 // input arguments - 1) this script 2) path to csv 3) output directory path 4) basepath 
 read(process.argv[2],process.argv[4]).then((ret: string[]) => {
-    writeFileSync(process.argv[3] + ret[1] + '.yml', ret[0], 'utf8');
+    writeFileSync(process.argv[3] + ret[1] + '.yml', ret[0], 'utf8'); // writes the yml file
     process.exit()
 });
