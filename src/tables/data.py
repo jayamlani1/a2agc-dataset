@@ -1,40 +1,39 @@
-from typing import Any, Mapping, TextIO
-from mypy_extensions import TypedDict
-
 import argparse
 import sqlite3
 import sys
+import typing as t
+
+import mypy_extensions as te
 import yaml
 
-from a2agc.schema import (
-    Node, Schema, getAttributes, getColumns,
-    getTables, load as load_schema
-)
+from a2agc import schema
+import infer_dist
 
 # Types
 
-Column = TypedDict('Column', {
+Column = te.TypedDict('Column', {
     'name': str,
     'type': str,
     'remarks': str,
     'n_non_null': int,
-    'pct_missing': float
+    'pct_missing': float,
+    'dist_type': str
 })
-Table = TypedDict('Table', {
+Table = te.TypedDict('Table', {
     'name': str,
     'row_count': int,
     'remarks': str,
-    'columns': Mapping[str, Column]
+    'columns': t.Mapping[str, Column]
 })
-Data = Mapping[str, Table]
+Data = t.Mapping[str, Table]
 
 
 # Load/Save
 
-def loadf(file: TextIO) -> Data:
+def loadf(file: t.TextIO) -> Data:
     return yaml.safe_load(file)
 
-def savef(file: TextIO, data: Data) -> None:
+def savef(file: t.TextIO, data: Data) -> None:
     file.write(yaml.dump(data, default_flow_style=False))
 
 def load(file: str) -> Data:
@@ -46,54 +45,95 @@ def save(file: str, data: Data) -> None:
         savef(fp, data)
 
 
-# Generate data
+# Generate column data
 
-def _generate_column(conn: sqlite3.Connection, table: str, column: Node, row_count: int) -> Column:
-    name, type_, remarks = getAttributes(column, 'name', 'type', 'remarks')
-    count = conn.execute(f'''
-        SELECT count(*) FROM { table } WHERE nullif("{ name }", '') IS NOT NULL;
-    ''').fetchone()[0]
+def _create_column_obj(
+    name: str, type_: str, remarks: str, count: int, row_count: int,
+    dist_type: str
+) -> Column:
     return {
         'name': name,
         'type': type_,
         'remarks': remarks,
         'n_non_null': count,
-        'pct_missing': 1 - count / row_count
+        'pct_missing': 1 - count / row_count,
+        'dist_type': dist_type
     }
 
-def _generate_table(conn: sqlite3.Connection, table: Node) -> Table:
-    name, row_count, remarks = getAttributes(table, 'name', 'numRows', 'remarks')
-    columns = getColumns(table)
-    data_gen = (_generate_column(conn, name, column, int(row_count)) for column in columns)
-    data = dict((column['name'], column) for column in data_gen)
+def _count_non_null_column_entries(
+    database: sqlite3.Connection, table: str, column: str
+) -> int:
+    command = f'''SELECT count(*) FROM { table } WHERE nullif("{ column }", '') IS NOT NULL;'''
+    cursor = database.execute(command)
+    return int(cursor.fetchone()[0])
+
+def _generate_column(
+    database: sqlite3.Connection, table: schema.Node, column: schema.Node
+) -> Column:
+    table_name, row_count = schema.get_attributes(table, 'name', 'numRows')
+    name, type_, remarks = schema.get_attributes(column, 'name', 'type', 'remarks')
+    dist_type = infer_dist.infer(database, column)
+    count = _count_non_null_column_entries(database, table_name, name)
+    return _create_column_obj(name, type_, remarks, count, int(row_count), dist_type)
+
+
+# Generate table data
+
+def _create_table_obj(
+    name: str, remarks: str, row_count: int, columns: t.Mapping[str, Column]
+) -> Table:
     return {
         'name': name,
-        'row_count': int(row_count),
         'remarks': remarks,
-        'columns': data
+        'row_count': row_count,
+        'columns': columns
     }
 
-def generate(database: str, schema: Schema) -> Data:
-    conn = sqlite3.connect(database)
-    data_gen = (_generate_table(conn, table) for table in getTables(schema))
-    data = dict((table['name'], table) for table in data_gen)
-    return data
+def _generate_table(database: sqlite3.Connection, table: schema.Node) -> Table:
+    name, count, remarks = schema.get_attributes(table, 'name', 'numRows', 'remarks')
+    columns = {}
+    for node in schema.get_columns(table):
+        column = _generate_column(database, table, node)
+        columns[column['name']] = column
+
+    return _create_table_obj(name, remarks, int(count), columns)
+
+
+# Generate data
+
+def generate(database: sqlite3.Connection, schema_obj: schema.Schema) -> Data:
+    tables = {}
+    for node in schema.get_tables(schema_obj):
+        table = _generate_table(database, node)
+        tables[table['name']] = table
+
+    return tables
 
 
 # Script functionality
 
-def _createCommandLineParser() -> argparse.ArgumentParser:
+def _create_command_line_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description='Generate aggregate data for a2agc tables')
-    parser.add_argument('database', help='database file')
-    parser.add_argument('schema', help='schema file')
+    parser.add_argument('database', type=sqlite3.connect, help='database file')
+    parser.add_argument('schema', type=schema.load, help='schema file')
+    parser.add_argument('overrides', nargs='?', type=infer_dist.load_override,
+                        help='column distribution overrides')
     parser.add_argument('-o', '--out', type=argparse.FileType('w'), default=sys.stdout,
                         help='output file')
     return parser
 
+def _override_dist_types(overrides: infer_dist.Override, data: Data) -> None:
+    for table in data.values():
+        for column in table['columns'].values():
+            type_ = infer_dist.get_override(overrides, table['name'], column['name'])
+            if type_:
+                column['dist_type'] = type_
+
 if __name__ == '__main__':
-    parser = _createCommandLineParser()
+    parser = _create_command_line_parser()
     namespace = parser.parse_args()
     with namespace.out:
-        schema = load_schema(namespace.schema)
-        data = generate(namespace.database, schema)
+        data = generate(namespace.database, namespace.schema)
+        if namespace.overrides:
+            _override_dist_types(namespace.overrides, data)
         savef(namespace.out, data)

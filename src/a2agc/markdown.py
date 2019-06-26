@@ -1,18 +1,21 @@
-from typing import Any, List, Union, overload
-
 import pathlib
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+import typing as t
 
-def _setupEnvironment(dirs: Union[str, List[str]]) -> Environment:
-    return Environment(
-        loader=FileSystemLoader(dirs),
-        autoescape=select_autoescape(['html', 'xml'])
+import jinja2 as jinja
+
+
+# Template rendering
+
+def _setup_environment(dirs: t.Union[str, t.List[str]]) -> jinja.Environment:
+    return jinja.Environment(
+        loader=jinja.FileSystemLoader(dirs),
+        autoescape=jinja.select_autoescape(['html', 'xml'])
     )
 
-@overload
-def render(template: str, context: Any) -> str: ...
-@overload
-def render(template: str, dirs: Union[str, List[str]], context: Any) -> str: ...
+@t.overload
+def render(template: str, context: t.Any) -> str: ...
+@t.overload
+def render(template: str, dirs: t.Union[str, t.List[str]], context: t.Any) -> str: ...
 
 def render(template, dirs, context = None):
     if context is None:
@@ -23,6 +26,6 @@ def render(template, dirs, context = None):
     path = pathlib.Path(template).resolve()
     template = path.name
     dirs = [str(path.parent), *dirs]
-    env = _setupEnvironment(dirs)
+    env = _setup_environment(dirs)
     return env.get_template(template).render(context)
 

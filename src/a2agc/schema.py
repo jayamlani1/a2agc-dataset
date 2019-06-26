@@ -1,43 +1,61 @@
-from typing import List, Mapping, overload
-
-from xml.etree.ElementTree import Element, ElementTree, parse
+import typing as t
+import xml.etree.ElementTree as ET
 
 # Types and aliases
 
-Schema = ElementTree
-Node = Element
+Schema = ET.ElementTree
+Node = ET.Element
 
 
 # Loading
 
+def loadf(file: t.TextIO) -> Schema:
+    return ET.parse(file)
+
 def load(xml: str) -> Schema:
-    return parse(xml)
+    return ET.parse(xml)
 
 
 # Node queries
 
-def getTables(schema: Schema) -> List[Node]:
+def get_table(schema: Schema, name: str) -> t.Optional[Node]:
+    return schema.find(f".//tables/table[@name='{ name }']")
+
+def get_tables(schema: Schema) -> t.List[Node]:
     return schema.findall('.//tables/table')
 
-def getColumns(table: Node) -> List[Node]:
+@t.overload
+def get_column(table: Node, column: str) -> t.Optional[Node]: ...
+@t.overload
+def get_column(schema: Schema, table: str, column: str) -> t.Optional[Node]: ...
+
+def get_column(schema, table, column):
+    if column:
+        table = get_table(schema, table)
+    else:
+        column = table
+        table = schema
+    return table.find(f"column[@name='{ column }']")
+
+def get_columns(table: Node) -> t.List[Node]:
     return table.findall('column')
 
-def getAllColumns(schema: Schema) -> Mapping[str, List[Node]]:
-    tables = getTables(schema)
-    columns = [(getName(table), getColumns(table)) for table in tables]
+def get_all_columns(schema: Schema) -> t.Mapping[str, t.List[Node]]:
+    tables = get_tables(schema)
+    columns = [(get_name(table), get_columns(table)) for table in tables]
     return dict(columns)
 
 
 # Attribute queries
 
-@overload
-def getAttributes(node: Node, __attr: str) -> str: ...
-@overload
-def getAttributes(node: Node, __attr1: str, __attr2: str, *__attrs: str) -> List[str]: ...
+@t.overload
+def get_attributes(node: Node, __attr: str) -> str: ...
+@t.overload
+def get_attributes(node: Node, __attr1: str, __attr2: str, *__attrs: str) -> t.List[str]: ...
 
-def getAttributes(node, *attrs):
+def get_attributes(node, *attrs):
     values = [node.get(attr) for attr in attrs]
     return values[0] if len(values) == 1 else values
 
-def getName(node: Node) -> str:
-    return getAttributes(node, 'name')
+def get_name(node: Node) -> str:
+    return get_attributes(node, 'name')

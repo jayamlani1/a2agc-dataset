@@ -1,6 +1,7 @@
 shopt -s expand_aliases
 
 export PYTHONPATH=./src
+export GPG_TTY=$(tty)
 
 ORIG=./raw-data/original
 OUT=./raw-data/derived/2019-05-31
@@ -14,6 +15,7 @@ SCHEMA_DIR=./docs/schema
 SCHEMA_NAME=A2AGC
 SCHEMA="$SCHEMA_DIR/$SCHEMA_NAME.public.xml"
 
+COLUMN_DISTRIBUTION_OVERRIDES=./column-distribution-overrides.yml
 AGGREGATE_DATA="$OUT/aggregate-table-data.yml"
 
 alias sqlite="sqlcipher $DB"
