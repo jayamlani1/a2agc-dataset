@@ -16,7 +16,6 @@ Override = t.Mapping[str, t.Mapping[str, str]]
 
 DISABLED = 'disabled'
 BAR_CHART = 'bar-chart'
-BINARY_BAR_CHART = 'binary-bar-chart'
 HISTOGRAM = 'histogram'
 SUMMARY = 'summary'
 UNKNOWN = 'unknown'
@@ -76,14 +75,6 @@ def _is_real(type_: str) -> bool:
     return type_ == 'real'
 
 
-# Database tests
-
-def _is_binary_column(database: sqlite3.Connection, table: str, column: str) -> bool:
-    cursor = database.execute(f'''SELECT count(DISTINCT "{ column }") FROM "{ table }"''')
-    diff_count = int(cursor.fetchone()[0])
-    return diff_count <= 2
-
-
 # Infer distribution type
 
 def infer(database: sqlite3.Connection, table: schema.Node, column: schema.Node) -> str:
@@ -94,13 +85,10 @@ def infer(database: sqlite3.Connection, table: schema.Node, column: schema.Node)
     type_ = type_.lower()
 
     if _is_boolean(type_):
-        return BINARY_BAR_CHART
+        return BAR_CHART
 
     if _is_single_char(type_):
-        if _is_binary_column(database, tname, cname):
-            return BINARY_BAR_CHART
-        else:
-            return HISTOGRAM
+        return BAR_CHART
 
     if _is_fixed_char(type_):
         return SUMMARY

@@ -7,7 +7,7 @@ import mypy_extensions as te
 import yaml
 
 from a2agc import schema
-import binary_bar_chart
+import bar_chart
 import infer_dist
 
 # Types
@@ -19,7 +19,7 @@ Column = te.TypedDict('Column', {
     'n_non_null': int,
     'pct_missing': float,
     'dist_type': str,
-    'chart_data': str
+    'dist_data': str
 })
 Table = te.TypedDict('Table', {
     'name': str,
@@ -49,18 +49,47 @@ def save(file: str, data: Data) -> None:
 
 # Generate chart data
 
+def _ensure_boolean_has_both(pairs: bar_chart.CountPairs) -> bar_chart.CountPairs:
+    if len(pairs) == 1:
+        return [('0', 0), ('1', 0)] + pairs
+    elif len(pairs) == 2:
+        value = '0' if pairs[0][0] == '1' else '1'
+        return [(value, 0)] + pairs
+    else:
+        return pairs
+
+
+def _get_name_map(type_: str) -> t.Mapping[str, str]:
+    if type_ == 'boolean':
+        return { '0': 'False', '1': 'True' }
+    return {}
+
+def _get_transform(type_: str) -> t.Any:
+    if type_ == 'boolean':
+        return _ensure_boolean_has_both
+    return None
+
 def _generate_chart(
-    database: sqlite3.Connection, table: str, column: str, type_: str
+    database: sqlite3.Connection, table: str, column: str,
+    type_: str, dist_type: str
 ) -> str:
-    if type_ == infer_dist.BINARY_BAR_CHART:
-        return binary_bar_chart.create(database, table, column)
-    return '' # TODO handle other chart types
+    type_ = type_.lower()
+    name_map = _get_name_map(type_)
+    transform = _get_transform(type_)
+    chart = None
+
+    if dist_type == infer_dist.BAR_CHART:
+        chart = bar_chart.create(database, table, column, name_map, transform)
+    # TODO handle other chart types
+
+    return chart.to_json() if chart else ''
+
 
 # Generate column data
 
 def _create_column_obj(
     name: str, type_: str, remarks: str, count: int, row_count: int,
-    dist_type: str, chart_data: str
+    dist_type: str, dist_data: str
 ) -> Column:
     return {
         'name': name,
@@ -69,7 +98,7 @@ def _create_column_obj(
         'n_non_null': count,
         'pct_missing': 1 - count / row_count,
         'dist_type': dist_type,
-        'chart_data': chart_data
+        'dist_data': dist_data
     }
 
 def _count_non_null_column_entries(
@@ -84,12 +113,14 @@ def _generate_column(
 ) -> Column:
     table_name, row_count = schema.get_attributes(table, 'name', 'numRows')
     name, type_, remarks = schema.get_attributes(column, 'name', 'type', 'remarks')
-    dist_type = infer_dist.infer(database, table, column)
     count = _count_non_null_column_entries(database, table_name, name)
-    chart_data = _generate_chart(database, table_name, name, dist_type)
+
+    dist_type = infer_dist.infer(database, table, column)
+    dist_data = _generate_chart(database, table_name, name, type_, dist_type)
+
     return _create_column_obj(
         name, type_, remarks, count, int(row_count),
-        dist_type, chart_data
+        dist_type, dist_data
     )
 
 
