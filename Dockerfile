@@ -24,7 +24,7 @@ RUN pip3 install nodeenv && \
 RUN npm install -g http-server
 
 # Install python requirements
-RUN pip3 install pyyaml Jinja2 \
+RUN pip3 install pyyaml Jinja2 altair \
     mkdocs mkpdfs-mkdocs click-man mkdocs-macros-plugin
 
 # Install datasette for exploring the db during development

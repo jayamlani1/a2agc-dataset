@@ -7,6 +7,7 @@ import mypy_extensions as te
 import yaml
 
 from a2agc import schema
+import binary_bar_chart
 import infer_dist
 
 # Types
@@ -17,7 +18,8 @@ Column = te.TypedDict('Column', {
     'remarks': str,
     'n_non_null': int,
     'pct_missing': float,
-    'dist_type': str
+    'dist_type': str,
+    'chart_data': str
 })
 Table = te.TypedDict('Table', {
     'name': str,
@@ -45,11 +47,20 @@ def save(file: str, data: Data) -> None:
         savef(fp, data)
 
 
+# Generate chart data
+
+def _generate_chart(
+    database: sqlite3.Connection, table: str, column: str, type_: str
+) -> str:
+    if type_ == infer_dist.BINARY_BAR_CHART:
+        return binary_bar_chart.create(database, table, column)
+    return '' # TODO handle other chart types
+
 # Generate column data
 
 def _create_column_obj(
     name: str, type_: str, remarks: str, count: int, row_count: int,
-    dist_type: str
+    dist_type: str, chart_data: str
 ) -> Column:
     return {
         'name': name,
@@ -57,7 +68,8 @@ def _create_column_obj(
         'remarks': remarks,
         'n_non_null': count,
         'pct_missing': 1 - count / row_count,
-        'dist_type': dist_type
+        'dist_type': dist_type,
+        'chart_data': chart_data
     }
 
 def _count_non_null_column_entries(
@@ -72,9 +84,13 @@ def _generate_column(
 ) -> Column:
     table_name, row_count = schema.get_attributes(table, 'name', 'numRows')
     name, type_, remarks = schema.get_attributes(column, 'name', 'type', 'remarks')
-    dist_type = infer_dist.infer(database, column)
+    dist_type = infer_dist.infer(database, table, column)
     count = _count_non_null_column_entries(database, table_name, name)
-    return _create_column_obj(name, type_, remarks, count, int(row_count), dist_type)
+    chart_data = _generate_chart(database, table_name, name, dist_type)
+    return _create_column_obj(
+        name, type_, remarks, count, int(row_count),
+        dist_type, chart_data
+    )
 
 
 # Generate table data

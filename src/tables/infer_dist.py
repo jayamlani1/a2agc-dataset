@@ -76,10 +76,19 @@ def _is_real(type_: str) -> bool:
     return type_ == 'real'
 
 
+# Database tests
+
+def _is_binary_column(database: sqlite3.Connection, table: str, column: str) -> bool:
+    cursor = database.execute(f'''SELECT count(DISTINCT "{ column }") FROM "{ table }"''')
+    diff_count = int(cursor.fetchone()[0])
+    return diff_count <= 2
+
+
 # Infer distribution type
 
-def infer(database: sqlite3.Connection, column: schema.Node) -> str:
-    type_ = schema.get_attributes(column, 'type')
+def infer(database: sqlite3.Connection, table: schema.Node, column: schema.Node) -> str:
+    tname = schema.get_attributes(table, 'name')
+    cname, type_ = schema.get_attributes(column, 'name', 'type')
     if not type_:
         return UNKNOWN
     type_ = type_.lower()
@@ -88,7 +97,10 @@ def infer(database: sqlite3.Connection, column: schema.Node) -> str:
         return BINARY_BAR_CHART
 
     if _is_single_char(type_):
-        return BINARY_BAR_CHART
+        if _is_binary_column(database, tname, cname):
+            return BINARY_BAR_CHART
+        else:
+            return HISTOGRAM
 
     if _is_fixed_char(type_):
         return SUMMARY

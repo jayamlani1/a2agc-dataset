@@ -1,3 +1,7 @@
+<script src="https://cdn.jsdelivr.net/npm/vega@5.4.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@3.3.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@4.2.0"></script>
+
 {{ table.remarks }}
 
 {% for column in table.columns.values() %}
@@ -5,4 +9,14 @@
 * Type - {{ column.type }}
 * Description - {{ column.remarks }}
 * Missing values - {{ '{:.8}'.format(100 * column.pct_missing) }}%
+
+{% if column.chart_data %}
+<div id="vis-{{ column.name }}"></div>
+<script type="text/javascript">
+    var spec = {{ column.chart_data }};
+    var opt = {"renderer": "canvas", "actions": false};
+    vegaEmbed("#vis-{{ column.name }}", spec, opt);
+</script>
+{% endif %}
+
 {% endfor %}
