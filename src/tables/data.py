@@ -9,6 +9,7 @@ import yaml
 from a2agc import schema
 import bar_chart
 import infer_dist
+import summary
 
 # Types
 
@@ -19,7 +20,7 @@ Column = te.TypedDict('Column', {
     'n_non_null': int,
     'pct_missing': float,
     'dist_type': str,
-    'dist_data': str
+    'dist_data': t.Any
 })
 Table = te.TypedDict('Table', {
     'name': str,
@@ -72,17 +73,20 @@ def _get_transform(type_: str) -> t.Any:
 def _generate_chart(
     database: sqlite3.Connection, table: str, column: str,
     type_: str, dist_type: str
-) -> str:
+) -> t.Any:
     type_ = type_.lower()
     name_map = _get_name_map(type_)
     transform = _get_transform(type_)
     chart = None
 
     if dist_type == infer_dist.BAR_CHART:
-        chart = bar_chart.create(database, table, column, name_map, transform)
+        obj = bar_chart.create(database, table, column, name_map, transform)
+        chart = obj.to_json()
+    elif dist_type == infer_dist.SUMMARY:
+        chart = summary.create(database, table, column)
     # TODO handle other chart types
 
-    return chart.to_json() if chart else ''
+    return chart
 
 
 # Generate column data

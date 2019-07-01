@@ -58,7 +58,7 @@ def create(
     names, counts = zip(*sorted_pairs) # Unzip
     data = pandas.DataFrame({ 'x': list(names), 'y': list(counts) })
 
-    bars = altair.Chart(data, width=600, height=600).mark_bar().encode(
+    bars = altair.Chart(data, width=300, height=300).mark_bar().encode(
         altair.X('x', axis=altair.Axis(title=column, labelAngle=0)),
         altair.Y('y', axis=altair.Axis(title='Count'))
     )
