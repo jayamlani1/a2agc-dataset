@@ -8,5 +8,8 @@ BOX_USER="example@example.com"
 # You will be otherwise prompted for this.
 # EKEY="encryption key"
 
+# The port to use when serving locally during development
+DEV_PORT=4444
+
 # Whether to sync with box.com
 DOSYNC=true

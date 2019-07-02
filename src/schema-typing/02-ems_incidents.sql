@@ -53,9 +53,9 @@ CREATE TABLE ems_incidents (
   "OVERDOSE_DUMMY" BOOLEAN CHECK(overdose_dummy IN (0, 1)),
   "OVERDOSE_CC_MOI" BOOLEAN CHECK(overdose_cc_moi IN (0, 1)),
   "NALOXONE_DUMMY" BOOLEAN CHECK(naloxone_dummy IN (0, 1)),
-  "LAST_NAME" VARCHAR(32) NOT NULL CHECK(length(last) BETWEEN 1 AND 32),
+  "LAST_NAME" VARCHAR(32) NOT NULL CHECK(length(last_name) BETWEEN 1 AND 32),
      -- Note: This has exactly the same values as last...
-  "FIRST_NAME" VARCHAR(32) NOT NULL CHECK(length(first) BETWEEN 1 AND 32),
+  "FIRST_NAME" VARCHAR(32) NOT NULL CHECK(length(first_name) BETWEEN 1 AND 32),
      -- Note: This has exactly the same values as first...
   "MIN_INCIDENT_DATE" DATE NOT NULL CHECK((typeof(min_incident_date) = 'text' AND length(dob) = 10)),
   "MAX_INCIDENT_DATE" DATE NOT NULL CHECK((typeof(max_incident_date) = 'text' AND length(dob) = 10)),
