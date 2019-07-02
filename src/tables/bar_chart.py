@@ -6,8 +6,6 @@ import typing as t
 import altair
 import pandas
 
-from a2agc import schema
-
 
 # Types
 

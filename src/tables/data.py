@@ -8,6 +8,7 @@ import yaml
 
 from a2agc import schema
 import bar_chart
+import histogram
 import infer_dist
 import summary
 
@@ -72,7 +73,7 @@ def _get_transform(type_: str) -> t.Any:
 
 def _generate_chart(
     database: sqlite3.Connection, table: str, column: str,
-    type_: str, dist_type: str
+    type_: str, dist_type: str, data_dir: str, site_data_dir: str
 ) -> t.Any:
     type_ = type_.lower()
     name_map = _get_name_map(type_)
@@ -82,9 +83,11 @@ def _generate_chart(
     if dist_type == infer_dist.BAR_CHART:
         obj = bar_chart.create(database, table, column, name_map, transform)
         chart = obj.to_json()
+    elif dist_type == infer_dist.HISTOGRAM:
+        obj = histogram.create(database, table, column, data_dir, site_data_dir)
+        chart = obj.to_json()
     elif dist_type == infer_dist.SUMMARY:
         chart = summary.create(database, table, column)
-    # TODO handle other chart types
 
     return chart
 
@@ -113,14 +116,18 @@ def _count_non_null_column_entries(
     return int(cursor.fetchone()[0])
 
 def _generate_column(
-    database: sqlite3.Connection, table: schema.Node, column: schema.Node
+    database: sqlite3.Connection, table: schema.Node, column: schema.Node,
+    data_dir: str, site_data_dir: str
 ) -> Column:
     table_name, row_count = schema.get_attributes(table, 'name', 'numRows')
     name, type_, remarks = schema.get_attributes(column, 'name', 'type', 'remarks')
     count = _count_non_null_column_entries(database, table_name, name)
 
     dist_type = infer_dist.infer(database, table, column)
-    dist_data = _generate_chart(database, table_name, name, type_, dist_type)
+    dist_data = _generate_chart(
+        database, table_name, name, type_, dist_type,
+        data_dir, site_data_dir
+    )
 
     return _create_column_obj(
         name, type_, remarks, count, int(row_count),
@@ -140,11 +147,14 @@ def _create_table_obj(
         'columns': columns
     }
 
-def _generate_table(database: sqlite3.Connection, table: schema.Node) -> Table:
+def _generate_table(
+    database: sqlite3.Connection, table: schema.Node,
+    data_dir: str, site_data_dir: str
+) -> Table:
     name, count, remarks = schema.get_attributes(table, 'name', 'numRows', 'remarks')
     columns = {}
     for node in schema.get_columns(table):
-        column = _generate_column(database, table, node)
+        column = _generate_column(database, table, node, data_dir, site_data_dir)
         columns[column['name']] = column
 
     return _create_table_obj(name, remarks, int(count), columns)
@@ -152,10 +162,13 @@ def _generate_table(database: sqlite3.Connection, table: schema.Node) -> Table:
 
 # Generate data
 
-def generate(database: sqlite3.Connection, schema_obj: schema.Schema) -> Data:
+def generate(
+    database: sqlite3.Connection, schema_obj: schema.Schema,
+    data_dir: str, site_data_dir: str
+) -> Data:
     tables = {}
     for node in schema.get_tables(schema_obj):
-        table = _generate_table(database, node)
+        table = _generate_table(database, node, data_dir, site_data_dir)
         tables[table['name']] = table
 
     return tables
@@ -167,10 +180,10 @@ def _create_command_line_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description='Generate aggregate data for a2agc tables')
     parser.add_argument('database', type=sqlite3.connect, help='database file')
     parser.add_argument('schema', type=schema.load, help='schema file')
-    parser.add_argument('overrides', nargs='?', type=infer_dist.load_override,
-                        help='column distribution overrides')
-    parser.add_argument('-o', '--out', type=argparse.FileType('w'), default=sys.stdout,
-                        help='output file')
+    parser.add_argument('overrides', nargs='?', type=infer_dist.load_override, help='column distribution overrides')
+    parser.add_argument('-o', '--out', type=argparse.FileType('w'), default=sys.stdout, help='output file')
+    parser.add_argument('-d', '--dout', required=True, help='data output directory')
+    parser.add_argument('-s', '--sout', help='site data directory')
     return parser
 
 def _override_dist_types(overrides: infer_dist.Override, data: Data) -> None:
@@ -183,8 +196,11 @@ def _override_dist_types(overrides: infer_dist.Override, data: Data) -> None:
 if __name__ == '__main__':
     parser = _create_command_line_parser()
     namespace = parser.parse_args()
-    with namespace.out:
-        data = generate(namespace.database, namespace.schema)
-        if namespace.overrides:
-            _override_dist_types(namespace.overrides, data)
-        savef(namespace.out, data)
+    data = generate(
+        namespace.database, namespace.schema,
+        namespace.dout, namespace.sout or namespace.dout
+    )
+    if namespace.overrides:
+        _override_dist_types(namespace.overrides, data)
+    savef(namespace.out, data)
+    namespace.out.close()

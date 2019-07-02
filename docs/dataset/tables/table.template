@@ -11,16 +11,13 @@
 * Missing values - {{ '{:.8}'.format(100 * column.pct_missing) }}%
 
 {% if column.dist_data %}
-{% if column.dist_type == 'bar-chart' %}
+{% if column.dist_type == 'bar-chart' or column.dist_type == 'histogram' %}
 <div id="vis-{{ column.name }}"></div>
 <script type="text/javascript">
     var spec = {{ column.dist_data }};
     var opt = {"renderer": "canvas", "actions": false};
     vegaEmbed("#vis-{{ column.name }}", spec, opt);
 </script>
-{% elif column.dist_type == 'histogram' %}
-* FOO
-* TODO histogram chart
 {% elif column.dist_type == 'summary' %}
 * Distinct entries - {{ column.dist_data.distinct }}
 * Minimun value/length - {{ column.dist_data.min }}
