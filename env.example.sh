@@ -13,6 +13,7 @@ BOX_USER="example@example.com"
 
 # The port to use when serving locally during development
 DEV_PORT=4444
+BASE_URL="http://localhost:${DEV_PORT}"
 
 # Whether to sync with box.com
 DOSYNC=true

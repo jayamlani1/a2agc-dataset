@@ -21,5 +21,6 @@ done
 sqlite3 $DB << EOF
 .mode csv
 .import "${DATA_SOURCES}/Marion_OD_Dataset-6_20_2019.csv" od_deaths_raw
+.import "${DATA_SOURCES}/Marion_OD_Jail_Weekly--06252019.csv" od_incarcerations_weekly_raw
 .quit
 EOF

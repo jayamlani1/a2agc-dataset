@@ -25,7 +25,8 @@ RUN npm install -g http-server
 
 # Install python requirements
 RUN pip3 install pyyaml Jinja2 altair geocoder \
-    mkdocs mkpdfs-mkdocs click-man mkdocs-macros-plugin
+    mkdocs mkpdfs-mkdocs click-man mkdocs-macros-plugin \
+    xlrd
 
 # Install datasette for exploring the db during development
 RUN pip3 install datasette datasette-vega datasette-cluster-map

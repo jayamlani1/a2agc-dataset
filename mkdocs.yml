@@ -23,6 +23,7 @@ nav:
       - ems_incidents: dataset/tables/table-ems_incidents.md
       - encounters: dataset/tables/table-encounters.md
       - incarcerations: dataset/tables/table-incarcerations.md
+      - incarcerations_weekly: dataset/tables/table-incarcerations_weekly.md
       - labs: dataset/tables/table-labs.md
       - medications: dataset/tables/table-medications.md
       - procedures: dataset/tables/table-procedures.md
