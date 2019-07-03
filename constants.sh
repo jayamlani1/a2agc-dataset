@@ -20,6 +20,8 @@ SCHEMA="$SCHEMA_DIR/$SCHEMA_NAME.public.xml"
 COLUMN_DISTRIBUTION_OVERRIDES=./column-distribution-overrides.yml
 AGGREGATE_DATA="$OUT/aggregate-table-data.yml"
 
+BASE_URL="https://demo.cns.iu.edu/a2agc-dataset/"
+
 alias sqlite="sqlcipher $DB"
 alias sqlite3="sqlcipher"
 

@@ -26,7 +26,7 @@ The rendered visualization looks like as follows -
 <script src="https://cdn.jsdelivr.net/npm/@dvl-fw/mav-embed@0.3.1/main-es2015.js" type="module"></script> 
  
 <!-- Add a project -->
-<mav-project id="proj1" href="/data/vis-geomap-opioid-deaths.yml">
+<mav-project id="proj1" href="../data/vis-geomap-opioid-deaths.yml">
 </mav-project>
  
  <div style="height: 500px;">
