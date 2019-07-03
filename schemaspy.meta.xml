@@ -276,6 +276,9 @@
             <column name="RELEASE_DATE" comments="Release date"/>
             <column name="RELEASE_YEAR" comments="Release year"/>
         </table>
+        <table name="incarcerations_weekly" comments="Summary data for analysts, weekly incarcerations (Marion_OD_Jail_Weekly--06252019.csv)">
+            <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
+        </table>
         <table name="diagnoses" comments="Diagnoses (Long Datasets/od_diagnosis_long.csv) -- This dataset contains any of the patient's diagnoses in the INPCR from Jan 1st 2005 until their date of death. Diagnoses are coded by ICD9 codes before Oct 1st 2015 and by ICD10 codes after that. ICD is a heirarchical system of classifying medical conditions, so descriptions of different levels of heirarchy of the codes were produced as seperate columns.">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
             <column name="DOD" comments="Date of death from cornort data"/>
@@ -617,6 +620,337 @@
             <column name="DRUG_CLASS_2__LAB_ANY" comments="Did patient test positive for an amphetamine lab anytime from 2005 on?"/>
             <column name="DRUG_CLASS_1__LAB_ANY" comments="Did patient test positive for an alcohol lab anytime from 2005 on?"/>
             <column name="HAS_INPC_LAB_DATA" comments="Does tha patient have data on any of the above labs in INPC?"/>
+            <column name="EPISODIC_MOOD_DISORDERS_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="EPISODIC_MOOD_DISORDERS_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="OTHER_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="OTHER_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="ANXIETY__DISSOCIATIVE_AND__1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="ANXIETY__DISSOCIATIVE_AND__ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="NONDEPENDENT_ABUSE_OF_DRUG_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="NONDEPENDENT_ABUSE_OF_DRUG_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="ADJUSTMENT_REACTION_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="ADJUSTMENT_REACTION_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="ALCOHOL_DEPENDENCE_SYNDROM_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="ALCOHOL_DEPENDENCE_SYNDROM_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="DRUG_DEPENDENCE_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DRUG_DEPENDENCE_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="DRUG_INDUCED_MENTAL_DISORD_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DRUG_INDUCED_MENTAL_DISORD_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SEXUAL_AND_GENDER_IDENTITY_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="SEXUAL_AND_GENDER_IDENTITY_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="ALCOHOL_INDUCED_MENTAL_DIS_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="ALCOHOL_INDUCED_MENTAL_DIS_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SCHIZOPHRENIC_DISORDERS_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SCHIZOPHRENIC_DISORDERS_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="DISTURBANCE_OF_CONDUCT__NO_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DISTURBANCE_OF_CONDUCT__NO_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="PERSONALITY_DISORDERS_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="PERSONALITY_DISORDERS_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="HYPERKINETIC_SYNDROME_OF_C_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="HYPERKINETIC_SYNDROME_OF_C_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="OTHER_NONORGANIC_PSYCHOSES_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="OTHER_NONORGANIC_PSYCHOSES_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DELUSIONAL_DISORDERS_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DELUSIONAL_DISORDERS_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="PERSISTENT_MENTAL_DISORDER_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="PERSISTENT_MENTAL_DISORDER_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="TRANSIENT_MENTAL_DISORDERS_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="TRANSIENT_MENTAL_DISORDERS_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DEMENTIAS_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="DEMENTIAS_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="PERVASIVE_DEVELOPMENTAL_DI_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="PERVASIVE_DEVELOPMENTAL_DI_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SPECIAL_SYMPTOMS_OR_SYNDRO_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SPECIAL_SYMPTOMS_OR_SYNDRO_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="ORGANIC_SLEEP_DISORDERS_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="ORGANIC_SLEEP_DISORDERS_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="DEPRESSIVE_DISORDER__NOT_E_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DEPRESSIVE_DISORDER__NOT_E_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SPECIFIC_NONPSYCHOTIC_MENT_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="SPECIFIC_NONPSYCHOTIC_MENT_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="DISTURBANCE_OF_EMOTIONS_SP_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="DISTURBANCE_OF_EMOTIONS_SP_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="MILD_INTELLECTUAL_DISABILI_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="MILD_INTELLECTUAL_DISABILI_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="ACUTE_REACTION_TO_STRESS_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="ACUTE_REACTION_TO_STRESS_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="OTHER_SPECIFIED_INTELLECTU_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="OTHER_SPECIFIED_INTELLECTU_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="UNSPECIFIED_INTELLECTUAL_D_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="UNSPECIFIED_INTELLECTUAL_D_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="PSYCHIC_FACTORS_ASSOCIATED_1YR" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="PSYCHIC_FACTORS_ASSOCIATED_ANY" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SPECIFIC_DELAYS_IN_DEVELOP_1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="SPECIFIC_DELAYS_IN_DEVELOP_ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="PHYSIOLOGICAL_MALFUNCTION__1YR" comments="Does the patient have a diagnosis in this ICD9 category up to one year before death?"/>
+            <column name="PHYSIOLOGICAL_MALFUNCTION__ANY" comments="Does the patient have a diagnosis in this ICD9 category anytime from 2005 on?"/>
+            <column name="HAS_INPC_DX_DATA" comments="Does that patient have any diagnoses in INPC from 2005 on?"/>
+            <column name="HYPNOTIC_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="BENZODIAZEPINE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="ANTIDEPRESSANT_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="ANTIPSYCHOTIC_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="HYDROCODONE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="ANTIANXIETY_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="FENTANYL_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="OXYCODONE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="OXYMORPHONE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="MORPHINE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="HYDROMORPHONE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="OTHER_OPIOID_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="BIPOLAR_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="ANXIANXIETY_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="METHADONE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="CODEINE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="STIMULANT_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="NALOXONE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="HEPATITIS_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="AMPHETAMINE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="OTHER_PSYCHOTHERAPEUTIC_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="ADHD_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="ANTIRETROVIRAL_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="BUPRENORPHINE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="ANTIRETROVIAL_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="BARBITUATE_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="DISULFIRAM_1YEAR" comments="Did the patient have a fill for any drug in this drug category up a year before death?"/>
+            <column name="BENZODIAZEPINE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="HYDROCODONE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="FENTANYL_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="OXYCODONE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="OXYMORPHONE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="MORPHINE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="HYDROMORPHONE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="OTHER_OPIOID_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="METHADONE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="CODEINE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="NALOXONE_1WEEK" comments="Did the patient have a fill for any drug in this drug category up a week before death?"/>
+            <column name="BENZODIAZEPINE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="HYDROCODONE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="FENTANYL_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="OXYCODONE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="OXYMORPHONE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="MORPHINE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="HYDROMORPHONE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="OTHER_OPIOID_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="METHADONE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="CODEINE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="NALOXONE_1MONTH" comments="Did the patient have a fill for any drug in this drug category up a month before death?"/>
+            <column name="HAS_INPC_MED_DATA" comments="Does the patient have any fill data from 2005 on in INPC?"/>
+            <column name="ANY_COPRESCRIPTION" comments="Did the patient have any benzo fill overlaps with an opioid fill from the same prescriber?"/>
+            <column name="ANY_CONCURRENT" comments="Did the patient have any benzo fill overlap with an opioid fill for 7 or more days?"/>
+            <column name="PRESCRIBED_ANY_OPIOID" comments="Did the patient ever have an opioid fill?"/>
+            <column name="PRESCRIBED_ANY_BENZO" comments="Did the patient ever have a benzodiazapine fill?"/>
+            <column name="N_PRESCRIPTIONS" comments="Total prescription filled by the patient from 2005 on"/>
+            <column name="N_OPIOID_PRESCRIPTIONS" comments="Total opioid prescription filled by the patient from 2005 on"/>
+            <column name="N_PRESCRIBERS" comments="Total unique prescribers for patient's fills since 2005"/>
+            <column name="N_OPIOID_PRESCRIBERS" comments="Total unique prescribers for patient's opioid fills since 2005"/>
+            <column name="N_OPIOID_PX_G7D" comments="Total number of fills for opioids greater with a  supply greater than 7 days"/>
+            <column name="CUMULATIVE_OPIOID_DAYS" comments="Sum of days supply across all of patients opioid fills"/>
+            <column name="CUMULATIVE_MME" comments="Sum of MME across all patients opioid fills"/>
+            <column name="ADJUSTED_MME" comments="CUMULATIVE_MME/CUMULATIVE_OPIOID_DAYS"/>
+            <column name="HAS_INPC_OPIOID_DATA" comments="Did the patient have any fill data?"/>
+            <column name="E_CSC_1YEAR" comments="Did the patient have and ED visit up to 1 year before date of death?"/>
+            <column name="O_CSC_1YEAR" comments="Did the patient have and outpatient/ambulatory visit up to 1 year before date of death?"/>
+            <column name="I_CSC_1YEAR" comments="Did the patient have and inpatient stay up to 1 year before date of death?"/>
+            <column name="E_CSC_1_MONTH" comments="Did the patient have and ED visit within 0 to 30 days before date of death?"/>
+            <column name="O_CSC_1_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 0 to 30 days before date of death?"/>
+            <column name="I_CSC_1_MONTH" comments="Did the patient have and inpatient stay up with in 0 to 30 days before date of death?"/>
+            <column name="E_CSC_2_MONTH" comments="Did the patient have and ED visit within 31 to 60 days before date of death?"/>
+            <column name="O_CSC_2_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 31 to 60 days before date of death?"/>
+            <column name="I_CSC_2_MONTH" comments="Did the patient have and inpatient stay up wihtin 31 to 60 days before date of death?"/>
+            <column name="E_CSC_3_MONTH" comments="Did the patient have and ED visit within 61 to 90 days before date of death?"/>
+            <column name="O_CSC_3_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 61 to90 days before date of death?"/>
+            <column name="I_CSC_3_MONTH" comments="Did the patient have and inpatient stay up wihtin 61 to 90 days before date of death?"/>
+            <column name="E_CSC_4_MONTH" comments="Did the patient have and ED visit within 91 to 120 days before date of death?"/>
+            <column name="O_CSC_4_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 91 to 120 days before date of death?"/>
+            <column name="I_CSC_4_MONTH" comments="Did the patient have and inpatient stay up wihtin 91 to 120 days before date of death?"/>
+            <column name="E_CSC_5_MONTH" comments="Did the patient have and ED visit within 121 to 150 days before date of death?"/>
+            <column name="O_CSC_5_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 121 to 150 days before date of death?"/>
+            <column name="I_CSC_5_MONTH" comments="Did the patient have and inpatient stay up wihtin 121 to 150 days before date of death?"/>
+            <column name="E_CSC_6_MONTH" comments="Did the patient have and ED visit within 151 to 180 days before date of death?"/>
+            <column name="O_CSC_6_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 151 to 180 days before date of death?"/>
+            <column name="I_CSC_6_MONTH" comments="Did the patient have and inpatient stay up wihtin 151 to 180 days before date of death?"/>
+            <column name="E_CSC_7_MONTH" comments="Did the patient have and ED visit within 181 to 210 days before date of death?"/>
+            <column name="O_CSC_7_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 181 to 210 days before date of death?"/>
+            <column name="I_CSC_7_MONTH" comments="Did the patient have and inpatient stay up wihtin 181 to 210 days before date of death?"/>
+            <column name="E_CSC_8_MONTH" comments="Did the patient have and ED visit within 211 to 240 days before date of death?"/>
+            <column name="O_CSC_8_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 211 to 240 days before date of death?"/>
+            <column name="I_CSC_8_MONTH" comments="Did the patient have and inpatient stay up wihtin 211 to 240 days before date of death?"/>
+            <column name="E_CSC_9_MONTH" comments="Did the patient have and ED visit within 241 to 270 days before date of death?"/>
+            <column name="O_CSC_9_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 241 to 270 days before date of death?"/>
+            <column name="I_CSC_9_MONTH" comments="Did the patient have and inpatient stay up wihtin 241 to 270 days before date of death?"/>
+            <column name="E_CSC_10_MONTH" comments="Did the patient have and ED visit within 271 to 300 days before date of death?"/>
+            <column name="O_CSC_10_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 271 to 300 days before date of death?"/>
+            <column name="I_CSC_10_MONTH" comments="Did the patient have and inpatient stay up wihtin 271 to 300 days before date of death?"/>
+            <column name="E_CSC_11_MONTH" comments="Did the patient have and ED visit within 301 to 330 days before date of death?"/>
+            <column name="O_CSC_11_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 301 to 330 days before date of death?"/>
+            <column name="I_CSC_11_MONTH" comments="Did the patient have and inpatient stay up wihtin 301 to 330 days before date of death?"/>
+            <column name="E_CSC_12_MONTH" comments="Did the patient have and ED visit within 331 to 360 days before date of death?"/>
+            <column name="O_CSC_12_MONTH" comments="Did the patient have and outpatient/ambulatory visit within 331 to 360 days before date of death?"/>
+            <column name="I_CSC_12_MONTH" comments="Did the patient have and inpatient stay up wihtin 331 to 360 days before date of death?"/>
+            <column name="HAS_INPC_ENC_DATA" comments="Does the patient have any encounter data in the INPC?"/>
+            <column name="EMERGENCY_DEPT_VISIT__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="OFFICE_CONSULTATION__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSYTX__OFF__45_50_MIN__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="OFFICE_OUTPATIENT_VISIT_EST__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="URINALYSIS_NONAUTO_W_O_SCOPE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="OFFICE_OUTPATIENT_VISIT_NEW__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="DRUG_SCREEN_SINGLE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="SUBSEQUENT_HOSPITAL_CARE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="HOSPITAL_DISCHARGE_DAY__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="MEDICATION_MANAGEMENT__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="DRUG_SCREEN_QUALITATE_MULTI__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="INTAC_GROUP_PSYTX__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="CRITICAL_CARE_FIRST_HOUR__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="INITIAL_HOSPITAL_CARE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSY_DX_INTERVIEW__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="URINALYSIS_AUTO_W_O_SCOPE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="INPATIENT_CONSULTATION__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="URINALYSIS_NONAUTO_W_SCOPE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="URINALYSIS_AUTO_W_SCOPE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSYTX__OFFICE__20_30_MIN__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="CRITICAL_CARE_ADDL_30_MIN__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="INITIAL_OBSERVATION_CARE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="GROUP_PSYCHOTHERAPY__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="FAMILY_PSYTX_W_PATIENT__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="OBSERV_HOSP_SAME_DATE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSYTX__OFF__20_30_MIN_W_E_M__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="OBSERVATION_CARE_DISCHARGE__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="DRUG_CONFIRMATION__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="URINALYSIS__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="ALCOHOL_DETOXIFICATION__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSYCHO_TESTING_BY_PSYCH_PHYS__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="DRUG_SCREEN_SINGLE_CLASS__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSYTX__OFF__45_50_MIN_W_E_M__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="DRUG_SCRN_1__CLASS_NONCHROMO__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="DRUG_SCREEN_MULTI_DRUG_CLASS__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSYTX_PT__FAMILY_45_MINUTES__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="PSYCH_DIAGNOSTIC_EVALUATION__PROC_1YR" comments="Did the patient have the procedure up to 1 year before date of death?"/>
+            <column name="EMERGENCY_DEPT_VISIT__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="OFFICE_CONSULTATION__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSYTX__OFF__45_50_MIN__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="OFFICE_OUTPATIENT_VISIT_EST__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="URINALYSIS_NONAUTO_W_O_SCOPE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="OFFICE_OUTPATIENT_VISIT_NEW__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="DRUG_SCREEN_SINGLE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="SUBSEQUENT_HOSPITAL_CARE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="HOSPITAL_DISCHARGE_DAY__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="MEDICATION_MANAGEMENT__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="DRUG_SCREEN_QUALITATE_MULTI__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="INTAC_GROUP_PSYTX__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="CRITICAL_CARE_FIRST_HOUR__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="INITIAL_HOSPITAL_CARE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSY_DX_INTERVIEW__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="URINALYSIS_AUTO_W_O_SCOPE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="INPATIENT_CONSULTATION__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="URINALYSIS_NONAUTO_W_SCOPE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="URINALYSIS_AUTO_W_SCOPE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSYTX__OFFICE__20_30_MIN__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="CRITICAL_CARE_ADDL_30_MIN__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="INITIAL_OBSERVATION_CARE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="GROUP_PSYCHOTHERAPY__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="FAMILY_PSYTX_W_PATIENT__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="OBSERV_HOSP_SAME_DATE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSYTX__OFF__20_30_MIN_W_E_M__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="OBSERVATION_CARE_DISCHARGE__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="DRUG_CONFIRMATION__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="URINALYSIS__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="ALCOHOL_DETOXIFICATION__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSYCHO_TESTING_BY_PSYCH_PHYS__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="DRUG_SCREEN_SINGLE_CLASS__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSYTX__OFF__45_50_MIN_W_E_M__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="DRUG_SCRN_1__CLASS_NONCHROMO__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="DRUG_SCREEN_MULTI_DRUG_CLASS__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSYTX_PT__FAMILY_45_MINUTES__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="PSYCH_DIAGNOSTIC_EVALUATION__PROC_ANY" comments="Did the patient have the procedure any time from 2015 on?"/>
+            <column name="HAS_INPC_PROC_DATA" comments="Does the patient have any data on the above procedures in INPC?"/>
+            <column name="PSYCHIATRY_CONSULT__REF_1YR" comments="Did the patient have an order for this up to 1 year before death?"/>
+            <column name="INTEGRATIVE_PAIN_PROGRAM_CONSULT__REF_1YR" comments="Did the patient have an order for this up to 1 year before death?"/>
+            <column name="SOCIAL_WORK_CONSULT__REF_1YR" comments="Did the patient have an order for this up to 1 year before death?"/>
+            <column name="PSYCHIATRY_MEDICAL_CONSULTATION__REF_1YR" comments="Did the patient have an order for this up to 1 year before death?"/>
+            <column name="PAIN_MGMT_MD_OP_H_P_INIT_CONSULT__REF_1YR" comments="Did the patient have an order for this up to 1 year before death?"/>
+            <column name="PSYCHIATRY_CONSULT__REF_ANY" comments="Did the patient have an order for this any time from 2015 on?"/>
+            <column name="INTEGRATIVE_PAIN_PROGRAM_CONSULT__REF_ANY" comments="Did the patient have an order for this any time from 2015 on?"/>
+            <column name="SOCIAL_WORK_CONSULT__REF_ANY" comments="Did the patient have an order for this any time from 2015 on?"/>
+            <column name="PSYCHIATRY_MEDICAL_CONSULTATION__REF_ANY" comments="Did the patient have an order for this any time from 2015 on?"/>
+            <column name="PAIN_MGMT_MD_OP_H_P_INIT_CONSULT__REF_ANY" comments="Did the patient have an order for this any time from 2015 on?"/>
+            <column name="HAS_INPC_REF_DATA" comments="Did the patient have any data on the above orders in INPC?"/>
+            <column name="DRUG_CLASS_10__LAB_1YR" comments="Did patient test positive for a cocaine/THC/PCP lab up to year before death?"/>
+            <column name="DRUG_CLASS_8__LAB_1YR" comments="Did patient test positive for a benzo lab up to year before death?"/>
+            <column name="DRUG_CLASS_11__LAB_1YR" comments="Did patient test positive for an opioid lab up to a year before death?"/>
+            <column name="DRUG_CLASS_7__LAB_1YR" comments="Did patient test positive for a barbituate lab up to year before death?"/>
+            <column name="DRUG_CLASS_3__LAB_1YR" comments="Did patient test positive for an acetominophen lab up to year before death?"/>
+            <column name="DRUG_CLASS_2__LAB_1YR" comments="Did patient test positive for an amphetamine lab up to a year before death?"/>
+            <column name="DRUG_CLASS_1__LAB_1YR" comments="Did patient test positive for an alcohol lab up to a year before death?"/>
+            <column name="DRUG_CLASS_10__LAB_ANY" comments="Did patient test positive for a cocaine/THC/PCP lab anytime from 2005 on?"/>
+            <column name="DRUG_CLASS_8__LAB_ANY" comments="Did patient test positive for a benzo lab anytime from 2005 on?"/>
+            <column name="DRUG_CLASS_11__LAB_ANY" comments="Did patient test positive for an opioid lab anytime from 2005 on?"/>
+            <column name="DRUG_CLASS_7__LAB_ANY" comments="Did patient test positive for a barbituate lab anytime from 2005 on?"/>
+            <column name="DRUG_CLASS_3__LAB_ANY" comments="Did patient test positive for an acetominophen lab anytime from 2005 on?"/>
+            <column name="DRUG_CLASS_2__LAB_ANY" comments="Did patient test positive for an amphetamine lab anytime from 2005 on?"/>
+            <column name="DRUG_CLASS_1__LAB_ANY" comments="Did patient test positive for an alcohol lab anytime from 2005 on?"/>
+            <column name="HAS_INPC_LAB_DATA" comments="Does the patient have data on any of the above labs in INPC?"/>
+            <column name="EMS_DATA" comments="Does the patient match to any record in the EMS data up to one year before death?"/>
+            <column name="MOST_RECENT_RUN" comments="Most recent EMS run time "/>
+            <column name="N_RUNS_1_DAY" comments="Number of EMS runs on date of death"/>
+            <column name="N_RUNS_2_DAYS" comments="Number of EMS runs on date before date of death"/>
+            <column name="N_RUNS_7_DAYS" comments="Number of EMS runs between 2 and 7 days before date of death"/>
+            <column name="N_RUNS_30_DAYS" comments="Number of EMS runs between 8 and 30 days before date of death"/>
+            <column name="N_RUNS_182_DAYS" comments="Number of EMS runs between 31 and 182 days before date of death"/>
+            <column name="N_RUNS_365_DAYS" comments="Number of EMS runs between 183 and 365 days before date of death"/>
+            <column name="N_OD_RUNS_1_DAY" comments="Number of EMS runs with OVERDOSE_CC_MOI = 1 on date of death"/>
+            <column name="N_OD_RUNS_2_DAYS" comments="Number of EMS runs with OVERDOSE_CC_MOI = 1 on date before date of death"/>
+            <column name="N_OD_RUNS_7_DAYS" comments="Number of EMS runs with OVERDOSE_CC_MOI = 1 between 2 and 7 days before date of death"/>
+            <column name="N_OD_RUNS_30_DAYS" comments="Number of EMS runs with OVERDOSE_CC_MOI = 1 between 8 and 30 days before date of death"/>
+            <column name="N_OD_RUNS_182_DAYS" comments="Number of EMS runs with OVERDOSE_CC_MOI = 1 between 31 and 182 days before date of death"/>
+            <column name="N_OD_RUNS_365_DAYS" comments="Number of EMS runs with OVERDOSE_CC_MOI = 1 between 183 and 365 days before date of death"/>
+            <column name="N_NARCAN_RUNS_1_DAY" comments="Number of EMS runs with NALOXONE_DUMMY = 1 on date of death"/>
+            <column name="N_NARCAN_RUNS_2_DAYS" comments="Number of EMS runs with NALOXONE_DUMMY = 1 on date before date of death"/>
+            <column name="N_NARCAN_RUNS_7_DAYS" comments="Number of EMS runs with NALOXONE_DUMMY = 1 between 2 and 7 days before date of death"/>
+            <column name="N_NARCAN_RUNS_30_DAYS" comments="Number of EMS runs with NALOXONE_DUMMY = 1 between 8 and 30 days before date of death"/>
+            <column name="N_NARCAN_RUNS_182_DAYS" comments="Number of EMS runs with NALOXONE_DUMMY = 1 between 31 and 182 days before date of death"/>
+            <column name="N_NARCAN_RUNS_365_DAYS" comments="Number of EMS runs with NALOXONE_DUMMY = 1 between 183 and 365 days before date of death"/>
+            <column name="RECENT_BOOKING_DATE" comments="Most recent jail booking date"/>
+            <column name="RECENT_RELEASE_DATE" comments="Most recent jail release date"/>
+            <column name="N_BOOKING_7_DAYS" comments="Number of booking dates between 2 and 7 days before date of death"/>
+            <column name="N_BOOKING_30_DAYS" comments="Number of booking dates between 8 and 30 days before date of death"/>
+            <column name="N_BOOKING_182_DAYS" comments="Number of booking dates between 31 and 182 days before date of death"/>
+            <column name="N_BOOKING_365_DAYS" comments="Number of booking dates between 183 and 365 days before date of death"/>
+            <column name="N_DRUG_BOOKING_7_DAYS" comments="Number of booking dates with offense code 'Drug/paraphenalia possession' between 2 and 7 days before date of death"/>
+            <column name="N_DRUG_BOOKING_30_DAYS" comments="Number of booking dates with offense code 'Drug/paraphenalia possession' between 8 and 30 days before date of death"/>
+            <column name="N_DRUG_BOOKING_182_DAYS" comments="Number of booking dates with offense code 'Drug/paraphenalia possession' between 31 and 182 days before date of death"/>
+            <column name="N_DRUG_BOOKING_365_DAYS" comments="Number of booking dates with offense code 'Drug/paraphenalia possession' between 183 and 365 days before date of death"/>
+            <column name="N_DEALING_BOOKING_7_DAYS" comments="Number of booking dates with offense code 'Drug dealing' between 2 and 7 days before date of death"/>
+            <column name="N_DEALING_BOOKING_30_DAYS" comments="Number of booking dates with offense code 'Drug dealing' between 8 and 30 days before date of death"/>
+            <column name="N_DEALING_BOOKING_182_DAYS" comments="Number of booking dates with offense code 'Drug dealing' between 31 and 182 days before date of death"/>
+            <column name="N_DEALING_BOOKING_365_DAYS" comments="Number of booking dates with offense code 'Drug dealing' between 183 and 365 days before date of death"/>
+            <column name="N_DWI_BOOKING_7_DAYS" comments="Number of booking dates with offense code 'DWI' between 2 and 7 days before date of death"/>
+            <column name="N_DWI_BOOKING_30_DAYS" comments="Number of booking dates with offense code 'DWI' between 8 and 30 days before date of death"/>
+            <column name="N_DWI_BOOKING_182_DAYS" comments="Number of booking dates with offense code 'DWI' between 31 and 182 days before date of death"/>
+            <column name="N_DWI_BOOKING_365_DAYS" comments="Number of booking dates with offense code 'DWI' between 183 and 365 days before date of death"/>
+            <column name="N_CM_BOOKING_7_DAYS" comments="Number of booking dates with offense code 'Common Nuisance' between 2 and 7 days before date of death"/>
+            <column name="N_CM_BOOKING_30_DAYS" comments="Number of booking dates with offense code 'Common Nuisance' between 8 and 30 days before date of death"/>
+            <column name="N_CM_BOOKING_182_DAYS" comments="Number of booking dates with offense code 'Common Nuisance' between 31 and 182 days before date of death"/>
+            <column name="N_CM_BOOKING_365_DAYS" comments="Number of booking dates with offense code 'Common Nuisance' between 183 and 365 days before date of death"/>
+            <column name="N_DAYS_BOOKED_7_DAYS" comments="Number of days booked (book to release date inclusive) between 2 and 7 days before death"/>
+            <column name="N_DAYS_BOOKED_30_DAYS" comments="Number of days booked (book to release date inclusive) between 8 and 30 days before death"/>
+            <column name="N_DAYS_BOOKED_182_DAYS" comments="Number of days booked (book to release date inclusive) between 31 and 182 days before death"/>
+            <column name="N_DAYS_BOOKED_365_DAYS" comments="Number of days booked (book to release date inclusive) between 183 and 365 days before death"/>
+            <column name="N_DRUG_DAYS_BOOKED_7_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug/paraphenalia possession' between 2 and 7 days before death"/>
+            <column name="N_DRUG_DAYS_BOOKED_30_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug/paraphenalia possession' between 8 and 30 days before death"/>
+            <column name="N_DRUG_DAYS_BOOKED_182_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug/paraphenalia possession' between 31 and 182 days before death"/>
+            <column name="N_DRUG_DAYS_BOOKED_365_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug/paraphenalia possession' between 183 and 365 days before death"/>
+            <column name="N_DEALING_DAYS_BOOKED_7_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug dealing' between 2 and 7 days before death"/>
+            <column name="N_DEALING_DAYS_BOOKED_30_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug dealing'  between 8 and 30 days before death"/>
+            <column name="N_DEALING_DAYS_BOOKED_182_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug dealing' between 31 and 182 days before death"/>
+            <column name="N_DEALING_DAYS_BOOKED_365_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Drug dealing' between 183 and 365 days before death"/>
+            <column name="N_DWI_DAYS_BOOKED_7_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'DWI' between 2 and 7 days before death"/>
+            <column name="N_DWI_DAYS_BOOKED_30_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'DWI' between 8 and 30 days before death"/>
+            <column name="N_DWI_DAYS_BOOKED_182_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'DWI' between 31 and 182 days before death"/>
+            <column name="N_DWI_DAYS_BOOKED_365_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'DWI' between 183 and 365 days before death"/>
+            <column name="N_CM_DAYS_BOOKED_7_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Common Nuisance' between 2 and 7 days before death"/>
+            <column name="N_CM_DAYS_BOOKED_30_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Common Nuisance' between 8 and 30 days before death"/>
+            <column name="N_CM_DAYS_BOOKED_182_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Common Nuisance' between 31 and 182 days before death"/>
+            <column name="N_CM_DAYS_BOOKED_365_DAYS" comments="Number of days booked (book to release date inclusive) with offense code 'Common Nuisance' between 183 and 365 days before death"/>
         </table>
     </tables>
 </schemaMeta>
