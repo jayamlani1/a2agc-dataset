@@ -33,6 +33,12 @@ async function read(inData: string, baseRef: string) {
                         graphicVariableType: 'longitude',
                         graphicVariableId: 'longitude'
                     },
+                    tooltip: {
+                        recordSet: 'csvData1',
+                        dataVariable: 'N_OPIOID_PRESCRIPTIONS',
+                        graphicVariableType: 'tooltip',
+                        graphicVariableId: 'tooltip'
+                    },
                     areaSize: {
                         recordSet: 'csvData1',
                         dataVariable: 'N_OPIOID_PRESCRIPTIONS',

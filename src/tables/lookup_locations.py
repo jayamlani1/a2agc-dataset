@@ -63,7 +63,8 @@ def _format_address(segments: t.Iterator[t.Optional[str]]) -> str:
   address, city, county, state, zipcode = segments
   required = list(filter(lambda seg: seg, (address, city, county, state)))
   if len(required):
-    return '{} {}'.format(', '.join(required), zipcode).strip(', ')
+    return '{} {}'.format(', '.join(required), zipcode).strip(', ') \
+      .replace('#', '%23').replace('/', '%2F').replace(',', '%2C') # URL Encode some common address characterisitcs which can make geocoders unhappy.
   return ''
 
 def _get_addresses(database: sqlite3.Connection) -> t.Iterator[t.Tuple[int, str]]:
@@ -115,4 +116,3 @@ if __name__ == '__main__':
     lookup_locations(database, namespace.max_wait, namespace.max_count)
   finally:
     database.commit()
-
