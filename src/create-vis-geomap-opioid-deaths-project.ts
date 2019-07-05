@@ -1,4 +1,4 @@
-import { ProjectSerializer, DefaultGraphicSymbol, ScatterplotVisualization, DefaultRawData } from '@dvl-fw/core';
+import { ProjectSerializer, DefaultGraphicSymbol, DefaultRawData } from '@dvl-fw/core';
 import { readFileSync, writeFileSync } from 'fs';
 import { basename } from 'path';
 
@@ -21,17 +21,17 @@ async function read(inData: string, baseRef: string) {
                         graphicVariableType: 'identifier',
                         graphicVariableId: 'identifier'
                     },
-                    x: {
+                    latitude: {
                         recordSet: 'csvData1',
-                        dataVariable: 'CASE_NUMBER',
-                        graphicVariableType: 'axis',
-                        graphicVariableId: 'axis'
+                        dataVariable: 'latitude',
+                        graphicVariableType: 'latitude',
+                        graphicVariableId: 'latitude'
                     },
-                    y: {
+                    longitude: {
                         recordSet: 'csvData1',
-                        dataVariable: 'CASE_NUMBER',
-                        graphicVariableType: 'axis',
-                        graphicVariableId: 'axis'
+                        dataVariable: 'longitude',
+                        graphicVariableType: 'longitude',
+                        graphicVariableId: 'longitude'
                     },
                     areaSize: {
                         recordSet: 'csvData1',
@@ -50,30 +50,65 @@ async function read(inData: string, baseRef: string) {
                         dataVariable: 'HOME_STATE',
                         graphicVariableType: 'color',
                         graphicVariableId: 'color'
+                    },
+                    strokeWidth: {
+                        recordSet: 'csvData1',
+                        dataVariable: 'strokeWidth',
+                        graphicVariableType: 'strokeWidth',
+                        graphicVariableId: 'strokeWidth'
                     }
                 }
             }, project),
         )
 
-        /* adds a `ScatterplotVisualization` (**Geomap coming soon**) object as an attribute of the `Project`,
+        /* adds a `GeomapVisualization` object as an attribute of the `Project`,
         with all the options needed to be enabled for the visualization. */
         project.visualizations.push(
-            new ScatterplotVisualization({
-                id: 'SG01',
-                template: 'scattergraph',
+            await ProjectSerializer.createVisualization('geomap', {
+                id: 'GM01',
+                template: 'geomap',
                 properties: {
-                    enableTooltip: true,
-                    gridlines: true,
-                    showAxisLabels: false,
-                    showAxisIndicators: false
+                    basemapZoomLevels: [
+                        {
+                            selector: ['world', 'united states', 'states'],
+                            projection: 'albersUsa',
+                            label: 'United States',
+                            class: 'us-icon'
+                        },
+                        {
+                            selector: ['world', 'united states', 'IN', 'counties'],
+                            projection: 'albersUsa',
+                            label: 'Indiana',
+                            class: 'state-icon'
+                        },
+                        {
+                            selector: [
+                                ['world', 'united states', 'IN', 'Marion'],
+                                ['world', 'united states', 'IN', 'Boone'],
+                                ['world', 'united states', 'IN', 'Hamilton'],
+                                ['world', 'united states', 'IN', 'Hancock'],
+                                ['world', 'united states', 'IN', 'Shelby'],
+                                ['world', 'united states', 'IN', 'Johnson'],
+                                ['world', 'united states', 'IN', 'Morgan'],
+                                ['world', 'united states', 'IN', 'Hendricks'],
+                              ],
+                              projection: 'albersUsa',
+                              label: 'Marion County Area',
+                              class: 'county-icon'
+                        }
+                    ],
+                    basemapSelectedZoomLevel: 3,
+                    basemapDefaultColor: 'white',
+                    basemapDefaultStrokeColor: '#bebebe',
+                    basemapDefaultStrokeWidth: '0.1%'
                 },
                 graphicSymbols: {
-                    points: 'opioidDeaths'
+                    nodes: 'opioidDeaths' as any
                 }
-            }, project),
+            }, project)
         )
-        
-        // adds a `RawData` object with its `url` set to the path of the `csv` to the `rawData` attribute of the `Project` object.  
+
+        // adds a `RawData` object with its `url` set to the path of the `csv` to the `rawData` attribute of the `Project` object.
         const rawDataId = 'csvData1';
         const rawData = new DefaultRawData({
             id: rawDataId, template: 'csv', url: baseRef + fileName
@@ -90,7 +125,7 @@ async function read(inData: string, baseRef: string) {
     }
 }
 
-// input arguments - 1) this script 2) path to csv 3) output directory path 4) basepath 
+// input arguments - 1) this script 2) path to csv 3) output directory path 4) basepath
 read(process.argv[2],process.argv[4]).then((ret: string[]) => {
     writeFileSync(process.argv[3] + ret[1] + '.yml', ret[0], 'utf8'); // writes the yml file
     process.exit()

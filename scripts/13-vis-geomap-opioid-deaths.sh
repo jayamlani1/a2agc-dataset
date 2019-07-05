@@ -11,4 +11,4 @@ PRAGMA foreign_keys = ON;
 .quit
 EOF
 
-npm run ts-node src/create-vis-geomap-opioid-deaths-project.ts ${OUT}/site-data/vis-geomap-opioid-deaths.csv ${OUT}/site-data/ ${BASE_URL}/data/
+npm run ts-node src/create-vis-geomap-opioid-deaths-project.ts ${OUT}/site-data/vis-geomap-opioid-deaths.csv ${OUT}/site-data/ ../data/

@@ -85,3 +85,10 @@ INSERT INTO locations
     NULL,
     NULL
   FROM ems_incidents;
+
+-- Ensure no duplicates
+DELETE FROM locations
+  WHERE _rowid_ NOT IN (
+    SELECT MIN(_rowid_) FROM locations
+      GROUP BY address, city, county, zip, state
+  );
