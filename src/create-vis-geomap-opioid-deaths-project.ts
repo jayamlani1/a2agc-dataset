@@ -57,6 +57,12 @@ async function read(inData: string, baseRef: string) {
                         graphicVariableType: 'shape',
                         graphicVariableId: 'shape'
                     },
+                    transparency: {
+                        recordSet: 'csvData1',
+                        dataVariable: 'Fixed',
+                        graphicVariableType: 'transparency',
+                        graphicVariableId: 'transparency'
+                    },
                     strokeColor: {
                         recordSet: 'csvData1',
                         dataVariable: 'HOME_STATE',
