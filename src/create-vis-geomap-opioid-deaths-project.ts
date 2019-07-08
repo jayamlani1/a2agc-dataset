@@ -2,7 +2,7 @@ import { ProjectSerializer, DefaultGraphicSymbol, DefaultRawData } from '@dvl-fw
 import { readFileSync, writeFileSync } from 'fs';
 import { basename } from 'path';
 
-async function read(inData: string, baseRef: string) {
+async function read(inData: string, baseRef: string, externalizeData = false) {
     try {
         const fileContents = readFileSync(inData, 'utf8');
         const fileName = basename(inData);
@@ -132,14 +132,18 @@ async function read(inData: string, baseRef: string) {
             }, project)
         )
 
-        // adds a `RawData` object with its `url` set to the path of the `csv` to the `rawData` attribute of the `Project` object.
+        // Either embeds the csv content or a url to the csv content
+        // embedding the data allows it to run in MaV without a complex setup,
+        // but the tradeoff is a larger yml file.
         const rawDataId = 'csvData1';
         const rawData = new DefaultRawData({
-            id: rawDataId, template: 'csv', url: baseRef + fileName
+            id: rawDataId, template: 'csv', 
+            url: externalizeData ? baseRef + fileName : undefined,
+            data: externalizeData ? undefined : fileContents
         });
         project.rawData[0] = rawData;
         project.dataSources[0].properties.rawData = rawDataId; // assigns the right rawDataId to the dataSources
-
+ 
         // makes a yaml string
         const yamlString = await ProjectSerializer.toYAML(project);
         return [yamlString, fileName.split('.').slice(0, -1).join('.')];
