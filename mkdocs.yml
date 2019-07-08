@@ -40,6 +40,13 @@ nav:
 
 plugins:
   - search
+  - macros
+
+# Module defining additional variables/macros for jinja2 processing
+python_module: mkdocs_macros_extras
+
+extra:
+  source_prefix: 'https://github.com/cns-iu/a2agc-dataset/blob/develop/'
 
   # MkPDFs doesn't work with readthedocs theme and
   # the generated schema html. So for now, we'll
