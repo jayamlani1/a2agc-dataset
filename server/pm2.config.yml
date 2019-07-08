@@ -1,0 +1,10 @@
+apps:
+  - script: ./server.js
+    name: a2agc
+    watch: true
+    exec_mode: fork
+    cwd: /projects/web/node/a2agc
+    env:
+      NODE_ENV: development
+    env_production:
+      NODE_ENV: production
