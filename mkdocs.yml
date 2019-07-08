@@ -14,6 +14,7 @@ nav:
   - About: index.md
   - Dataset:
     - Overview: dataset/index.md
+    - Change Log: CHANGELOG.md
     - Data Access Requirements: dataset/access.md
     - '&#x1F517; Schema Browser': schema/index.html
     - ER Diagram: schema/relationships.html

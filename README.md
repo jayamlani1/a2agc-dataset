@@ -2,6 +2,10 @@
 
 Scripts for compiling, validating, and documenting the A2AGC Dataset.
 
+## Change Log
+
+See [CHANGELOG](docs/CHANGELOG.md)
+
 ## Base Requirements
 
 * bash
