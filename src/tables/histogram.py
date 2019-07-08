@@ -26,18 +26,24 @@ def _write_rows(file: str, rows: t.List[t.Tuple[t.Any]]) -> None:
 
 def create(
     database: sqlite3.Connection, table: str, column: str,
-    data_dir: str, site_data_dir: str
+    data_dir: str, site_data_dir: str, is_temporal = False
 ) -> altair.Chart:
     filename = f'{ table }-{ column }.csv'
     data_path = pathlib.Path(data_dir) / 'histogram-data' / filename
     site_data_path = pathlib.Path(site_data_dir) / 'histogram-data' / filename
+
+    xargs = { 'type': 'quantitative' }
+    if is_temporal:
+        xargs['type'] = 'temporal'
+        xargs['timeUnit'] = 'year'
+
 
     rows = _get_rows(database, table, column)
     data_path.parent.mkdir(parents=True, exist_ok=True)
     _write_rows(str(data_path), rows)
 
     bars = altair.Chart(str(site_data_path), width=300, height=300).mark_bar().encode(
-        altair.X('x:Q', bin=True, axis=altair.Axis(title=column, labelAngle=0)),
+        altair.X('x', bin=True, axis=altair.Axis(title=column, labelAngle=0), **xargs),
         y='count()'
     )
 

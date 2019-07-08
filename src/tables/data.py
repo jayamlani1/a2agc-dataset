@@ -1,4 +1,5 @@
 import argparse
+import collections
 import sqlite3
 import sys
 import typing as t
@@ -32,6 +33,21 @@ Table = te.TypedDict('Table', {
 Data = t.Mapping[str, Table]
 
 
+# Setup yaml ordered dict load/dump
+_mapping_tag = yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG
+
+def dict_representer(dumper, data):
+    return dumper.represent_dict(data.items())
+
+def dict_constructor(loader, node):
+    return OrderedDict(loader.construct_pairs(node))
+
+yaml.Dumper.add_representer(collections.OrderedDict, dict_representer)
+yaml.Loader.add_constructor(_mapping_tag, dict_constructor)
+
+# yaml.Dumper.add_representer(str, yaml.representer.SafeRepresenter.represent_str)
+
+
 # Load/Save
 
 def loadf(file: t.TextIO) -> Data:
@@ -50,6 +66,12 @@ def save(file: str, data: Data) -> None:
 
 
 # Generate chart data
+
+def _is_likely_date_column(column: str, type_: str) -> bool:
+    column = column.lower()
+    if type_ == 'date' or column in ['year', 'yob', 'yod']:
+        return True
+    return False
 
 def _ensure_boolean_has_both(pairs: bar_chart.CountPairs) -> bar_chart.CountPairs:
     if len(pairs) == 1:
@@ -84,7 +106,8 @@ def _generate_chart(
         obj = bar_chart.create(database, table, column, name_map, transform)
         chart = obj.to_json()
     elif dist_type == infer_dist.HISTOGRAM:
-        obj = histogram.create(database, table, column, data_dir, site_data_dir)
+        is_date = _is_likely_date_column(column, type_)
+        obj = histogram.create(database, table, column, data_dir, site_data_dir, is_date)
         chart = obj.to_json()
     elif dist_type == infer_dist.SUMMARY:
         chart = summary.create(database, table, column)
@@ -152,7 +175,7 @@ def _generate_table(
     data_dir: str, site_data_dir: str
 ) -> Table:
     name, count, remarks = schema.get_attributes(table, 'name', 'numRows', 'remarks')
-    columns = {}
+    columns = collections.OrderedDict()
     for node in schema.get_columns(table):
         column = _generate_column(database, table, node, data_dir, site_data_dir)
         columns[column['name']] = column
