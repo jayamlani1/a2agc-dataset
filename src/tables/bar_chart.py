@@ -32,7 +32,8 @@ def _get_counts(database: sqlite3.Connection, table: str, column: str) -> CountP
     total = int(total_row[0])
     missing = total - sum(map(lambda o: o[1], counts))
 
-    counts.append(('Unknown/Missing', missing))
+    if missing > 0:
+        counts.append(('Unknown/Missing', missing))
     return counts
 
 
@@ -46,19 +47,28 @@ def _rename(pairs: CountPairs, name_map: t.Mapping[str, str]) -> CountPairs:
 
 def create(
     database: sqlite3.Connection, table: str, column: str,
-    name_map: t.Mapping[str, str] = {},
-    transform: t.Optional[t.Callable[[CountPairs], CountPairs]] = None
+    name_map: t.Mapping[str, str] = None,
+    transform: t.Optional[t.Callable[[CountPairs], CountPairs]] = None,
+    orientation = 'vertical'
 ) -> altair.Chart:
     count_pairs = _get_counts(database, table, column)
     transformed_pairs = transform(count_pairs) if transform else count_pairs
-    named_pairs = _rename(transformed_pairs, name_map)
-    sorted_pairs = sorted(named_pairs[:-1]) + [named_pairs[-1]]
+    named_pairs = _rename(transformed_pairs, name_map) if name_map else transformed_pairs
+    sorted_pairs = sorted(named_pairs)
     names, counts = zip(*sorted_pairs) # Unzip
     data = pandas.DataFrame({ 'x': list(names), 'y': list(counts) })
 
-    bars = altair.Chart(data, width=300, height=300).mark_bar().encode(
-        altair.X('x', axis=altair.Axis(title=column, labelAngle=0)),
-        altair.Y('y', axis=altair.Axis(title='Count'))
+    width = 300
+    height = 300
+    x = { 'source': 'x', 'title': column }
+    y = { 'source': 'y', 'title': 'Count' }
+    if orientation == 'horizontal':
+        height = height + 8 * len(sorted_pairs)
+        x, y = y, x
+
+    bars = altair.Chart(data, width=width, height=height).mark_bar().encode(
+        altair.X(x['source'], axis=altair.Axis(title=x['title'], labelAngle=0)),
+        altair.Y(y['source'], axis=altair.Axis(title=y['title']))
     )
 
     text = bars.transform_joinaggregate(
@@ -73,7 +83,7 @@ def create(
        altair.Text('percentage:Q', format='.1%')
     )
 
-    chart = bars + text
+    chart = bars + text if orientation == 'vertical' else bars
     return chart
 
 

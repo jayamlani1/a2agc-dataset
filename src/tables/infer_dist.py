@@ -6,6 +6,7 @@ import sqlite3
 import yaml
 
 from a2agc import schema
+import summary
 
 # Types
 
@@ -16,6 +17,7 @@ Override = t.Mapping[str, t.Mapping[str, str]]
 
 DISABLED = 'disabled'
 BAR_CHART = 'bar-chart'
+HORIZONTAL_BAR_CHART = 'horizontal-bar-chart'
 HISTOGRAM = 'histogram'
 SUMMARY = 'summary'
 UNKNOWN = 'unknown'
@@ -65,6 +67,9 @@ def _is_var_char(type_: str) -> bool:
 def _is_text(type_: str) -> bool:
     return type_ == 'text'
 
+def _is_characters(type_: str) -> bool:
+    return _is_fixed_char(type_) or _is_var_char(type_) or _is_text(type_)
+
 def _is_date(type_: str) -> bool:
     return type_ == 'date'
 
@@ -73,6 +78,9 @@ def _is_int(type_: str) -> bool:
 
 def _is_real(type_: str) -> bool:
     return type_ == 'real'
+
+def _is_numeric(type_: str) -> bool:
+    return _is_int(type_) or _is_real(type_)
 
 
 # Infer distribution type
@@ -84,28 +92,16 @@ def infer(database: sqlite3.Connection, table: schema.Node, column: schema.Node)
         return UNKNOWN
     type_ = type_.lower()
 
-    if _is_boolean(type_):
+    if _is_boolean(type_) or _is_single_char(type_):
         return BAR_CHART
 
-    if _is_single_char(type_):
-        return BAR_CHART
-
-    if _is_fixed_char(type_):
+    if _is_characters(type_):
+        col_summary = summary.get_summary(database, schema.get_name(table), schema.get_name(column))
+        if col_summary['distinct'] <= 100 and col_summary['max'] <= 100:
+            return HORIZONTAL_BAR_CHART
         return SUMMARY
 
-    if _is_var_char(type_):
-        return SUMMARY
-
-    if _is_text(type_):
-        return SUMMARY
-
-    if _is_date(type_):
-        return HISTOGRAM
-
-    if _is_int(type_):
-        return HISTOGRAM
-
-    if _is_real(type_):
+    if _is_date(type_) or _is_numeric(type_):
         return HISTOGRAM
 
     return SUMMARY

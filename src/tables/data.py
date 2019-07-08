@@ -105,6 +105,9 @@ def _generate_chart(
     if dist_type == infer_dist.BAR_CHART:
         obj = bar_chart.create(database, table, column, name_map, transform)
         chart = obj.to_json()
+    elif dist_type == infer_dist.HORIZONTAL_BAR_CHART:
+        obj = bar_chart.create(database, table, column, orientation='horizontal')
+        chart = obj.to_json()
     elif dist_type == infer_dist.HISTOGRAM:
         is_date = _is_likely_date_column(column, type_)
         obj = histogram.create(database, table, column, data_dir, site_data_dir, is_date)

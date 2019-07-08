@@ -17,7 +17,7 @@ Summary = te.TypedDict('Summary', {
 
 
 # Data extraction
-def _get_summary(database: sqlite3.Connection, table: str, column: str) -> Summary:
+def get_summary(database: sqlite3.Connection, table: str, column: str) -> Summary:
     distinct_query = f'''
         SELECT count(DISTINCT "{ column }") FROM "{ table }";
     '''
@@ -50,7 +50,7 @@ def _get_summary(database: sqlite3.Connection, table: str, column: str) -> Summa
 # Summary generation
 
 def create(database: sqlite3.Connection, table: str, column: str) -> Summary:
-    return _get_summary(database, table, column)
+    return get_summary(database, table, column)
 
 
 # Script functionality
