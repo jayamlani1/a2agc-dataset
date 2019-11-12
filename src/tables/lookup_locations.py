@@ -46,7 +46,7 @@ def _get_single_location(address: str, max_wait: int) -> t.Optional[t.Any]:
     return None
 
 def _get_locations(
-  addresses: t.Iterator[str], max_wait: int
+  addresses: t.Iterable[str], max_wait: int
 ) -> t.Iterator[t.Optional[t.Any]]:
   try:
     for address in addresses:
@@ -59,15 +59,15 @@ def _get_locations(
 
 # Database updating
 
-def _format_address(segments: t.Iterator[t.Optional[str]]) -> str:
+def _format_address(segments: t.Iterable[t.Optional[str]]) -> str:
   address, city, county, state, zipcode = segments
-  required = list(filter(lambda seg: seg, (address, city, county, state)))
+  required = t.cast(t.List[str], list(filter(lambda seg: seg, (address, city, county, state))))
   if len(required):
     return '{} {}'.format(', '.join(required), zipcode).strip(', ') \
       .replace('#', '%23').replace('/', '%2F').replace(',', '%2C') # URL Encode some common address characterisitcs which can make geocoders unhappy.
   return ''
 
-def _get_addresses(database: sqlite3.Connection) -> t.Iterator[t.Tuple[int, str]]:
+def _get_addresses(database: sqlite3.Connection) -> t.Iterable[t.Tuple[int, str]]:
   query = '''
     SELECT _rowid_, address, city, county, state, zip FROM locations WHERE latitude IS NULL;
   '''
@@ -77,7 +77,7 @@ def _get_addresses(database: sqlite3.Connection) -> t.Iterator[t.Tuple[int, str]
     if address:
       yield (row[0], address)
 
-def _update_table(database: sqlite3.Connection, values: t.Iterator[t.Tuple[int, t.Any]]) -> None:
+def _update_table(database: sqlite3.Connection, values: t.Iterable[t.Tuple[int, t.Any]]) -> None:
   query = '''
     UPDATE locations
       SET (normalized, latitude, longitude) = (?,?,?) WHERE _rowid_ = ?;

@@ -122,6 +122,7 @@ if __name__ == '__main__':
     namespace = parser.parse_args()
     type_ = get_override(namespace.overrides, namespace.table, namespace.column)
     if not type_:
-        node = schema.get_column(namespace.schema, namespace.table, namespace.column)
-        type_ = infer(namespace.database, node) if node else UNKNOWN
+        table = schema.get_table(namespace.schema, namespace.table)
+        column = schema.get_column(namespace.schema, namespace.table, namespace.column)
+        type_ = infer(namespace.database, table, column) if table and column else UNKNOWN
     print(type_)
