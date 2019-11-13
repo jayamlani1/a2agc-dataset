@@ -41,9 +41,9 @@ def get_summary(database: sqlite3.Connection, table: str, column: str) -> Summar
     max_value = database.execute(max_query).fetchone()[0]
 
     return {
-        'distinct': distinct,
-        'min': min_value,
-        'max': max_value
+        'distinct': distinct or 0,
+        'min': min_value or 0,
+        'max': max_value or 0
     }
 
 
