@@ -178,7 +178,7 @@ def _generate_table(
     data_dir: str, site_data_dir: str
 ) -> Table:
     name, count, remarks = schema.get_attributes(table, 'name', 'numRows', 'remarks')
-    columns = collections.OrderedDict()
+    columns: t.Dict[str, Column] = collections.OrderedDict()
     for node in schema.get_columns(table):
         column = _generate_column(database, table, node, data_dir, site_data_dir)
         columns[column['name']] = column
