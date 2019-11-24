@@ -2,13 +2,17 @@
 source constants.sh
 set -ev
 
-mkdir ${OUT}/site-data/vis1-data -p
-touch ${OUT}/site-data/vis1-data/deaths.csv -c
+SRC_DIR=./src/visualization1
+OUT_DIR=${OUT}/site-data/vis1-data
+
+mkdir -p ${OUT_DIR}
 
 sqlite3 $DB << EOF
 .headers on
 .mode csv
-.output ${OUT}/site-data/vis1-data/deaths.csv
-.read src/visualization1/extract-data.sql
+.output ${OUT_DIR}/death-counts.csv
+.read ${SRC_DIR}/extract_data.sql
 .quit
 EOF
+
+python3 ${SRC_DIR}/census_data.py ${SRC_DIR}/census-data -o ${OUT_DIR}/census-counts.csv
