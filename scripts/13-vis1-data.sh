@@ -4,6 +4,7 @@ set -ev
 
 SRC_DIR=./src/visualization1
 OUT_DIR=${OUT}/site-data/vis1-data
+SITE_DATA_DIR=../data/vis1-data
 
 mkdir -p ${OUT_DIR}
 
@@ -16,3 +17,5 @@ sqlite3 $DB << EOF
 EOF
 
 python3 ${SRC_DIR}/census_data.py ${SRC_DIR}/census-data -o ${OUT_DIR}/census-counts.csv
+
+python3 ${SRC_DIR}/chart.py ${SITE_DATA_DIR}/death-counts.csv ${SITE_DATA_DIR}/census-counts.csv --fill1 gray --fill2 dimgray -o ${OUT_DIR}/full-vis.json

@@ -38,6 +38,7 @@ nav:
     - Getting Started: examples/getting_started.md
     - Geographic Map of Opioid Deaths: examples/vis-geomap-opioid-deaths.md
     - '# Opioid Prescriptions and Death Correlation': examples/n-opioid-death/index.md
+    - Bar Graph of Opioid Deaths: examples/visualization1.md
 
 plugins:
   - search
