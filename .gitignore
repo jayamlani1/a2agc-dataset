@@ -133,3 +133,6 @@ env.sh
 
 # Node module dependencies
 node_modules
+
+# Visual Studio Code
+.vscode
