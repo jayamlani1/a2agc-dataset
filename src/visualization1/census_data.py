@@ -132,9 +132,9 @@ def process_raw_data(entries: t.Iterable[RawEntry], year = -1) -> t.List[Entry]:
       count = count / 100 * total
 
     result.append({
-      'year': year,
+      'year': 2000 + year,
       'gender': gender,
-      'age_group': age_group,
+      'age_group': 17 - age_group,
       'count': round(count)
     })
 

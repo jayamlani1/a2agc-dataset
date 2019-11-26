@@ -1,10 +1,13 @@
 import argparse
+import csv
+import io
 import typing as t
 
 import altair as alt # type: ignore
 
 # Types
 
+T = t.TypeVar('T')
 _Options = t.Mapping[str, t.Any]
 
 # Utilities
@@ -23,7 +26,10 @@ def _get_stroked(color: str, width: float) -> _Options:
 
 # Chart generation
 
-def _get_base(data: t.Any, start_year: int , end_year: int) -> alt.Chart:
+def _get_base(
+  data: t.Any, start_year: int , end_year: int,
+  width: int, height: int
+) -> alt.Chart:
   base = alt.Chart(data)
   if start_year >= 0:
     base = base.transform_filter(alt.datum.year >= start_year)
@@ -39,22 +45,24 @@ def _get_base(data: t.Any, start_year: int , end_year: int) -> alt.Chart:
   ).transform_calculate(
     percentage='datum.count / datum.total'
   ).properties(
-    width=250
+    width=(width - 30) // 2,
+    height=height
   )
 
 def _create_stacked_chart(
-  filled_base: alt.Chart, stroked_base: alt.Chart,
-  gender: str, fill: str, stroke: str,
-  stroke_width: float
+  filled_base: alt.Chart, stroked_base: alt.Chart, gender: str,
+  fill: str, stroke: str, stroke_width: float,
+  domain: float = None,
+  show_xlabels: bool = True, show_title: bool = True
 ) -> alt.Chart:
   x = alt.X(
     'percentage:Q', title=None,
     sort='ascending' if gender == 'F' else 'descending',
-    axis=alt.Axis(format='.1%', labelFlush=False, grid=False)
+    scale=alt.Scale(domain=[0, domain]) if domain is not None else alt.Undefined,
+    axis=alt.Axis(format='.0%', labels=show_xlabels, labelFlush=False, grid=False)
   )
   y = alt.Y(
-    'age_group:O', title=None, sort='descending',
-    axis=None
+    'age_group:O', title=None, axis=None
   )
 
   filled = filled_base.transform_filter(
@@ -70,40 +78,62 @@ def _create_stacked_chart(
     **_get_stroked(stroke, stroke_width)
   ).mark_bar()
 
+  if show_title:
+    title = 'Female' if gender == 'F' else 'Male'
+  else:
+    title = ''
+
   return alt.layer(
     filled, stroked
   ).resolve_scale(
     x='shared', y='shared'
   ).properties(
-    title='Female' if gender == 'F' else 'Male'
+    title=title
   )
 
 def _create_labels(base: alt.Chart) -> alt.Chart:
   return base.transform_calculate(
-    label='toString(5 * datum.age_group) + "-" + toString(5 * datum.age_group + 4)'
+    age_low='5 * (17 - datum.age_group)'
+  ).transform_calculate(
+    label='if(datum.age_low == 85, "85+", toString(datum.age_low) + "-" + toString(datum.age_low + 4))'
   ).encode(
-    y=alt.Y('age_group:O', sort='descending', axis=None),
+    y=alt.Y('age_group:O', axis=None),
     text=alt.Text('label:O')
-  ).mark_text().properties(width=20)
+  ).mark_text().properties(width=30)
 
 def create(
-  source1: t.Any, source2: t.Any,
-  start_year: int, end_year: int,
+  *, source1: t.Any, source2: t.Any, title: str,
+  start_year1: int, end_year1: int,
+  start_year2: int, end_year2: int,
   fill1: str, stroke1: str, stroke_width1: float,
-  fill2: str, stroke2: str, stroke_width2: float
+  fill2: str, stroke2: str, stroke_width2: float,
+  width: int, height: int, domain: float = None,
+  show_xlabels: bool = True, show_ylabels: bool = True,
+  show_subtitles: bool = True
 ) -> alt.Chart:
-  base1 = _get_base(source1, start_year, end_year)
-  base2 = _get_base(source2, start_year, end_year)
-  left = _create_stacked_chart(base1, base2, 'M', fill1, stroke1, stroke_width1)
-  right = _create_stacked_chart(base1, base2, 'F', fill2, stroke2, stroke_width2)
+  base1 = _get_base(source1, start_year1, end_year1, width, height)
+  base2 = _get_base(source2, start_year2, end_year2, width, height)
+  left = _create_stacked_chart(
+    base1, base2, 'M',
+    fill1, stroke1, stroke_width1,
+    domain, show_xlabels, show_subtitles
+  )
+  right = _create_stacked_chart(
+    base1, base2, 'F',
+    fill2, stroke2, stroke_width2,
+    domain, show_xlabels, show_subtitles
+  )
   labels = _create_labels(base2)
 
   return alt.hconcat(
-    labels, left, right, spacing=0, bounds='flush'
+    *((labels,) if show_ylabels else ()), left, right,
+    spacing=0, bounds='flush',
+    title=alt.TitleParams(
+      text=title, anchor='middle',
+      dx=15 if show_ylabels else 0
+    )
   ).resolve_scale(
     y='shared'
-  ).configure_view(
-    stroke='transparent'
   )
 
 # Script functionality
@@ -113,37 +143,76 @@ def setup_cmd_parser(parser: argparse.ArgumentParser = None) -> argparse.Argumen
     parser = argparse.ArgumentParser(description='Create visualization 1 charts')
   parser.add_argument('source1', help='data source 1')
   parser.add_argument('source2', help='data source 2')
-  parser.add_argument('--start-year', type=int, default=-1, help='start year of visualized data (inclusive)')
-  parser.add_argument('--end-year', type=int, default=-1, help='end year of visualized data (inclusive)')
-  parser.add_argument('--fill', default='grey', help='fill color for both sides of the chart')
-  parser.add_argument('--fill1', help='fill color for the left side of the chart (overrides --fill)')
-  parser.add_argument('--fill2', help='fill color for the right side of the chart (overrides --fill)')
-  parser.add_argument('--stroke', default='black', help='stroke color for both sides of the chart')
-  parser.add_argument('--stroke1', help='stroke color for the left side of the chart (overrides --stroke)')
-  parser.add_argument('--stroke2', help='stroke color for the right side of the chart (overrides --stroke)')
-  parser.add_argument('--stroke-width', type=float, default=2, help='stroke width for both sides of the chart')
-  parser.add_argument('--stroke-width1', type=float, help='stroke width for the left side of the chart (overrides --stroke-width)')
-  parser.add_argument('--stroke-width2', type=float, help='stroke width for the right side of the chart (overrides --stroke-width)')
+  parser.add_argument('args', type=argparse.FileType('rb'), help='visualization customization arguments')
+  parser.add_argument('--width', type=int, default=530, help='max width per visualization')
+  parser.add_argument('--height', type=int, default=400, help='max height per visualization')
+  parser.add_argument('--domain', type=float, help='max value for the domain')
   parser.add_argument('--output', '-o', type=argparse.FileType('w'), default='-', help='output file for the vega-lite spec')
 
   return parser
 
-if __name__ == '__main__':
-  ns = setup_cmd_parser().parse_args()
-  with ns.output as outfile:
-    data_format = alt.CsvDataFormat(parse={ 'year': 'number', 'age_group': 'number', 'count': 'number' })
-    fill1 = ns.fill1 or ns.fill
-    stroke1 = ns.stroke1 or ns.stroke
-    stroke_width1 = ns.stroke_width1 or ns.stroke_width
-    fill2 = ns.fill2 or ns.fill
-    stroke2 = ns.stroke2 or ns.stroke
-    stroke_width2 = ns.stroke_width2 or ns.stroke_width
-    spec = create(
-      alt.UrlData(ns.source1, data_format),
-      alt.UrlData(ns.source2, data_format),
-      ns.start_year, ns.end_year,
-      fill1, stroke1, stroke_width1,
-      fill2, stroke2, stroke_width2
-    )
+def _get_arg_value(
+  args: t.Sequence[t.Mapping[str, t.Optional[str]]], name: str, index: int,
+  default: T = None, cast: t.Callable[[str], T] = None
+) -> t.Union[str, T, None]:
+  while index >= 0:
+    arg = args[index].get(name)
+    if arg:
+      return cast(arg) if cast else arg
+    index -= 1
+  return default
 
-    outfile.write(spec.to_json())
+def _get_create_args(args: t.Sequence[t.Mapping[str, t.Optional[str]]], index: int) -> t.Dict[str, t.Any]:
+  arg_spec: t.Iterable[t.Tuple[str, t.Any, t.Any]] = [
+    ('title', '', None),
+    ('start_year1', -1, int),
+    ('end_year1', -1, int),
+    ('start_year2', -1, int),
+    ('end_year2', -1, int),
+    ('fill1', 'gray', None),
+    ('stroke1', 'black', None),
+    ('stroke_width1', 2, float),
+    ('fill2', 'gray', None),
+    ('stroke2', 'black', None),
+    ('stroke_width2', 2, float)
+  ]
+
+  return { name: _get_arg_value(args, name, index, default, cast) for name, default, cast in arg_spec }
+
+if __name__ == '__main__':
+  NCOLUMNS = 3
+
+  ns = setup_cmd_parser().parse_args()
+  data_format = alt.CsvDataFormat(parse={ 'year': 'number', 'age_group': 'number', 'count': 'number' })
+  sources = { 'source1': alt.UrlData(ns.source1, data_format), 'source2': alt.UrlData(ns.source2, data_format) }
+
+  with ns.args as rawfile, io.TextIOWrapper(rawfile, newline='') as argsfile:
+    reader = csv.DictReader(argsfile)
+    args = [row for row in reader]
+
+  charts: t.List[alt.Chart] = []
+  for index in range(len(args)):
+    show_xlabels = len(args) - index <= NCOLUMNS
+    show_ylabels = index % NCOLUMNS == 0
+    show_subtitles = index < NCOLUMNS
+
+    charts.append(create( # type: ignore[call-arg]
+      width=ns.width, height=ns.height,
+      domain=ns.domain,
+      show_xlabels=show_xlabels,
+      show_ylabels=show_ylabels,
+      show_subtitles=show_subtitles,
+      **sources, **_get_create_args(args, index)
+    ))
+
+  if len(charts) > 1:
+    chart = alt.concat(
+      *charts, columns=NCOLUMNS, spacing=5
+    ).configure_view(
+      stroke='transparent'
+    )
+  else:
+    chart = charts[0].configure_view(stroke='transparent')
+
+  with ns.output as outfile:
+    outfile.write(chart.to_json())
