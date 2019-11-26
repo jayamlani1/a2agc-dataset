@@ -8,24 +8,13 @@ import typing as t
 # List of substance for which the heatmaps should be generated. Each substance will have one row in the visualization.
 substances = [
     'ALL_SUBSTANCES',
-    'FENTANYL',
+    'HEROIN',
     'COCAINE',
-    'MORPHINE',
-    'CODEINE',
-    'NORFENTANYL',
-    'FENTANYL_ACETYL',
-    'FENTANYL_4ANPP',
-    'FURANYL_FENANTYL',
-    'FIBF_FENTANYL',
-    'CARFENTANYL',
-    'OXYCODONE',
-    'HYDROCODONE',
-    'OXYMORPHONE',
-    'HYDROMORPHONE',
-    'DIHYDROCODEINE',
-    'BENZOYLECGONINE',
-    'METHADONE',
-    'AMPHETAMINE',
+    'FENTANYL',
+    'ILLICIT_OPIOID',
+    'PRESCRIPTION_OPIOID',
+    # 'OPIOID',
+    # 'BENZODIAZEPINE',
     'METHAMPHETAMINE'
 ]
 
@@ -42,7 +31,7 @@ column_width = 170
 column_height = 170
 
 # Column names for the data that is extracted from db and assigned to the pandas data frame. 
-columns = ['case_number', 'sex', 'substance_name', 'substance_amount', 'age_group', 'date_of_death', 'year']
+columns = ['case_number', 'sex', 'substance_name', 'age_group', 'date_of_death',  'count_of_deaths', 'year',]
 
 # This function is used to format the date so that we can group by "month-year"
 def _get_year_month(date: str):
@@ -59,15 +48,28 @@ def _get_heatmap(data_frame, substance = "", sex = "") -> alt.Chart:
         data_frame,
         # Heatmap title format eg: COCAINE - Male
         title=f"{substance} - {sex}" if sex else f"{substance}",
+        ).transform_aggregate(
+            total_count = 'max(total_rows)',
+            sum_acc='count():Q',
+            groupby=["age_group", "year"]
         ).transform_calculate(
             # Transforming the group number to group range. eg: if group number is 2 it's group range should be (5-9)
-            group=f'toString(5 * datum.age_group) + "-" + toString({age_group_range} * datum.age_group + {age_group_range - 1})'
+            group=f'toString(5 * datum.age_group) + "-" + toString({age_group_range} * datum.age_group + {age_group_range - 1})',
+            average= 'datum.sum_acc / datum.total_count',
+            total = 'datum.total_count',
+            deaths_in_age_group_in_year = 'datum.sum_acc'
         ).mark_rect().encode(
-            alt.X('yearmonth(year_month_of_death):N', title=''),
+            alt.X('year:O', title=''),
             # Only displaying title and labels for the first column
             alt.Y('group:O', title='Age Group' if _is_first_column(sex) else '', axis=alt.Axis(labels=_is_first_column(sex))),
-            color=f'{color_coding_label}:Q',
-            tooltip= [alt.Tooltip(f'{color_coding_label}:O', format=".2f", formatType='number', title='Amount'), alt.Tooltip('group:O', title='Age Group')],
+            color=alt.Color('average:Q'),
+            tooltip= [
+                alt.Tooltip('deaths_in_age_group_in_year:O', title='Death Count'),
+                alt.Tooltip('average:O', title='Average Death Count'),
+                alt.Tooltip('total:O', title='Total Death Count'),
+                alt.Tooltip('group:O', title='Age Group'),
+                alt.Tooltip('year:O', title='Year')
+            ],
         ).properties(
             width= column_width,
             height = column_height
@@ -88,19 +90,19 @@ def _draw_heatmap_by_substance_name(df, substance_name: str) -> t.List[alt.Chart
     df_by_substance_name = df.query(f'substance_name == "{substance_name}"') if substance_name != 'ALL_SUBSTANCES' else df
     # Sharing the y axis with other columns in visualization
     heat_maps = alt.hconcat().resolve_scale(y='shared')
-
-    # Grouping data by age group and month-year of death
-    groups = df_by_substance_name.groupby(['age_group', 'year_month_of_death'])
-    # Calculating mean of substance amount
-    all_data = groups['substance_amount'].mean().reset_index(name=color_coding_label)
+    
+    all_data = df_by_substance_name
+    all_data['total_rows'] = np.array(len(all_data))
     heat_maps |=  _get_heatmap(all_data, substance_name)
   
-    groups = df_by_substance_name.query('sex == "M"').groupby(['age_group', 'year_month_of_death'])
-    male_data = groups['substance_amount'].mean().reset_index(name=color_coding_label)
+    male_data = df_by_substance_name.query('sex == "M"')
+    # print(male_data)
+    male_data['total_rows'] = np.array(len(male_data))
+    # print(male_data)
     heat_maps |=  _get_heatmap(male_data, substance_name, "Male")
 
-    groups = df_by_substance_name.query('sex == "F"').groupby(['age_group', 'year_month_of_death'])
-    female_data = groups['substance_amount'].mean().reset_index(name=color_coding_label)
+    female_data = df_by_substance_name.query('sex == "F"')
+    female_data['total_rows'] =  np.array(len(female_data))
     heat_maps |= _get_heatmap(female_data, substance_name, "Female")
     
     return heat_maps
@@ -109,14 +111,16 @@ def _generate_heatmaps(data_frame, output: str) -> None:
 
     # Independent legend for each row.
     vis_rows = alt.vconcat().resolve_scale(color='independent')
+    # vis_rows = alt.vconcat()
+
 
     # Getting heatmap row for each substance
     for substance in substances:
         vis_rows &= _draw_heatmap_by_substance_name(data_frame, substance)
 
-    vis_rows.save("site/examples/temp-4.html")
+    vis_rows.save("site/examples/temp-4a.html")
     # Saving the visualization
-    with open(f"{output}/site-data/visualization4/output.json", "w+") as f:
+    with open(f"{output}/site-data/visualization4a/output.json", "w+") as f:
         f.write(vis_rows.to_json())
 
 # Extract data from the database
@@ -129,21 +133,20 @@ def _get_data(database: sqlite3.Connection, output: str):
                     CASE_NUMBER,
                     SEX,
                     '{substance}' AS SUBSTANCE_NAME,
-                    {substance + "_AMOUNT"} AS SUBSTANCE_AMOUNT,
                     CAST((AGE / {age_group_range}) AS INT) AS AGE_GROUP,
                     DOD as DATE_OF_DEATH,
+                    '1' AS COUNT_OF_DEATHS,
                     YEAR
                 FROM deaths
-                WHERE {substance + "_AMOUNT"} !=0'''
+                WHERE {"ANY_" + substance} == 1'''
 
         data = database.execute(query).fetchall()
         current_df = pd.DataFrame(data, columns= columns)
         df = df.append(current_df)
 
-    df['year_month_of_death'] = df['date_of_death'].apply(lambda x: _get_year_month(x)).astype('datetime64')
-    df.to_csv(f'{output}/site-data/visualization4/visualization4.csv')
+    df.to_csv(f'{output}/site-data/visualization4a/visualization4a.csv')
     
-    return df[['sex', 'substance_name', 'substance_amount','age_group','year_month_of_death']]
+    return df[['sex', 'substance_name','age_group', 'count_of_deaths', 'year']]
 
 def _create_command_line_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description='Create visualization 4 heatmaps')
