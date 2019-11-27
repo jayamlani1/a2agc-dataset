@@ -2,6 +2,17 @@
 
 Changelog for A2AGC.
 
+## 0.2.0 - 2019-11-27
+
+### Added in 0.2.0
+
+- Added three new visualizations:
+    - Demographic Comparison of Opioid Deaths
+    - Heatmaps of Deaths with Substance
+    - Heatmaps of Substance Proportions at Death
+- Removed incomplete content
+- Cleaned up navigation menu
+
 ## 0.1.0 - 2019-07-08
 
 ### Added in 0.1.0
