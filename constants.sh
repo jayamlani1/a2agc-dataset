@@ -7,12 +7,12 @@ export MYPYPATH=$PYTHONPATH
 export GPG_TTY=$(tty)
 
 ORIG=./raw-data/original
-OUT=./raw-data/derived/2019-05-31
+OUT=./raw-data/derived/2019-11-27
 mkdir -p $ORIG $OUT/site-data
 
 DB=$OUT/a2agc.db
 EDB=$OUT/a2agc.db.e
-DATA_SOURCES="$ORIG/box-health/Final Datasets"
+DATA_SOURCES="$ORIG/box-health/[Box Health] Final Datasets"
 
 SCHEMA_DIR=./docs/schema
 SCHEMA_NAME=A2AGC

@@ -20,8 +20,8 @@
 </script>
 {% elif column.dist_type == 'summary' %}
 * Distinct entries - {{ column.dist_data.distinct }}
-* Minimun value/length - {{ column.dist_data.min }}
-* Maximun value/length - {{ column.dist_data.max }}
+* Minimum value/length - {{ column.dist_data.min }}
+* Maximum value/length - {{ column.dist_data.max }}
 {% endif %}
 {% endif %}
 {% endfor %}

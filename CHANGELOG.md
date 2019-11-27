@@ -10,6 +10,7 @@ Changelog for A2AGC.
     - Demographic Comparison of Opioid Deaths
     - Heatmaps of Deaths with Substance
     - Heatmaps of Substance Proportions at Death
+- Fixed some misspellings
 - Removed incomplete content
 - Cleaned up navigation menu
 

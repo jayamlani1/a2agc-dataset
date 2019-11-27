@@ -281,7 +281,7 @@
         </table>
         <table name="diagnoses" comments="Diagnoses (Long Datasets/od_diagnosis_long.csv) -- This dataset contains any of the patient's diagnoses in the INPCR from Jan 1st 2005 until their date of death. Diagnoses are coded by ICD9 codes before Oct 1st 2015 and by ICD10 codes after that. ICD is a heirarchical system of classifying medical conditions, so descriptions of different levels of heirarchy of the codes were produced as seperate columns.">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
-            <column name="DOD" comments="Date of death from cornort data"/>
+            <column name="DOD" comments="Date of death from coroner data"/>
             <column name="CODE_SYSTEM" comments="Diagnosis code system, either ICD9 or ICD10"/>
             <column name="CODE_NAME" comments="Name of the diagnosis"/>
             <column name="PHYS_TIME" comments="Date of the diagnosis"/>
@@ -297,7 +297,7 @@
         </table>
         <table name="encounters" comments="Hospital Encounters (Long Datasets/od_encounters_long.csv) -- From the INPCR, all health care encounters record were pulled for the cohort between 2005 and date of death. Each row represents one unique encounter for a unique patient. An admit time and discharge time is associated with each encounter, as well as a care setting code. The care setting code refers to the type of encounter the patient had. This can be one of 'E', 'I', or 'O'. E is for emergency visits, I is for inpatient encounter, and O is for outpatient/ambulatory visits. It is in theory possible for a patient to have had multiple encounters with the same admit date, so encounters have been given a unique ENCOUNTER_ID to distinguish separate encounters.">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
-            <column name="DOD" comments="Date of death from cornort data"/>
+            <column name="DOD" comments="Date of death from coroner data"/>
             <column name="ENCOUNTER_ID" comments="A unique ID to distinguish encounters"/>
             <column name="ADMIT_TIME" comments="Date the patient was admitted for the encounter"/>
             <column name="DISCHARGE_TIME" comments="Date the patient was discharged from the encounter. If this is absent for 'E', and 'O' care setting codes, you can assume the patient was discharged same day as admitted"/>
@@ -305,7 +305,7 @@
         </table>
         <table name="labs" comments="Labs (Long Datasets/od_lab_long.csv) -- This dataset contains any of the patient's tox screen labs in the INPCR from Jan 1st 2005 until their date of death. Tox screens were manually selected by the study team from a list of all of the cohort's available lab values. Lab results can either be text or numeric. Lab values, like all INPCR data, comes from a variety of sources and is therefore not always in a standard coding system. However, most of the labs here do map to LOINC values. More info about LOINC here [https://loinc.org/](https://loinc.org/).">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
-            <column name="DOD" comments="Date of death from cornort data"/>
+            <column name="DOD" comments="Date of death from coroner data"/>
             <column name="LAB_NAME" comments="The name of the LAB in the INPC"/>
             <column name="PHYS_TIME" comments="The physiologic time of the lab result"/>
             <column name="CODE_VALUE" comments="The lab result value"/>
@@ -319,7 +319,7 @@
         </table>
         <table name="medications" comments="Medications Prescribed (Long Datasets/od_medication_long.csv) -- The INPCR recieves pharmacy fill data. This dataset contains all fills for the cohort between 2005 and date of death available in the INPCR. Medications are coded by NDC code, (National Drug Code). The NDC codes have been mapped to GPI codes (Generic Product Identifier, https://www.wolterskluwercdi.com/drug-data/gpi/) as a means of heirachically classifying drugs. There is a fill time associated with each drug (PHYS_TIME). Keep in mind a filled prescription doesn't neccesarily mean the patient took the medication. The study team reviewed all unique drug names and coded certain drugs of interest. Flag variables for opioids and benzo were added, as these were of special interest.">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
-            <column name="DOD" comments="Date of death from cornort data"/>
+            <column name="DOD" comments="Date of death from coroner data"/>
             <column name="PHYS_TIME" comments="Time of prescription fill"/>
             <column name="DRUG_NAME" comments="Name of drug filled"/>
             <column name="PRESCRIBER_NUMBER" comments="Prescriber NPI"/>
@@ -336,7 +336,7 @@
         </table>
         <table name="procedures" comments="Procedures done (Long Datasets/od_procedures_long.csv) -- All unique procedures were pulled for the cohort between 2005 and date of death. These procedures were then coded by the study team to be of interest or not.">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
-            <column name="DOD" comments="Date of death from cornort data"/>
+            <column name="DOD" comments="Date of death from coroner data"/>
             <column name="PHYS_TIME" comments="Time the procedure occurred"/>
             <column name="CPT4_CODE" comments="CPT4 (Current Procedure Terminology) code of procedure"/>
             <column name="CODE_NAME" comments="Name of the CPT4_CODE"/>
@@ -344,7 +344,7 @@
         </table>
         <table name="referrals" comments="Referrals (Long Datasets/od_referrals_long.csv) -- All consults were pulled for the cohort between 2005 and date of death. These referrals were then coded by the study team to be of interest or not.">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
-            <column name="DOD" comments="Date of death from cornort data"/>
+            <column name="DOD" comments="Date of death from coroner data"/>
             <column name="PHYS_TIME" comments="Time of the referral"/>
             <column name="REFERRAL_NAME" comments="The name of the referral"/>
             <column name="STUDY_TEAM_CODE_USE" comments="Set to 1 if the referral was coded by the study team to be of interest"/>
