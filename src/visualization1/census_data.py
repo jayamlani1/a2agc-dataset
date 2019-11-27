@@ -11,8 +11,8 @@ import mypy_extensions as te
 
 # Encoding description of census data
 # -----------------------------------
-# When downloaded with metadata embedded each data file consists of a set of 3 row column.
-# The first 3 column contain geographical information.
+# When downloaded with metadata embedded each data file consists of a set of 3 value columns.
+# The first 3 columns contain geographical information.
 # For the following columns the following format is used:
 # First row: Encodes the position of the cell and the type in the format:
 #   HC[row]_[type]_VC[column] where
@@ -48,8 +48,8 @@ _DATA_PATTERN = re.compile(
   '(?P<gender>Male|Female); '
   'Estimate; '
   '(Total population - )?'
-  'AGE - ('
-  'Under (?P<zero>5) years|'
+  'AGE - '
+  '(Under (?P<zero>5) years|'
   '(?P<seventeen>85) years and over|'
   '(?P<between>\d+) to \d+ years)',
   re.I
@@ -64,6 +64,19 @@ def _find_file(names: t.Iterable[str], pattern: t.Pattern) -> str:
     raise FileNotFoundError('No data file found using pattern `{}`'.format(pattern))
 
 def read_raw_data(path: pathlib.Path, pattern = _DATA_FILE_NAME_PATTERN) -> t.List[RawEntry]:
+  '''Reads census data from a zip archive.
+
+  Args:
+    path: Path to the zip archive.
+    pattern: Optional pattern used to find the data file in the archive.
+
+  Returns:
+    A list of columns where each column is represented by a 3-element tuple of strings.
+    No conversions are applied to the values.
+
+  Raises:
+    FileNotFoundError: No file matching the pattern could be found in the archive.
+  '''
   with contextlib.ExitStack() as stack:
     archive = stack.enter_context(zipfile.ZipFile(path))
     filename = _find_file(archive.namelist(), pattern)
@@ -81,6 +94,13 @@ def read_raw_data(path: pathlib.Path, pattern = _DATA_FILE_NAME_PATTERN) -> t.Li
 # Save processed data
 
 def savef_data(file: t.TextIO, data: t.Iterable[Entry], write_header = True) -> None:
+  '''Saves processed data to a file like object.
+
+  Args:
+    file: A file like object on which the data will be serialized.
+    data: A sequence of processed data objects to serialize.
+    write_header: Whether a header show be written before the data.
+  '''
   fields = ['year', 'gender', 'age_group', 'count']
   writer = csv.DictWriter(file, fields, extrasaction='ignore')
 
@@ -88,10 +108,6 @@ def savef_data(file: t.TextIO, data: t.Iterable[Entry], write_header = True) -> 
     writer.writeheader()
   for entry in data:
     writer.writerow(entry)
-
-def save_data(path: pathlib.Path, data: t.Iterable[Entry]) -> None:
-  with open(path, 'w', newline='') as file:
-    savef_data(file, data)
 
 # Process raw data
 
@@ -105,6 +121,17 @@ def _find_total(entries: t.Iterable[RawEntry], pattern: t.Pattern) -> int:
   return int(next(_find_entries(entries, pattern))[1][2])
 
 def process_raw_data(entries: t.Iterable[RawEntry], year = -1) -> t.List[Entry]:
+  '''Processes a raw data into a normalized format.
+
+  The data is processed into the same format as produced by `extract_data.sql`.
+
+  Args:
+    entries: A sequence of the raw data entries that will be processed.
+    year: The value to set in the year field.
+
+  Returns:
+    A list containing the normalized data entries.
+  '''
   lentries = list(entries)
   ftotal = _find_total(lentries, _FEMALE_TOTAL_PATTERN)
   mtotal = _find_total(lentries, _MALE_TOTAL_PATTERN)

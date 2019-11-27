@@ -111,6 +111,31 @@ def create(
   show_xlabels: bool = True, show_ylabels: bool = True,
   show_subtitles: bool = True
 ) -> alt.Chart:
+  '''Creates a bar graph showing the opioid deaths according to the spec.
+
+  Args:
+    source1: Data which will be visualized as filled bars.
+    source2: Data which will be visualized as outlined bars.
+    start_year1: Beginning of source1 data.
+    end_year1: End of source1 data.
+    start_year2: Beginning of source2 data.
+    end_year2: End of source2 data.
+    fill1: Color of the filled bars for the left side.
+    stroke1: Color of the outlined bars for the left side.
+    stroke_width1: Line width of the outlined bars for the left side.
+    fill2: Color of the filled bars for the right side.
+    stroke2: Color of the outlined bars for the right side.
+    stroke_width2: Line width of the outlined bars for the right side.
+    width: Total width of the visualization in pixels.
+    height: Total height of the visualization in pixels.
+    domain: Max value for the data.
+    show_xlabels: Whether labels should be shown on the x-axis.
+    show_ylabels: Whether labels should be shown on the y-axis.
+    show_subtitles: Whether 'Male' and 'Female' subtitles should be shown.
+
+  Returns:
+    An altair chart specifying the visualization.
+  '''
   base1 = _get_base(source1, start_year1, end_year1, width, height)
   base2 = _get_base(source2, start_year2, end_year2, width, height)
   left = _create_stacked_chart(
