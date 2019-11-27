@@ -33,7 +33,7 @@ substances = [
 age_group_range = 5
 
 # The label for the legend.
-color_coding_label = "Avg Amount"
+color_coding_label = "Avg Amt"
 
 # Width of each heatmap within the visualization.
 column_width = 170
@@ -108,7 +108,7 @@ def _draw_heatmap_by_substance_name(df, substance_name: str) -> t.List[alt.Chart
 def _generate_heatmaps(data_frame, output: str) -> None:
 
     # Independent legend for each row.
-    vis_rows = alt.vconcat().resolve_scale(color='independent')
+    vis_rows = alt.vconcat().resolve_scale(color='independent', y='shared')
 
     # Getting heatmap row for each substance
     for substance in substances:
