@@ -36,7 +36,9 @@ nav:
   - Visualizations:
   #  - Getting Started: examples/getting_started.md
     - Geographic Map of Opioid Deaths: examples/vis-geomap-opioid-deaths.md
-    - Demographic Comparison of Opioid Deaths: examples/visualization1.md
+    - Bar Graph of Opioid Deaths: examples/visualization1.md
+    - Heatmaps of Deaths with Substance: examples/visualization4.md
+    - Heatmaps of Substance Proportions at Death: examples/visualization4a.md
 
 plugins:
   - search

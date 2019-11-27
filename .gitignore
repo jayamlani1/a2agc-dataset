@@ -135,6 +135,5 @@ env.sh
 # Node module dependencies
 node_modules
 
-# VS Code configurations
+# Visual Studio Code
 .vscode/
-
