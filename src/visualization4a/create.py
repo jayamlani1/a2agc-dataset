@@ -42,6 +42,7 @@ def _get_heatmap(data_frame, substance = "", sex = "") -> alt.Chart:
         # Heatmap title format eg: COCAINE - Male
         title=f"{sex}" if sex else f"{substance}",
         ).transform_aggregate(
+            # Grouping by age_group and year, then taking count of the each group
             total_deaths='count():Q',
             groupby=["age_group", "year"]
         ).transform_calculate(
@@ -51,6 +52,8 @@ def _get_heatmap(data_frame, substance = "", sex = "") -> alt.Chart:
             alt.X('year:O', title=''),
             # Only displaying title and labels for the first column
             alt.Y('group:O', title='Age Group' if _is_first_column(sex) else '', axis=alt.Axis(labels=_is_first_column(sex))),
+
+             # Color coding with the total count of deaths in each age_group and year
             color=alt.Color('total_deaths:Q', title='Deaths', scale=alt.Scale(scheme="yellowgreenblue")),
             tooltip= [
                 alt.Tooltip('total_deaths:O', title='Deaths'),
@@ -75,10 +78,11 @@ def _draw_heatmap_by_substance_name(df, substance_name: str) -> t.List[alt.Chart
 
     # From dataframe filtering data for given substance
     df_by_substance_name = df.query(f'substance_name == "{substance_name}"') if substance_name != 'ALL_SUBSTANCES' else df
+    
     # Sharing the y axis with other columns in visualization
     heat_maps = alt.hconcat().resolve_scale(y='shared')
     
-    # Male and Female both
+    # Horizontally concatenating the visualizations
     heat_maps |=  _get_heatmap(df_by_substance_name, substance_name)
   
     # For males
@@ -91,11 +95,16 @@ def _draw_heatmap_by_substance_name(df, substance_name: str) -> t.List[alt.Chart
     
     return heat_maps
 
+# 1. We filter the data for given substance and generate the heatmap
+# 2. Similarly we get the chart by filtering data where gender is male
+# 3. And then we generate the third heatmap for each row by filtering the data where gender is female
+# 4. We concatenate horizontally all three heatmaps to make it a single row for the complete visualization
+# 5. We do all 4 steps for each substance
+
 def _generate_heatmaps(data_frame, output: str) -> None:
 
     # Independent legend for each row.
     vis_rows = alt.vconcat().resolve_scale(color='independent')
-
 
     # Getting heatmap row for each substance
     for substance in substances:
@@ -125,6 +134,7 @@ def _get_data(database: sqlite3.Connection, output: str):
         current_df = pd.DataFrame(data, columns= columns)
         df = df.append(current_df)
 
+    # Saving data to the csv file
     df.to_csv(f'{output}/site-data/visualization4a/visualization4a.csv')
     
     return df[['sex', 'substance_name','age_group', 'year']]
