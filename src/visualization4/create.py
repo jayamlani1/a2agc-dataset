@@ -114,7 +114,6 @@ def _generate_heatmaps(data_frame, output: str) -> None:
     for substance in substances:
         vis_rows &= _draw_heatmap_by_substance_name(data_frame, substance)
 
-    vis_rows.save("site/examples/temp-4.html")
     # Saving the visualization
     with open(f"{output}/site-data/visualization4/output.json", "w+") as f:
         f.write(vis_rows.to_json())

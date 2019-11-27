@@ -12,7 +12,6 @@ SELECT
     '{substance}' AS SUBSTANCE_NAME,
     CAST((AGE / {age_group_range}) AS INT) AS AGE_GROUP,
     DOD as DATE_OF_DEATH,
-    '1' AS COUNT_OF_DEATHS,
     YEAR
 FROM deaths
 WHERE {"ANY_" + substance} == 1
@@ -30,18 +29,12 @@ df_by_substance_name = df.query(f'substance_name == "{substance_name}"') if subs
 # Sharing the y axis with other columns in visualization
 heat_maps = alt.hconcat().resolve_scale(y='shared')
 
-all_data = df_by_substance_name
-all_data['total_rows'] = np.array(len(all_data))
-heat_maps |=  _get_heatmap(all_data, substance_name)
+heat_maps |=  _get_heatmap(df_by_substance_name, substance_name)
 
 male_data = df_by_substance_name.query('sex == "M"')
-# print(male_data)
-male_data['total_rows'] = np.array(len(male_data))
-# print(male_data)
 heat_maps |=  _get_heatmap(male_data, substance_name, "Male")
 
 female_data = df_by_substance_name.query('sex == "F"')
-female_data['total_rows'] =  np.array(len(female_data))
 heat_maps |= _get_heatmap(female_data, substance_name, "Female")
 ```
 
@@ -50,29 +43,23 @@ Individual heatmaps were created using the following script and then stacked
  2. Vertically based on the `substance_name`
 
 ```py
-    chart = alt.Chart(
+     chart = alt.Chart(
         data_frame,
-        # Heatmap title format eg: COCAINE - Male
-        title=f"{substance} - {sex}" if sex else f"{substance}",
+        # Heatmap title format eg: COCAINE
+        title=f"{sex}" if sex else f"{substance}",
         ).transform_aggregate(
-            total_count = 'max(total_rows)',
-            sum_acc='count():Q',
+            total_deaths='count():Q',
             groupby=["age_group", "year"]
         ).transform_calculate(
             # Transforming the group number to group range. eg: if group number is 2 it's group range should be (5-9)
-            group=f'toString(5 * datum.age_group) + "-" + toString({age_group_range} * datum.age_group + {age_group_range - 1})',
-            average= 'datum.sum_acc / datum.total_count',
-            total = 'datum.total_count',
-            deaths_in_age_group_in_year = 'datum.sum_acc'
+            group=f'toString(5 * datum.age_group) + "-" + toString({age_group_range} * datum.age_group + {age_group_range - 1})'
         ).mark_rect().encode(
             alt.X('year:O', title=''),
             # Only displaying title and labels for the first column
             alt.Y('group:O', title='Age Group' if _is_first_column(sex) else '', axis=alt.Axis(labels=_is_first_column(sex))),
-            color=alt.Color('average:Q'),
+            color=alt.Color('total_deaths:Q', title='Deaths', scale=alt.Scale(scheme="yellowgreenblue")),
             tooltip= [
-                alt.Tooltip('deaths_in_age_group_in_year:O', title='Death Count'),
-                alt.Tooltip('average:O', title='Average Death Count'),
-                alt.Tooltip('total:O', title='Total Death Count'),
+                alt.Tooltip('total_deaths:O', title='Deaths'),
                 alt.Tooltip('group:O', title='Age Group'),
                 alt.Tooltip('year:O', title='Year')
             ],
