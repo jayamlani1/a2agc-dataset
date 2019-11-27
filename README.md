@@ -4,7 +4,7 @@ Scripts for compiling, validating, and documenting the A2AGC Dataset.
 
 ## Change Log
 
-See [CHANGELOG](docs/CHANGELOG.md)
+See [CHANGELOG](CHANGELOG.md)
 
 ## Base Requirements
 
@@ -15,6 +15,7 @@ See [CHANGELOG](docs/CHANGELOG.md)
 * sqlite3
 * sqlcipher
 * GraphViz (dot)
+* Altair
 * MkDocs
 
 ## Singularity
