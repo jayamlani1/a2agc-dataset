@@ -58,7 +58,7 @@ def _get_heatmap(data_frame, substance = "", sex = "") -> alt.Chart:
     chart = alt.Chart(
         data_frame,
         # Heatmap title format eg: COCAINE - Male
-        title=f"{substance} - {sex}" if sex else f"{substance}",
+        title=f"{sex}" if sex else f"{substance}",
         ).transform_calculate(
             # Transforming the group number to group range. eg: if group number is 2 it's group range should be (5-9)
             group=f'toString(5 * datum.age_group) + "-" + toString({age_group_range} * datum.age_group + {age_group_range - 1})'
