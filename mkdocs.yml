@@ -1,7 +1,7 @@
 site_name: A2AGC Dataset
-site_url: https://demo.cns.iu.edu/agc2
+site_url: https://node.cns.iu.edu/client/a2agc/
 site_description: A2AGC Dataset documentation
-site_author: CNS & Regenstrief Institute
+site_author: Cyberinfrastructure for Network Science Center & Regenstrief Institute
 
 repo_url: https://github.com/cns-iu/a2agc-dataset/
 
