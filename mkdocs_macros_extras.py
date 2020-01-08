@@ -43,7 +43,7 @@ def declare_variables(variables, macro):
     md_header = "|"
     with open(file) as f:
 
-        rows= list(csv.reader(f))
+        rows = list(csv.reader(f))
         header = rows[0]
         lines = rows[1:]
 

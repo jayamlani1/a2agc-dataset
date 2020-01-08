@@ -1,6 +1,7 @@
-
+#!/bin/bash
 source constants.sh
 set -ev
+
 OUT_DIR=${OUT}/site-data/visualization2
 
 mkdir -p ${OUT_DIR}
