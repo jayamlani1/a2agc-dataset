@@ -1,4 +1,5 @@
 import json
+import csv
 
 # Utility
 def _multiline(*lines):
@@ -35,6 +36,34 @@ def declare_variables(variables, macro):
         format_sql(text.read()),
         source_tag('SQL', file, prefix) if source else None
       )
+  
+  # Convert CSV to Markdown
+  @macro
+  def include_csv_to_md(file):
+    md_header = "|"
+    with open(file) as f:
+
+        rows= list(csv.reader(f))
+        header = rows[0]
+        lines = rows[1:]
+
+        # Header
+        md_header += '|'.join(header) + "|\n"
+
+        # Divider between header and data
+        md_divider = "|"
+        for _ in range(len(header)):
+            md_divider += '-------|'
+        md_divider += "\n"
+
+        # CSV data
+        md_data = ""
+        for line in lines:
+            md_data += f'|{"|".join(line)}   |\n'
+
+        # Complete markdown
+        markdown = md_header + md_divider + md_data
+        return markdown
 
   # Mav Embed functionality
   variables['mav_embed_script_tags'] = _multiline(
