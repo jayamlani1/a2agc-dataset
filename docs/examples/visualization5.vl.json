@@ -14,7 +14,7 @@
     {
       "data": {
         "name": "counties",
-        "url": "..data/indiana.topojson",
+        "url": "../data/indiana.topojson",
         "format": {
           "type": "topojson",
           "feature": "counties"
@@ -35,7 +35,7 @@
 
     {
       "data": {
-        "url": "..data/vis-geomap-opioid-deaths.csv",
+        "url": "../data/vis-geomap-opioid-deaths.csv",
         "format": {
           "type": "csv",
           "parse": {
