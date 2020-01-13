@@ -35,7 +35,7 @@ nav:
   #  - Data Analytics: analytics.md
   - Visualizations:
   #  - Getting Started: examples/getting_started.md
-    - Geographic Map of Opioid Deaths: examples/vis-geomap-opioid-deaths.md
+    - Geographic Map of Opioid Deaths: examples/visualization5.md
     - Demographic Comparison of Opioid Deaths: examples/visualization1.md
     - Heatmaps of Deaths with Substance: examples/visualization4a.md
     - Heatmaps of Substance Proportions at Death: examples/visualization4.md
@@ -43,10 +43,8 @@ nav:
 
 plugins:
   - search
-  - macros
-
-# Module defining additional variables/macros for jinja2 processing
-python_module: mkdocs_macros_extras
+  - macros:
+      module_name: src.mkdocs_macros
 
 extra:
   source_prefix: 'https://github.com/cns-iu/a2agc-dataset/blob/develop/'

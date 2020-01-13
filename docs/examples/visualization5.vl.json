@@ -1,0 +1,93 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+
+  "width": 550,
+  "height": 600,
+
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  },
+
+  "layer": [
+    {
+      "data": {
+        "name": "counties",
+        "url": "../data/indiana.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "counties"
+        }
+      },
+      "transform": [
+      ],
+      "projection": {
+        "type": "mercator"
+      },
+
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightgray",
+        "stroke": "white"
+      }
+    },
+
+    {
+      "data": {
+        "url": "../data/vis-geomap-opioid-deaths.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "N_OPIOID_PRESCRIPTIONS": "number",
+            "latitude": "number",
+            "longitude": "number",
+            "N_OPIOID_PRESCRIPTIONS$$areaSize": "number",
+            "Fixed$$strokeWidth": "number",
+            "Fixed$$strokeTransparency": "number",
+            "Fixed$$transparency": "number"
+          }
+        }
+      },
+      "transform": [
+
+      ],
+      "projection": {
+        "type": "mercator"
+      },
+
+      "mark": {
+        "type": "point",
+        "filled": true
+      },
+      "encoding": {
+        "longitude": {
+          "type": "quantitative",
+          "field": "longitude"
+        },
+        "latitude": {
+          "type": "quantitative",
+          "field": "latitude"
+        },
+
+        "shape": {
+          "type": "nominal",
+          "field": "HOME_STATE$$shape",
+          "scale": null
+        },
+        "size": {
+          "type": "quantitative",
+          "field": "N_OPIOID_PRESCRIPTIONS",
+          "scale": {
+            "type": "symlog"
+          }
+        },
+        "color": {
+          "type": "nominal",
+          "field": "SEX$$color",
+          "scale": null
+        }
+      }
+    }
+  ]
+}
