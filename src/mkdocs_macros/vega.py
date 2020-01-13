@@ -3,7 +3,7 @@ import json
 from src.mkdocs_macros import common, javascript as js
 
 
-DEFAULT_VEGA_OPTIONS = { 'renderer': 'canvas', 'actions': False }
+DEFAULT_VEGA_OPTIONS = { 'renderer': 'canvas', 'actions': True }
 
 
 def options_to_javascript(opts):

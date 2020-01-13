@@ -116,7 +116,7 @@ def declare_variables(variables, macro):
     return _multiline(
       f'<div id="{ vid }"></div>',
       f'<script type="text/javascript">',
-      f'  var opt = {{ "renderer": "canvas", "actions": false }};',
+      f'  var opt = {{ "renderer": "canvas", "actions": true }};',
       f'  vegaEmbed("#{ vid }", JSON.parse(\'{ json_spec }\'), opt);',
       f'</script>'
     )
@@ -127,7 +127,7 @@ def declare_variables(variables, macro):
     return _multiline(
       f'<div id="{ vid }"></div>',
       f'<script type="text/javascript">',
-      f'  var opt = {{ "renderer": "canvas", "actions": false }};',
+      f'  var opt = {{ "renderer": "canvas", "actions": true }};',
       f'  vegaEmbed("#{ vid }", "{ url }", opt);',
       f'</script>'
     )
