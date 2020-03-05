@@ -134,3 +134,7 @@ node_modules
 
 # Visual Studio Code
 .vscode/
+
+# Generated data
+/docs/data
+!/docs/data/indiana.topojson
