@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
   software-properties-common && \
   add-apt-repository -y universe
 
-# Set timezone
+# Set timezone to Eastern Timezone
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
   ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
