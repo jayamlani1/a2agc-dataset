@@ -1,6 +1,9 @@
+# Opioid Death Trajectories
+---------------------------
+
 This example visualization shows opioid deaths trajectories based on prescription, overdose, justice involvement and health data.
 
-# Data and Graphic Variable Extraction
+## Data and Graphic Variable Extraction
 
 The table was created using the following SQL script:
 
@@ -16,7 +19,7 @@ Following rules were used to determined each of the following attributes:
 4. Health Data VS No health data: True if CASE_NUMBER is present in `encounters` table, false otherwise.
 
 
-# Visualization
+## Visualization
 
 The final visualization is shown below.
 

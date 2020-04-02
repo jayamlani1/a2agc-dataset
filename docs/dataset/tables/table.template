@@ -2,6 +2,9 @@
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.3.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@4.2.0"></script>
 
+# {{ table.name.title() }}
+--------------------------
+
 {{ table.remarks }}
 
 {% for column in table.columns.values() %}

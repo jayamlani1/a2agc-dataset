@@ -1,6 +1,9 @@
+# Demographic Comparison of Opioid Deaths
+-----------------------------------------
+
 This example visualization shows a bar graph of opioid deaths broken down by gender and age group compared to the census data of Marion County, Indiana.
 
-# Data and Graphic Variable Extraction
+## Data and Graphic Variable Extraction
 
 Opioid death data was aggregated from the database using the following query:
 
@@ -12,11 +15,11 @@ The original census data was retrieved from [here](https://factfinder.census.gov
 The resulting file can be found [here](../data/vis1-data/census-counts.csv).
 
 
-# Visualization creation
+## Visualization creation
 
 Two VegaLite specifications - [overall](../data/vis1-data/all-years-vis.json) and [by year](../data/vis1-data/by-year-vis.json) - were created using [this script](https://github.com/cns-iu/a2agc-dataset/blob/develop/src/visualization1/chart.py). The resulting specifications are then displayed using [Vega-Embed](https://github.com/vega/vega-embed).
 
-# Visualization
+## Visualization
 
 The final product is visualized below.  
 Each gray bar represents the percentage of opioid deaths in the corresponding age group.  
