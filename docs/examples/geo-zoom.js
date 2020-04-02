@@ -33,7 +33,7 @@ function addGeoZoom(spec, opts) {
       on: [{
         events: { type: 'wheel', consume: true },
         update: [
-          'clamp(scale * pow(1.0005, -event.deltaY * pow(16, event.deltaMode)), ',
+          'clamp(scale * pow(1.0015, -event.deltaY * pow(16, event.deltaMode)), ',
           opts.zoomLevels[0],
           ', ',
           opts.zoomLevels[1],

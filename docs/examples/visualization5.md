@@ -29,4 +29,4 @@ The final product is visualized below.
 
 {{ vega.header() }}
 {{ js.include('./geo-zoom.js') }}
-{{ vega.include('./visualization5.vl.json', { 'patch': js.Raw('patchIndianaGeoZoom') }) }}
+{{ vega.include('./visualization5.vl.json', { 'patch': js.Raw('patchIndianaGeoZoom'), 'actions': True }) }}

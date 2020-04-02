@@ -15,11 +15,12 @@ nav:
   - Change Log: CHANGELOG.md
   - Visualizations:
     # - Getting Started: examples/getting_started.md
-    - Geographic Map of Opioid Deaths: examples/visualization5.md
     - Demographic Comparison of Opioid Deaths: examples/visualization1.md
+    - Opioid Death Trajectories: examples/visualization2.md
     - Heatmaps of Deaths with Substance: examples/visualization4a.md
     - Heatmaps of Substance Proportions at Death: examples/visualization4.md
     - Opioid Death Trajectories: examples/visualization2.md
+    - Geographic Map of Opioid Deaths: examples/visualization5.md
   - Dataset:
     # - Overview: dataset/index.md
     # - Data Access Requirements: dataset/access.md

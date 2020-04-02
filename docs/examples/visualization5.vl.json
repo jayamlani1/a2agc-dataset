@@ -28,8 +28,8 @@
 
       "mark": {
         "type": "geoshape",
-        "fill": "lightgray",
-        "stroke": "white"
+        "fill": "white",
+        "stroke": "lightgray"
       }
     },
 
@@ -41,11 +41,7 @@
           "parse": {
             "N_OPIOID_PRESCRIPTIONS": "number",
             "latitude": "number",
-            "longitude": "number",
-            "N_OPIOID_PRESCRIPTIONS$$areaSize": "number",
-            "Fixed$$strokeWidth": "number",
-            "Fixed$$strokeTransparency": "number",
-            "Fixed$$transparency": "number"
+            "longitude": "number"
           }
         }
       },
@@ -75,17 +71,20 @@
           "field": "HOME_STATE$$shape",
           "scale": null
         },
+        "color": {
+          "type": "nominal",
+          "field": "SEX",
+          "scale": {
+            "domain": ["M", "F"],
+            "range": ["blue", "pink"]
+          }
+        },
         "size": {
           "type": "quantitative",
           "field": "N_OPIOID_PRESCRIPTIONS",
           "scale": {
-            "type": "symlog"
+            "zero": true
           }
-        },
-        "color": {
-          "type": "nominal",
-          "field": "SEX$$color",
-          "scale": null
         }
       }
     }
