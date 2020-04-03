@@ -20,4 +20,5 @@ Following rules were used to determined each of the following attributes:
 
 The final visualization is shown below.
 
-{{ include_csv_to_md('docs/data/visualization2/data.csv') }}
+{{ vega.header() }}
+{{ vega.include('./visualization2.vl.json') }}

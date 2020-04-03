@@ -1,0 +1,78 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+
+    "width": 400,
+    "height": 400,
+
+    "data": {
+      "values": [
+        {"A": "P", "B": "None", "count": 2, "Set": "P"},
+        {"A": "P", "B": "J∩H", "count": 218, "Set": "P∩J∩H"},
+        {"A": "P", "B": "H", "count": 887, "Set": "P∩H"},
+        {"A": "P∩O", "B": "J∩H", "count": 95, "Set": "P∩O∩J∩H"},
+        {"A": "P∩O", "B": "H", "count": 99, "Set": "P∩O∩H"},
+        {"A": "O", "B": "None", "count": 25, "Set": "O"},
+        {"A": "O", "B": "J", "count": 17, "Set": "O∩J"},
+        {"A": "O", "B": "J∩H", "count": 25, "Set":"O∩J∩H"},
+        {"A": "O", "B": "H", "count": 28, "Set": "O∩H"},
+        {"A": "None", "B": "None", "count": 473, "Set": " "},
+        {"A": "None", "B": "J", "count": 63, "Set": "J"},
+        {"A": "None", "B": "J∩H", "count": 78, "Set": "J∩H"},
+        {"A": "None", "B": "H", "count": 321, "Set": "H"}
+      ]
+    },
+
+    "encoding": {
+      "y": {"field": "B", "type": "ordinal", "sort": ["P", "P∩O", "O", "None"]},
+      "x": {"field": "A", "type": "ordinal", "sort": ["J", "J∩H", "H", "None"]}
+    },
+    
+    "layer": [
+      {
+        "selection": {
+          "highlight": {"type": "single"}
+        },
+        "mark": {"type": "rect", "strokeWidth": 2},
+        "encoding": {
+          "fill": {
+            "field": "count",
+            "type": "quantitative"
+          },
+          "stroke": {
+            "condition": {"test": {"and": [{"selection": "highlight"}, "length(data(\"highlight_store\"))"]}, "value": "black"},
+            "value": null
+          },
+          "opacity": {
+            "condition": {"selection": "highlight", "value": 1},
+            "value": 0.5
+          }
+        }
+      },
+      {
+        "mark": "text",
+        "encoding": {
+          "text": {"field": "Set", "type": "nominal"},
+          "color": {
+            "condition": {"test": "datum['count'] < 400", "value": "black"},
+            "value": "white"
+          }
+        }
+      }
+    ],
+    
+    "config": {
+      "scale": {
+        "bandPaddingInner": 0,
+        "bandPaddingOuter": 0
+      },
+      "view": {"step": 40},
+      "range": {
+        "ramp": {
+          "scheme": "yellowgreenblue"
+        }
+      },
+      "axis": {
+        "domain": false
+      }
+    }
+  }
