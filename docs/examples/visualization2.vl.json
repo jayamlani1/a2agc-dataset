@@ -27,7 +27,7 @@
 
     "encoding": {
       "y": {"field": "A", "type": "ordinal", "sort": ["Opioid Prescription(P)", "P∩O", "Overdose(O)", " "], "title": null},
-      "x": {"field": "B", "type": "ordinal", "sort": ["Justice Involvement(J)", "J∩H", "Health Data(H)", " "], "title": null}
+      "x": {"field": "B", "type": "ordinal", "sort": [" ", "Justice Involvement(J)", "J∩H", "Health Data(H)"], "title": null}
     },
     
     "layer": [
@@ -39,7 +39,8 @@
         "encoding": {
           "fill": {
             "field": "count",
-            "type": "quantitative"
+            "type": "quantitative",
+            "condition": {"test": "datum['count'] == 0", "value": "white"}
           },
           "stroke": {
             "condition": {"test": {"and": [{"selection": "highlight"}, "length(data(\"highlight_store\"))"]}, "value": "black"},
