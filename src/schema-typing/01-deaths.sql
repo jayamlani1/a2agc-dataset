@@ -8,7 +8,7 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE deaths (
   "CASE_NUMBER" CHARACTER(6) CHECK(length(case_number) = 6 OR case_number = '172987a') PRIMARY KEY,
-      -- FIXME: case_number = 172987a is the only row that is not length 6 and is a duplicate of 172987 
+      -- FIXME: case_number = 172987a is the only row that is not length 6 and is a duplicate of 172987
   "YEAR" INT CHECK(typeof(year) = 'integer'),
   "LAST_NAME" VARCHAR(32) CHECK(length(last_name) BETWEEN 1 AND 32),
   "FIRST_NAME" VARCHAR(32) CHECK(length(first_name) BETWEEN 1 AND 32),
@@ -17,7 +17,7 @@ CREATE TABLE deaths (
   "RACE" CHARACTER CHECK(length(race) == 1),
       -- FIXME: Need to know what race numbers map to
   "DOB" DATE CHECK((typeof(dob) = 'text' AND length(dob) = 10) OR dob IS NULL),
-      -- FIXME: 2 cases (121121 and 172311) do not have a DOB. 
+      -- FIXME: 2 cases (121121 and 172311) do not have a DOB.
   "DOD" DATE CHECK(typeof(dod) = 'text' AND length(dod) = 10),
   "AGE" INT CHECK(typeof(age) = 'integer' AND age BETWEEN 0 AND 130),
   "MILITARY" CHARACTER CHECK(length(military) <= 1),
@@ -277,7 +277,7 @@ CREATE TABLE deaths (
 );
 INSERT INTO deaths
   SELECT
-    case_number, 
+    case_number,
     CAST(year AS INT),
     last_name,
     first_name,
@@ -302,7 +302,7 @@ INSERT INTO deaths
     specific_place_of_death,
     place_of_injury,
     specific_place_of_injury,
-    CASE describe_injury 
+    CASE describe_injury
         WHEN 'NA' THEN 'Unknown'
         WHEN '' THEN 'Unknown'
         ELSE describe_injury
