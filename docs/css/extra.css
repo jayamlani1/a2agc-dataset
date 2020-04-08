@@ -17,3 +17,8 @@
 .toctree-l6>a.nav-item {
   padding-left: 75px;
 }
+
+.headerlink {
+  color: lightgray;
+  font-size: 1rem;
+}
