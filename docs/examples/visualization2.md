@@ -23,9 +23,9 @@ Following rules were used to determined each of the following attributes:
 
 The final visualization is shown below.
 
-Rx: Received opioid prescription
-OD: Overdosed
-Jail: Incarcerated
+Rx: Received opioid prescription  
+OD: Overdosed  
+Jail: Incarcerated  
 Hosp: Admitted to hospital
 
 {{ vega.header() }}
