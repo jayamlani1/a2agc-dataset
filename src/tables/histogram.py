@@ -42,7 +42,7 @@ def create(
     data_path.parent.mkdir(parents=True, exist_ok=True)
     _write_rows(str(data_path), rows)
 
-    bars = altair.Chart(str(site_data_path), width=300, height=300).mark_bar().encode(
+    bars = altair.Chart(str(site_data_path), width=600, height=300).mark_bar().encode(
         altair.X('x', bin=True, axis=altair.Axis(title=column, labelAngle=0), **xargs),
         y='count()'
     )

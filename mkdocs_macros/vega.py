@@ -1,6 +1,6 @@
 import json
 
-from src.mkdocs_macros import common, javascript as js
+from mkdocs_macros import common, javascript as js
 
 
 DEFAULT_VEGA_OPTIONS = { 'renderer': 'canvas', 'actions': True }
@@ -23,9 +23,9 @@ def create_vega_script(source, opts):
 
 def header():
     return common.multiline(
-        js.include('https://cdn.jsdelivr.net/npm/vega@5.4.0'),
-        js.include('https://cdn.jsdelivr.net/npm/vega-lite@3.3.0'),
-        js.include('https://cdn.jsdelivr.net/npm/vega-embed@4.2.0')
+        js.include('https://cdn.jsdelivr.net/npm/vega@5'),
+        js.include('https://cdn.jsdelivr.net/npm/vega-lite@4'),
+        js.include('https://cdn.jsdelivr.net/npm/vega-embed@6')
     )
 
 def include(path, opts=None):

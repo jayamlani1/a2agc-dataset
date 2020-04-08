@@ -1,6 +1,9 @@
-<script src="https://cdn.jsdelivr.net/npm/vega@5.4.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@3.3.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@4.2.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+# {{ table.name.title() }}
+--------------------------
 
 {{ table.remarks }}
 
@@ -9,9 +12,9 @@
 * Type - {{ column.type }}
 * Description - {{ column.remarks }}
 * Missing values - {{ '{:.8}'.format(100 * column.pct_missing) }}%
-
 {% if column.dist_data %}
 {% if column.dist_type == 'bar-chart' or column.dist_type == 'horizontal-bar-chart' or column.dist_type == 'histogram' %}
+
 <div id="vis-{{ column.name }}"></div>
 <script type="text/javascript">
     var spec = {{ column.dist_data }};

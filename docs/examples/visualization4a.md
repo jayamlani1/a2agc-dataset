@@ -1,6 +1,9 @@
+# Heatmaps of Deaths with Substance
+-----------------------------------
+
 This example visualization shows heatmap of opioid deaths categorized by sex, age group, substance and date
 
-# Data and Graphic Variable Extraction
+## Data and Graphic Variable Extraction
 
 Opiod death data was fetched from the database using the following query
 
@@ -19,7 +22,7 @@ WHERE {"ANY_" + substance} == 1
 
 The extracted data can be found [here](../data/visualization4a/visualization4a.csv)
 
-# Data transformations
+## Data transformations
 
 For each substance, the data was transformed using `pandas` dataframes as following
 
@@ -86,10 +89,9 @@ Individual heatmaps were created using the following script and then stacked
         )
 ```
 
-# Visualization
+## Visualization
 
 The final visualization is shown below.
 
 {{vega_script_tags}}
 {{include_vega_ext('../data/visualization4a/output.json')}}
-

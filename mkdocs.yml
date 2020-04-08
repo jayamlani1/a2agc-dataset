@@ -12,43 +12,41 @@ use_directory_urls: false
 
 nav:
   - About: index.md
-  - Change Log: CHANGELOG.md
-  - Dataset:
-  #  - Overview: dataset/index.md
-  #  - Data Access Requirements: dataset/access.md
-    - '<i class="fa fa-link" aria-hidden="true"></i> Schema Browser': schema/index.html
-    - '<i class="fa fa-link" aria-hidden="true"></i> ER Diagram': schema/relationships.html
-    - '<i class="fa fa-table" aria-hidden="true"></i> deaths': dataset/tables/table-deaths.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> diagnoses': dataset/tables/table-diagnoses.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> ems_incidents': dataset/tables/table-ems_incidents.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> encounters': dataset/tables/table-encounters.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> incarcerations': dataset/tables/table-incarcerations.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> incarcerations_weekly': dataset/tables/table-incarcerations_weekly.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> labs': dataset/tables/table-labs.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> medications': dataset/tables/table-medications.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> procedures': dataset/tables/table-procedures.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> referrals': dataset/tables/table-referrals.md
-    - '<i class="fa fa-table" aria-hidden="true"></i> rollup1': dataset/tables/table-rollup1.md
-  #  - Validation Results: dataset/validation.md
-  #- Source Code:
-  #  - Dataset Generation: dataset/workflow.md
-  #  - Data Analytics: analytics.md
   - Visualizations:
-  #  - Getting Started: examples/getting_started.md
+    # - Getting Started: examples/getting_started.md
     - Demographic Comparison of Opioid Deaths: examples/visualization1.md
     - Opioid Death Trajectories: examples/visualization2.md
     - Heatmaps of Deaths with Substance: examples/visualization4a.md
     - Heatmaps of Substance Proportions at Death: examples/visualization4.md
+    - Opioid Death Trajectories: examples/visualization2.md
     - Geographic Map of Opioid Deaths: examples/visualization5.md
+  - Dataset:
+    # - Overview: dataset/index.md
+    # - Data Access Requirements: dataset/access.md
+    - Schema Browser: schema/index.html
+    - ER Diagram: schema/relationships.html
+    - Tables:
+      - Deaths: dataset/tables/table-deaths.md
+      - Diagnoses: dataset/tables/table-diagnoses.md
+      - Ems Incidents: dataset/tables/table-ems_incidents.md
+      - Encounters: dataset/tables/table-encounters.md
+      - Incarcerations: dataset/tables/table-incarcerations.md
+      # - Incarcerations Weekly: dataset/tables/table-incarcerations_weekly.md
+      - Labs: dataset/tables/table-labs.md
+      - Medications: dataset/tables/table-medications.md
+      - Procedures: dataset/tables/table-procedures.md
+      - Referrals: dataset/tables/table-referrals.md
+      # - Rollup1: dataset/tables/table-rollup1.md
+  #  - Validation Results: dataset/validation.md
+  #- Source Code:
+  #  - Dataset Generation: dataset/workflow.md
+  #  - Data Analytics: analytics.md
+  - Change Log: CHANGELOG.md
 
 plugins:
   - search
   - macros:
-      module_name: src.mkdocs_macros
-
-extra:
-  source_prefix: 'https://github.com/cns-iu/a2agc-dataset/blob/develop/'
-
+      module_name: mkdocs_macros
   # MkPDFs doesn't work with readthedocs theme and
   # the generated schema html. So for now, we'll
   # turn PDF generation off.
@@ -56,9 +54,16 @@ extra:
   # - mkpdfs:
   #     output_path: pdf/a2agc-documentation.pdf
 
-theme: readthedocs
-
 markdown_extensions:
   - toc:
       permalink: True
   - footnotes
+
+theme:
+  name: ivory
+
+extra_css:
+  - css/extra.css
+
+extra:
+  source_prefix: 'https://github.com/cns-iu/a2agc-dataset/blob/develop/'

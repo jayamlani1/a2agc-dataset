@@ -1,4 +1,4 @@
-from src.mkdocs_macros import common, javascript, vega, back_compat
+from mkdocs_macros import common, javascript, vega, back_compat
 
 class SubEnvironment:
     def __init__(self, name, parent):
