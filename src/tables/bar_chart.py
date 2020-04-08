@@ -58,7 +58,7 @@ def create(
     names, counts = zip(*sorted_pairs) # Unzip
     data = pandas.DataFrame({ 'x': list(names), 'y': list(counts) })
 
-    width = 300
+    width = 600
     height = 300
     x = { 'source': 'x', 'title': column }
     y = { 'source': 'y', 'title': 'Count' }

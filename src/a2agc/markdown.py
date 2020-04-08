@@ -9,7 +9,8 @@ import jinja2 as jinja
 def _setup_environment(dirs: t.Union[str, t.List[str]]) -> jinja.Environment:
     return jinja.Environment(
         loader=jinja.FileSystemLoader(dirs),
-        autoescape=jinja.select_autoescape(['html', 'xml'])
+        autoescape=jinja.select_autoescape(['html', 'xml']),
+        trim_blocks=True
     )
 
 @t.overload
@@ -28,4 +29,3 @@ def render(template, dirs, context = None):
     dirs = [str(path.parent), *dirs]
     env = _setup_environment(dirs)
     return env.get_template(template).render(context)
-

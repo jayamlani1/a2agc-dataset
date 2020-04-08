@@ -1,4 +1,4 @@
-from src.mkdocs_macros import common
+from mkdocs_macros import common
 
 
 class Raw(str):

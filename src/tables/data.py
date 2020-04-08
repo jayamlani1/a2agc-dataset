@@ -212,12 +212,17 @@ def _create_command_line_parser() -> argparse.ArgumentParser:
     parser.add_argument('-s', '--sout', help='site data directory')
     return parser
 
-def _override_dist_types(overrides: infer_dist.Override, data: Data) -> None:
+def _override_dist_types(database: sqlite3.Connection, overrides: infer_dist.Override, data: Data,
+                         data_dir: str, site_data_dir: str) -> None:
     for table in data.values():
         for column in table['columns'].values():
             type_ = infer_dist.get_override(overrides, table['name'], column['name'])
             if type_:
                 column['dist_type'] = type_
+                column['dist_data'] = _generate_chart(
+                    database, table['name'], column['name'],
+                    column['type'], type_, data_dir, site_data_dir
+                )
 
 if __name__ == '__main__':
     parser = _create_command_line_parser()
@@ -227,6 +232,9 @@ if __name__ == '__main__':
         namespace.dout, namespace.sout or namespace.dout
     )
     if namespace.overrides:
-        _override_dist_types(namespace.overrides, data)
+        _override_dist_types(
+            namespace.database, namespace.overrides, data,
+            namespace.dout, namespace.sout or namespace.dout
+        )
     savef(namespace.out, data)
     namespace.out.close()
