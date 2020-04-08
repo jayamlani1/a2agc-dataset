@@ -254,10 +254,54 @@
             <column name="METHAMPHETAMINE_AMOUNT" comments="Tox lab flag"/>
             <column name="NOTES" comments="Additional Notes"/>
         </table>
-        <table name="ems_incidents" comments="EMS Incidents (Long Datasets/Linked_EMS_Data.csv)">
+        <table name="ems_incidents" comments="EMS Incidents (Long Datasets/Linked_EMS_Data.csv) -- Indianapolis Emergency Medical Services (IEMS) provides data on all first responder runs that IEMS were called to from 2011-2018. This data contains the demographic information (first and last name, gender, race, date of birth, and age) of the person who the run was called for, location and time of the run, and the reasons why EMS was called (chief complaints and mechanism of injury).">
+            <column name="EMS_ID" comments="Emergency medical service identifier"/>
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
+            <column name="YEAR" comments="Incident year"/>
+            <column name="YOB" comments="Year of birth"/>
+            <column name="PatientID" comments="Patient identifier"/>
+            <column name="LAST" comments="Last name"/>
+            <column name="FIRST" comments="First name"/>
+            <column name="DOB" comments="Date of birth"/>
+            <column name="MiddleName" comments="Middle name"/>
+            <column name="GENDER" comments="Gender"/>
+            <column name="Race_Ethnicity" comments="Ethnicity"/>
+            <column name="RACE_ONLY" comments="Race"/>
+            <column name="PCRDateTime" comments="PCR date"/>
+            <column name="IncidentNumber" comments="Incident number"/>
+            <column name="IncidentLocationTypeAll_TEXT" comments="Incident location"/>
+            <column name="IncidentLocationTypeAll_CATEGORIES" comments="Incident location"/>
+            <column name="IncidentAddressLine1_A" comments="Incident address"/>
+            <column name="IncidentAddressLine2_A" comments="Incident address"/>
+            <column name="IncidentState" comments="Incident state"/>
+            <column name="IncidentCity" comments="Incident city"/>
+            <column name="IncidentCounty" comments="Incident county"/>
+            <column name="IncidentZip" comments="Incident zip"/>
+            <column name="HomeAddressLine1" comments="Home address"/>
+            <column name="HomeAddressLine2" comments="Home address"/>
+            <column name="HomeZip" comments="Home zip"/>
+            <column name="HomeCity" comments="Home city"/>
+            <column name="HomeCounty" comments="Home county"/>
+            <column name="HomeState" comments="Home state"/>
+            <column name="ChiefComplaint_TEXT" comments="Main complaint"/>
+            <column name="SecondaryComplaintsAll_TEXT" comments="Secondary complaint"/>
+            <column name="FirstMOI_TEXT" comments="First medical officer incident description"/>
+            <column name="FirstMOI_CATEGORIES" comments="First medical officer incident category"/>
+            <column name="FirstMOI_Collapsed_CATEGORIES" comments="First medical officer incident category"/>
+            <column name="FirstMOIDetails_TEXT" comments="First medical officer incident details"/>
+            <column name="ResponseOutcomeAll_TEXT" comments="Outcome of officer response"/>
+            <column name="ResponseOutcomeAll_CATEGORIES" comments="Outcome of officer response"/>
+            <column name="ReceivingFacility_TEXT" comments="Receiving facility name"/>
+            <column name="OVERDOSE_DUMMY" comments="Overdosed"/>
+            <column name="OVERDOSE_CC_MOI" comments="Overdosed"/>
+            <column name="NALOXONE_DUMMY" comments="Naloxone administered"/>
+            <column name="LAST_NAME" comments="Last name"/>
+            <column name="FIRST_NAME" comments="First name"/>
+            <column name="MIN_INCIDENT_DATE" comments="Incident date"/>
+            <column name="MAX_INCIDENT_DATE" comments="Incident date"/>
         </table>
-        <table name="incarcerations" comments="Incarcerations (Long Datasets/Linked_Jail_Data.csv)">
+        <table name="incarcerations" comments="Incarcerations (Long Datasets/Linked_Jail_Data.csv) -- Data obtained from the Marion County Sheriff’s Office (MSCO) contains information on all jail bookings that occurred in Marion County from 2014-2018. Information that is available within this dataset includes demographic information (first and last name, gender, race, birth date, and age), booking and release date, description of the offense, and jail admission information. The data was provided upon request directly from MSCO.">
+            <column name="JAIL_ID" comments="Jail identifier"/>
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>
             <column name="ADMISSION" comments="Reason for admission to jail"/>
             <column name="PERMANENT_NO" comments="Permanent Number"/>
@@ -266,6 +310,7 @@
             <column name="FIRST_NAME" comments="First name"/>
             <column name="MIDDLE_NAME" comments="Middle name"/>
             <column name="OFFENSE_DESCRIPTION" comments="Offense description"/>
+            <column name="JAIL_CASE_NUMBER" comments="Jail case number"/>
             <column name="GENDER" comments="Gender"/>
             <column name="DOB" comments="Date of birth"/>
             <column name="YOB" comments="Year of birth"/>
@@ -275,6 +320,8 @@
             <column name="BOOKING_YEAR" comments="Booking year"/>
             <column name="RELEASE_DATE" comments="Release date"/>
             <column name="RELEASE_YEAR" comments="Release year"/>
+            <column name="MIN_BOOKING_DATE" comments="Booking date"/>
+            <column name="MAX_RELEASE_DATE" comments="Release date"/>
         </table>
         <table name="incarcerations_weekly" comments="Summary data for analysts, weekly incarcerations (Marion_OD_Jail_Weekly--06252019.csv)">
             <column name="CASE_NUMBER" comments="Case number from coroner data, can be used to link across datasets"/>

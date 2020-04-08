@@ -14,20 +14,18 @@ CREATE TABLE deaths (
   "FIRST_NAME" VARCHAR(32) CHECK(length(first_name) BETWEEN 1 AND 32),
   "SSN" VARCHAR(11) CHECK(ssn IS NULL OR length(ssn) = 11),
   "SEX" CHARACTER CHECK(sex = 'M' OR sex = 'F'),
-  "RACE" CHARACTER CHECK(length(race) == 1),
-      -- FIXME: Need to know what race numbers map to
+  "RACE" CHARACTER CHECK(race IN (NULL, 'White', 'Black', 'Hispanic', 'Other')),
   "DOB" DATE CHECK((typeof(dob) = 'text' AND length(dob) = 10) OR dob IS NULL),
       -- FIXME: 2 cases (121121 and 172311) do not have a DOB.
   "DOD" DATE CHECK(typeof(dod) = 'text' AND length(dod) = 10),
   "AGE" INT CHECK(typeof(age) = 'integer' AND age BETWEEN 0 AND 130),
-  "MILITARY" CHARACTER CHECK(length(military) <= 1),
-      -- FIXME: Need to know what military numbers map to
-  "EMPLOYMENT" CHARACTER CHECK(length(employment) <= 1),
-      -- FIXME: Need to know what employment numbers map to
-  "EDUCATION" CHARACTER CHECK(length(education) <= 1),
-      -- FIXME: Need to know what education numbers map to
-  "MARITAL_STATUS" CHARACTER CHECK(length(marital_status) <= 1),
-      -- FIXME: Need to know what marital_status numbers map to
+  "MILITARY" BOOLEAN CHECK(military IN (NULL, 0, 1)),
+  "EMPLOYMENT" CHARACTER CHECK(employment IN (NULL, 'Employed', 'Unemployed', 'Student', 'Disabled', 'Retired')),
+  "EDUCATION" CHARACTER CHECK(education IN (NULL, 'Under 8th grade', 'High school - Not finished',
+                                            'Graduated high school', 'Some college - No degree',
+                                            'Technical/vocational degree', 'College degree',
+                                            'Post graduation degree (Masters, PHD, MD, etc.)')),
+  "MARITAL_STATUS" CHARACTER CHECK(marital_status IN (NULL, 'Never married', 'Married', 'Separated', 'Widowed', 'Divorced')),
   "HOME_ADDRESS" VARCHAR(96) NOT NULL CHECK(length(home_address) BETWEEN 1 AND 96 OR home_address IN ('Unknown', 'Homeless')),
   "HOME_CITY" VARCHAR(64) NOT NULL CHECK(length(home_city) BETWEEN 1 AND 64 OR home_city IN ('Unknown', 'Homeless')),
   "HOME_ZIP" VARCHAR(8) NOT NULL CHECK(length(home_zip) = 5 OR home_zip IN ('Unknown', 'Homeless', '8031')),
@@ -37,11 +35,10 @@ CREATE TABLE deaths (
   "INJURY_CITY" VARCHAR(64) NOT NULL CHECK(length(injury_city) BETWEEN 1 AND 64 OR home_city = 'Unknown'),
       -- FIXME: There are zero length cities that can be filled in. Setting them to 'Unknown' currently.
   "INJURY_ZIP" VARCHAR(7) NOT NULL CHECK(length(injury_zip) = 5 OR injury_zip = 'Unknown'),
-  "PLACE_OF_DEATH" CHARACTER NOT NULL CHECK(length(place_of_death) = 1),
-      -- FIXME: Need to know what place_of_death numbers map to
+  "PLACE_OF_DEATH" CHARACTER CHECK(place_of_death IN (NULL, 'Residence', 'Other Residence', 'Hospital-Inpatient', 'ER-Outpatient')),
   "SPECIFIC_PLACE_OF_DEATH" VARCHAR(96) NOT NULL CHECK(length(specific_place_of_death) BETWEEN 1 AND 96),
       -- FIXME: Bad unicode character in 'Friend's Residence�'
-  "PLACE_OF_INJURY" CHARACTER NOT NULL CHECK(length(place_of_injury) = 1),
+  "PLACE_OF_INJURY" CHARACTER CHECK(place_of_injury IN (NULL, 'Residence', 'Other Residence', 'Workplace')),
   "SPECIFIC_PLACE_OF_INJURY" VARCHAR(196) NOT NULL CHECK(length(specific_place_of_injury) BETWEEN 1 AND 196),
   "DESCRIBE_INJURY" VARCHAR(512) NOT NULL CHECK(length(describe_injury) BETWEEN 1 AND 512 OR describe_injury = 'Unknown'),
       -- FIXME: Bad unicode character in 'Decedent crashed his SUV on an interstate�'
@@ -283,14 +280,47 @@ INSERT INTO deaths
     first_name,
     NULLIF(REPLACE(ssn, 'N/A', ''), ''),
     CASE sex WHEN '0' THEN 'F' WHEN '1' THEN 'M' ELSE NULL END,
-    race,
+    CASE race
+        WHEN '1' THEN 'White'
+        WHEN '2' THEN 'Black'
+        WHEN '3' THEN 'Hispanic'
+        WHEN '4' THEN 'Other'
+        ELSE NULL
+    END,
     date(dob),
     date(dod),
     CAST(age AS INT),
-    military,
-    employment,
-    education,
-    marital_status,
+    CASE military
+        WHEN '0' THEN 0
+        WHEN '1' THEN 1
+        ELSE NULL
+    END,
+    CASE employment
+        WHEN '1' THEN 'Employed'
+        WHEN '2' THEN 'Unemployed'
+        WHEN '3' THEN 'Student'
+        WHEN '4' THEN 'Disabled'
+        WHEN '5' THEN 'Retired'
+        ELSE NULL
+    END,
+    CASE education
+        WHEN '1' THEN 'Under 8th grade'
+        WHEN '2' THEN 'High school - Not finished'
+        WHEN '3' THEN 'Graduated high school'
+        WHEN '4' THEN 'Some college - No degree'
+        WHEN '5' THEN 'Technical/vocational degree'
+        WHEN '6' THEN 'College degree'
+        WHEN '7' THEN 'Post graduation degree (Masters, PHD, MD, etc.)'
+        ELSE NULL
+    END,
+    CASE marital_status
+        WHEN '1' THEN 'Never married'
+        WHEN '2' THEN 'Married'
+        WHEN '3' THEN 'Separated'
+        WHEN '4' THEN 'Widowed'
+        WHEN '5' THEN 'Divorced'
+        ELSE NULL
+    END,
     home_address,
     home_city,
     CASE home_zip WHEN '' THEN 'Homeless' ELSE home_zip END,
@@ -298,9 +328,20 @@ INSERT INTO deaths
     injury_address,
     CASE injury_city WHEN '' THEN 'Unknown' ELSE injury_city END,
     CASE injury_zip WHEN '' THEN 'Unknown' ELSE injury_zip END,
-    place_of_death,
+    CASE place_of_death
+        WHEN '1' THEN 'Residence'
+        WHEN '2' THEN 'Other Residence'
+        WHEN '3' THEN 'Hospital-Inpatient'
+        WHEN '4' THEN 'ER-Outpatient'
+        ELSE NULL
+    END,
     specific_place_of_death,
-    place_of_injury,
+    CASE place_of_injury
+        WHEN '1' THEN 'Residence'
+        WHEN '2' THEN 'Other Residence'
+        WHEN '3' THEN 'Workplace'
+        ELSE NULL
+    END,
     specific_place_of_injury,
     CASE describe_injury
         WHEN 'NA' THEN 'Unknown'
