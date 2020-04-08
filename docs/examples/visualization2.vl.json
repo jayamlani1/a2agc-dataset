@@ -1,7 +1,7 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
 
-    "width": 400,
+    "width": 550,
     "height": 400,
 
     "data": {
@@ -9,8 +9,8 @@
     },
 
     "encoding": {
-      "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Opioid Prescription(P)", "P∩O", "Overdose(O)", "∅"], "title": null},
-      "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Justice Involvement(J)", "J∩H", "Health Data(H)"], "title": null}
+      "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null},
+      "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Hosp", "Hosp"], "title": null, "axis": {"labelAngle": 0}}
     },
     
     "layer": [
@@ -21,9 +21,9 @@
         "mark": {"type": "rect", "strokeWidth": 2},
         "encoding": {
           "fill": {
-            "field": "count",
+            "field": "Deaths",
             "type": "quantitative",
-            "condition": {"test": "datum['count'] == 0", "value": "white"}
+            "condition": {"test": "datum['Deaths'] == 0", "value": "white"}
           },
           "stroke": {
             "condition": {"test": {"and": [{"selection": "highlight"}, "length(data(\"highlight_store\"))"]}, "value": "black"},
@@ -40,7 +40,7 @@
         "encoding": {
           "text": {"field": "Set", "type": "nominal"},
           "color": {
-            "condition": {"test": "datum['count'] < 400", "value": "black"},
+            "condition": {"test": "datum['Deaths'] < 400", "value": "black"},
             "value": "white"
           }
         }
