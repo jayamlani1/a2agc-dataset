@@ -9,8 +9,8 @@
     },
 
     "encoding": {
-      "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null},
-      "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Hosp", "Hosp"], "title": null, "axis": {"labelAngle": 0}}
+      "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null, "axis": {"labelFontSize": 15}},
+      "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Hosp", "Hosp"], "title": null, "axis": {"labelAngle": 0, "labelFontSize": 15}}
     },
     
     "layer": [
@@ -20,29 +20,34 @@
         },
         "mark": {"type": "rect", "strokeWidth": 2},
         "encoding": {
+          "tooltip": [
+            {
+              "field": "Touchpoint A",
+              "title": "Touchpoint A",
+              "type": "ordinal"
+            },
+            {
+              "field": "Touchpoint B",
+              "title": "Touchpoint B",
+              "type": "ordinal"
+            },
+            {
+              "field": "Deaths",
+              "title": "Deaths",
+              "type": "ordinal"
+            }
+          ],
           "fill": {
             "field": "Deaths",
             "type": "quantitative",
-            "condition": {"test": "datum['Deaths'] == 0", "value": "white"}
-          },
-          "stroke": {
-            "condition": {"test": {"and": [{"selection": "highlight"}, "length(data(\"highlight_store\"))"]}, "value": "black"},
-            "value": null
-          },
-          "opacity": {
-            "condition": {"selection": "highlight", "value": 1},
-            "value": 0.5
+            "scale": {"type": "sqrt", "scheme": "lightmulti"}
           }
         }
       },
       {
         "mark": "text",
         "encoding": {
-          "text": {"field": "Set", "type": "nominal"},
-          "color": {
-            "condition": {"test": "datum['Deaths'] < 400", "value": "black"},
-            "value": "white"
-          }
+          "text": {"field": "Set", "type": "nominal"}
         }
       }
     ],
