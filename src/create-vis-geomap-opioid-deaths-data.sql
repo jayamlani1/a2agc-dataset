@@ -3,11 +3,53 @@ SELECT
     d.CASE_NUMBER,
     d.SEX,
     d.HOME_STATE,
+    d.AGE,
+    d.DOD,
+    d.ANY_HEROIN,
+    d.ANY_COCAINE,
+    d.FENTANYL,
+    d.ANY_METHAMPHETAMINE,
     r.N_OPIOID_PRESCRIPTIONS,
+    r.HYDROMORPHONE_1YEAR,
+    r.MORPHINE_1YEAR,
+    r.OXYMORPHONE_1YEAR,
+    r.OXYCODONE_1YEAR,
+    r.FENTANYL_1YEAR,
+    r.ANTIANXIETY_1YEAR,
+    r.ANTIDEPRESSANT_1YEAR,
+    r.BENZODIAZEPINE_1YEAR,
+    r.HYPNOTIC_1YEAR,
+    r.OTHER_OPIOID_1YEAR,
+    r.N_PRESCRIPTIONS,
     l.LATITUDE,
     l.LONGITUDE,
 
     -- Graphic Variables
+    CASE
+        WHEN d.ANY_HEROIN = 'true' THEN 'true'
+        WHEN d.ANY_COCAINE = 'true' THEN 'true'
+        WHEN d.FENTANYL = 'true' THEN 'true'
+        WHEN d.ANY_METHAMPHETAMINE = 'true' THEN 'true'
+        ELSE 'false'
+    END AS 'ANY_ILLICIT',
+    ---- Any Prescriptions?
+    CASE
+        WHEN r.N_PRESCRIPTIONS > 0 THEN 'true'
+        ELSE 'false'
+    END AS 'ANY_PRESCRIPTIONS',
+    ---- Any Opiod Prescription in last year
+    CASE
+        WHEN r.HYDROMORPHONE_1YEAR = 'true' THEN 'true'
+        WHEN r.MORPHINE_1YEAR = 'true' THEN 'true'
+        WHEN r.OXYMORPHONE_1YEAR = 'true' THEN 'true'
+        WHEN r.OXYCODONE_1YEAR = 'true' THEN 'true'
+        WHEN r.FENTANYL_1YEAR = 'true' THEN 'true'
+        WHEN r.ANTIANXIETY_1YEAR = 'true' THEN 'true'
+        WHEN r.ANTIDEPRESSANT_1YEAR = 'true' THEN 'true'
+        WHEN r.BENZODIAZEPINE_1YEAR = 'true' THEN 'true'
+        WHEN r.HYPNOTIC_1YEAR = 'true' THEN 'true'
+        WHEN r.OTHER_OPIOID_1YEAR = 'true' THEN 'true'
+    END AS 'ANY_OPIOD_PRESCRIPTIONS',
     ---- Color coding by SEX
     CASE
         WHEN d.SEX = 'M' THEN 'blue'

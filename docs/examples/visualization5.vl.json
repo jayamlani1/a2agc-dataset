@@ -46,7 +46,6 @@
         }
       },
       "transform": [
-
       ],
       "projection": {
         "type": "mercator"
@@ -55,6 +54,17 @@
       "mark": {
         "type": "point",
         "filled": true
+      },
+      "selection": {
+        "Filter": {
+          "type": "single",
+          "fields": ["SEX"],
+          "bind":{
+            "SEX": {
+              "input": "select", "options": [null, "M", "F"], "labels": ["Both"]
+            }
+          }
+        }
       },
       "encoding": {
         "longitude": {
@@ -65,7 +75,6 @@
           "type": "quantitative",
           "field": "latitude"
         },
-
         "shape": {
           "type": "nominal",
           "field": "HOME_STATE$$shape",
@@ -77,6 +86,10 @@
           "scale": {
             "domain": ["M", "F"],
             "range": ["blue", "pink"]
+          },
+          "legend": {
+            "fillColor": "white",
+            "padding": 15
           }
         },
         "size": {
@@ -84,7 +97,18 @@
           "field": "N_OPIOID_PRESCRIPTIONS",
           "scale": {
             "zero": true
+          },
+          "legend": {
+            "fillColor": "white",
+            "padding": 15
           }
+        },
+        "opacity": {
+          "condition": {
+            "selection": "Filter",
+            "value": 1
+          },
+          "value": 0
         }
       }
     }
