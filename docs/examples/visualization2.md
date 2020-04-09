@@ -30,3 +30,4 @@ Hosp: Admitted to hospital
 
 {{ vega.header() }}
 {{ vega.include('./visualization2.vl.json') }}
+{{ vega.include('./visualization2b.vl.json') }}

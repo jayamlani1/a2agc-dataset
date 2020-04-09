@@ -12,13 +12,11 @@
     "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null, "axis": {"labelFontSize": 15}},
     "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Hosp", "Hosp"], "title": null, "axis": {"labelAngle": 0, "labelFontSize": 15}}
   },
-  
+
   "layer": [
     {
-      "selection": {
-        "highlight": {"type": "single"}
-      },
-      "mark": {"type": "rect", "strokeWidth": 2},
+      "selection": {"highlight": {"type": "single"}},
+      "mark": {"type": "point", "strokeWidth": 2},
       "encoding": {
         "tooltip": [
           {
@@ -37,21 +35,18 @@
             "type": "ordinal"
           }
         ],
-        "fill": {
-          "field": "Deaths",
-          "type": "quantitative",
-          "scale": {"type": "sqrt", "scheme": "lightmulti"}
-        }
+        "size": {"field": "Deaths", "type": "quantitative", "scale": {"range": [0, 4000]}, "legend": {"values": [20, 100, 200, 400, 800]}},
+        "fill": {"value": "#4682b4"}
       }
     },
     {
-      "mark": "text",
+      "mark": {"type": "text", "dy": -40},
       "encoding": {
         "text": {"field": "Set", "type": "nominal"}
       }
     }
   ],
-  
+
   "config": {
     "scale": {
       "bandPaddingInner": 0,
