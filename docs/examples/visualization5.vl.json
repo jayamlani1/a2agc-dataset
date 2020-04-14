@@ -21,6 +21,19 @@
     "type": "pad",
     "resize": true
   },
+  "data": {
+    "url": "../data/vis-geomap-opioid-deaths.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "N_OPIOID_PRESCRIPTIONS": "number",
+        "LATITUDE": "number",
+        "LONGITUDE": "number",
+        "PERIOD": "date",
+        "VALUE": "number"
+      }
+    }
+  },
   "transform": [
     {
       "lookup": "DATA_VARIABLE",
@@ -38,11 +51,11 @@
     }
   ],
   "vconcat": [
-    {
-      "width": 550,
-      "height": 600,
+    {  
       "layer": [
         {
+          "width": 550,
+          "height": 600,
           "data": {
             "name": "counties",
             "url": "../data/indiana.topojson",
@@ -62,28 +75,11 @@
           }
         },
         {
-          "data": {
-            "url": "../data/vis-geomap-opioid-deaths.csv",
-            "format": {
-              "type": "csv",
-              "parse": {
-                "N_OPIOID_PRESCRIPTIONS": "number",
-                "latitude": "number",
-                "longitude": "number"
-              }
-            }
-          },
+          "width": 550,
+          "height": 600,
           "transform": [
-            {
-              "filter": {
-                "selection": "data_variable"
-              }
-            },
-            {
-              "filter": {
-                "selection": "period"
-              }
-            }
+            {"filter": { "selection": "data_variable" }},
+            {"filter": { "selection": "period" }}
           ],
           "projection": {
             "type": "mercator"
@@ -95,11 +91,11 @@
           "encoding": {
             "longitude": {
               "type": "quantitative",
-              "field": "longitude"
+              "field": "LONGITUDE"
             },
             "latitude": {
               "type": "quantitative",
-              "field": "latitude"
+              "field": "LATITUDE"
             },
             "shape": {
               "type": "nominal",
@@ -108,10 +104,11 @@
             },
             "color": {
               "type": "nominal",
-              "field": "COLOR"
+              "field": "COLOR",
+              "scale": null
             },
             "size": {
-              "value": 10
+              "value": 100
             }
           }
         }
@@ -123,23 +120,8 @@
       "view": {
         "strokeOpacity": 1
       },
-      "resolve": {
-        "scale": {
-          "color": "independent"
-        }
-      },
       "layer": [
         {
-          "data": {
-            "url": "../data/vis-geomap-opioid-deaths.csv",
-            "format": {
-              "type": "csv",
-              "parse": {
-                "N_OPIOID_PRESCRIPTIONS": "number",
-                "PERIOD": "date"
-              }
-            }
-          },
           "transform": [],
           "mark": {
             "type": "line"
@@ -153,65 +135,27 @@
               "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}"
             },
             "data_variable": {
-              "type": "multi",
-              "fields": [
-                "LABEL"
-              ],
-              "bind": {
-                "legend": "dblclick"
-              },
-              "init": [
-                {
-                  "LABEL": "Gender"
-                }
-              ]
+              "type": "single",
+              "fields": [ "DATA_VARIABLE" ],
+              "bind": {"input": "select", "options": ["SEX", "AGE","OPIOID_PRESCRIPTIONS_1YEAR"]},
+              "init": {"DATA_VARIABLE": "SEX"}
             }
           },
           "encoding": {
+            "x": {
+              "type": "temporal",
+              "field": "PERIOD",
+              "title": "Period"
+            },
             "y": {
               "aggregate": "count",
               "type": "quantitative",
-              "field": "N_OPIOID_PRESCRIPTIONS"
-            },
-            "x": {
-              "type": "temporal",
-              "field": "PERIOD"
-            },
-            "color": {
-              "type": "ordinal",
-              "field": "LEGEND_COLOR"
+              "field": "N_OPIOID_PRESCRIPTIONS",
+              "title": "Record Count"
             }
           }
         }
-      ],
-      "encoding": {
-        "color": {
-          "type": "nominal",
-          "field": "LABEL",
-          "title": "Data Variable",
-          "sort": {"field": "LEGEND_ORDER"},
-          "scale": {
-            "domain": [
-              "Gender",
-              "Age",
-              "Opiod Prescriptions within last year before death"
-            ],
-            "range": [
-              "#1f77b4",
-              "#aec7e8",
-              "#ff7f0e"
-            ]
-          },
-          "legend": {
-            "symbolType": "circle",
-            "orient": "right"
-          }
-        },
-        "opacity": {
-          "condition": {"selection": "data_variable", "value": 1},
-          "value": 0.1
-        }
-      }
+      ]
     }
   ]
 }
