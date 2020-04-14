@@ -1,26 +1,25 @@
 # Opioid Death Trajectories
 ---------------------------
 
-This example visualization shows accidental overdose deaths based on opioid prescription, previous overdose, incarceration and health data.
+This example visualization shows opioid overdose deaths based on history of opioid prescription, previous overdoses, incarceration and encounters with health services.
 
 ## Visualization
 
 The final visualization is shown below.  
 
 {{ vega.header() }}
-{{ vega.include('./visualization2.vl.json') }}  
 {{ vega.include('./visualization2b.vl.json') }}
 
 ## Purpose and Criteria
 
-The purpose of this visualization is to provide insight on the frequency of events that commonly occur one year before an overdose death.
+The purpose of this visualization is to provide insight on the frequency of events that commonly occur before an overdose death.
 
 Four criteria are analyzed:
 
 1. Opioid Prescription (Rx): Whether or not an individual had received an opioid prescription. This includes any opioid or benzo medications that were provided to the individual.
 2. Overdose (OD): Whether or not an individual had a previous overdose requiring EMS intervention. 
 3. Incarceration (Jail): Whether or not an individual had been in jail.
-4. Health Data (HD): Whether or not an individual had a previous encounter with healthcare services.
+4. Health Data (HD): Whether or not an individual had a previous encounter with healthcare services (excluding opioid prescriptions).
 
 The visualization provides a comparison of the number of cases across each possible combination of the above criteria, including the case where none apply (∅).
 

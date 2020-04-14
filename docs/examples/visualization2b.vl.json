@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
 
-  "width": 550,
-  "height": 400,
+  "width": 750,
+  "height": 600,
 
   "data": {
     "url": "../data/visualization2/data.csv"
@@ -16,7 +16,12 @@
   "layer": [
     {
       "selection": {"highlight": {"type": "single"}},
-      "mark": {"type": "point", "strokeWidth": 2},
+      "mark": {
+        "type": "circle", 
+        "strokeWidth": 1,
+        "stroke": "black",
+        "opacity": 1
+      },
       "encoding": {
         "tooltip": [
           {
@@ -35,14 +40,39 @@
             "type": "ordinal"
           }
         ],
-        "size": {"field": "Deaths", "type": "quantitative", "scale": {"range": [0, 4000]}, "legend": {"values": [20, 100, 200, 400, 800]}},
-        "fill": {"value": "#4682b4"}
+        "size": {
+          "condition": {"test": "datum['Deaths'] == 0", "value": 0},
+          "field": "Deaths", 
+          "type": "quantitative",
+          "scale": {"range": [200, 6000]}, 
+          "legend": {
+            "values": [20, 100, 200, 400, 800],
+            "symbolStrokeColor": "black",
+            "symbolStrokeWidth": 1,
+            "labelAlign": "center",
+            "labelOffset": -38
+          }
+        },
+        "color": {
+          "field": "Deaths",
+          "type": "quantitative",
+          "scale": {
+            "type": "sqrt", 
+            "scheme": "lightmulti"
+          }
+        }
       }
     },
     {
-      "mark": {"type": "text", "dy": -40},
+      "mark": {"type": "text", "dy": -60},
       "encoding": {
         "text": {"field": "Set", "type": "nominal"}
+      }
+    },
+    {
+      "mark": {"type": "text"},
+      "encoding": {
+        "text": {"field": "Deaths", "type": "quantitative"}
       }
     },
     {
@@ -56,7 +86,7 @@
           "field": " ",
           "type": "ordinal",
           "legend": {
-            "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "HD: Health Data"],
+            "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "HD: Health Data", "∅: No Touchpoints"],
             "symbolOffset": -15
           }
         }

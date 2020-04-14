@@ -59,7 +59,7 @@
           "field": " ",
           "type": "ordinal",
           "legend": {
-            "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "HD: Health Data"],
+            "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "HD: Health Data", "∅: No Touchpoints"],
             "symbolOffset": -15
           }
         }
