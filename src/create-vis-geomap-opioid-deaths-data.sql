@@ -27,30 +27,30 @@ SELECT
 
     -- Graphic Variables
     CASE
-        WHEN d.ANY_HEROIN THEN 'true'
-        WHEN d.ANY_COCAINE THEN 'true'
-        WHEN d.FENTANYL THEN 'true'
-        WHEN d.ANY_METHAMPHETAMINE THEN 'true'
-        ELSE 'false'
+        WHEN d.ANY_HEROIN THEN 'green'
+        WHEN d.ANY_COCAINE THEN 'green'
+        WHEN d.FENTANYL THEN 'green'
+        WHEN d.ANY_METHAMPHETAMINE THEN 'green'
+        ELSE 'blue'
     END AS 'ANY_ILLICIT',
     ---- Any Prescriptions?
     CASE
-        WHEN r.N_PRESCRIPTIONS > 0 THEN 'true'
-        ELSE 'false'
+        WHEN r.N_PRESCRIPTIONS > 0 THEN 'green'
+        ELSE 'blue'
     END AS 'ANY_PRESCRIPTIONS',
     ---- Any Opiod Prescription in last year
     CASE
-        WHEN r.HYDROMORPHONE_1YEAR THEN 'true'
-        WHEN r.MORPHINE_1YEAR THEN 'true'
-        WHEN r.OXYMORPHONE_1YEAR THEN 'true'
-        WHEN r.OXYCODONE_1YEAR THEN 'true'
-        WHEN r.FENTANYL_1YEAR THEN 'true'
-        WHEN r.ANTIANXIETY_1YEAR THEN 'true'
-        WHEN r.ANTIDEPRESSANT_1YEAR THEN 'true'
-        WHEN r.BENZODIAZEPINE_1YEAR THEN 'true'
-        WHEN r.HYPNOTIC_1YEAR THEN 'true'
-        WHEN r.OTHER_OPIOID_1YEAR THEN 'true'
-        ELSE 'false'
+        WHEN r.HYDROMORPHONE_1YEAR THEN 'green'
+        WHEN r.MORPHINE_1YEAR THEN 'green'
+        WHEN r.OXYMORPHONE_1YEAR THEN 'green'
+        WHEN r.OXYCODONE_1YEAR THEN 'green'
+        WHEN r.FENTANYL_1YEAR THEN 'green'
+        WHEN r.ANTIANXIETY_1YEAR THEN 'green'
+        WHEN r.ANTIDEPRESSANT_1YEAR THEN 'green'
+        WHEN r.BENZODIAZEPINE_1YEAR THEN 'green'
+        WHEN r.HYPNOTIC_1YEAR THEN 'green'
+        WHEN r.OTHER_OPIOID_1YEAR THEN 'green'
+        ELSE 'blue'
     END AS 'OPIOD_PRESCRIPTIONS_1YEAR',
     ---- Color coding by SEX
     CASE
@@ -96,6 +96,6 @@ SELECT * FROM (
     FROM "ALL_AGGREGATES"
     UNION ALL
     SELECT CASE_NUMBER, LATITUDE, LONGITUDE, DOD AS PERIOD, "HOME_STATE$$shape", "N_OPIOID_PRESCRIPTIONS",
-        'OPIOID_PRESCRIPTIONS_1YEAR' AS "DATA_VARIABLE", OPIOD_PRESCRIPTIONS_1YEAR AS "VALUE", "OPIOD_PRESCRIPTIONS_1YEAR$$color" AS "COLOR"
+        'OPIOID_PRESCRIPTIONS_1YEAR' AS "DATA_VARIABLE", OPIOD_PRESCRIPTIONS_1YEAR AS "VALUE", OPIOD_PRESCRIPTIONS_1YEAR AS "COLOR"
     FROM "ALL_AGGREGATES"
 ) AS A;
