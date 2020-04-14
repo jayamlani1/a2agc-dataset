@@ -19,7 +19,7 @@ Four criteria are analyzed:
 1. Opioid Prescription (Rx): Whether or not an individual had received an opioid prescription. This includes any opioid or benzo medications that were provided to the individual.
 2. Overdose (OD): Whether or not an individual had a previous overdose requiring EMS intervention. 
 3. Incarceration (Jail): Whether or not an individual had been in jail.
-4. Health Data (HD): Whether or not an individual had a previous encounter with healthcare services (excluding opioid prescriptions).
+4. Health Data (Health): Whether or not an individual had a previous encounter with healthcare services (excluding opioid prescriptions).
 
 The visualization provides a comparison of the number of cases across each possible combination of the above criteria, including the case where none apply (∅).
 

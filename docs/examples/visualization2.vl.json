@@ -10,7 +10,7 @@
 
   "encoding": {
     "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null, "axis": {"labelFontSize": 15}},
-    "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + HD", "HD"], "title": null, "axis": {"labelAngle": 0, "labelFontSize": 15}}
+    "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Health", "Health"], "title": null, "axis": {"labelAngle": 0, "labelFontSize": 15}}
   },
 
   "layer": [
@@ -59,7 +59,7 @@
           "field": " ",
           "type": "ordinal",
           "legend": {
-            "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "HD: Health Data", "∅: No Touchpoints"],
+            "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "Health: Health Data", "∅: No Touchpoints"],
             "symbolOffset": -15
           }
         }
