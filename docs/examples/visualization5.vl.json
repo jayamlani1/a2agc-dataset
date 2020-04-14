@@ -1,114 +1,215 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-
-  "width": 550,
-  "height": 600,
-
+  "name": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
+  "title": {
+    "text": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
+    "anchor": "middle",
+    "fontSize": 24
+  },
   "config": {
     "view": {
       "stroke": "transparent"
     }
   },
-
-  "layer": [
+  "padding": {
+    "left": 65,
+    "right": 10,
+    "bottom": 10,
+    "top": 10
+  },
+  "autosize": {
+    "type": "pad",
+    "resize": true
+  },
+  "transform": [
     {
-      "data": {
-        "name": "counties",
-        "url": "../data/indiana.topojson",
-        "format": {
-          "type": "topojson",
-          "feature": "counties"
+      "lookup": "DATA_VARIABLE",
+      "from": {
+        "key": "DATA_VARIABLE",
+        "fields": [
+          "LEGEND_ORDER",
+          "LABEL",
+          "LEGEND_COLOR"
+        ],
+        "data": {
+          "url": "../data/vis5-data-variables.csv"
         }
-      },
-      "transform": [
-      ],
-      "projection": {
-        "type": "mercator"
-      },
-
-      "mark": {
-        "type": "geoshape",
-        "fill": "white",
-        "stroke": "lightgray"
       }
-    },
-
+    }
+  ],
+  "vconcat": [
     {
-      "data": {
-        "url": "../data/vis-geomap-opioid-deaths.csv",
-        "format": {
-          "type": "csv",
-          "parse": {
-            "N_OPIOID_PRESCRIPTIONS": "number",
-            "latitude": "number",
-            "longitude": "number"
+      "width": 550,
+      "height": 600,
+      "layer": [
+        {
+          "data": {
+            "name": "counties",
+            "url": "../data/indiana.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "counties"
+            }
+          },
+          "transform": [],
+          "projection": {
+            "type": "mercator"
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "white",
+            "stroke": "lightgray"
           }
-        }
-      },
-      "transform": [
-      ],
-      "projection": {
-        "type": "mercator"
-      },
-
-      "mark": {
-        "type": "point",
-        "filled": true
-      },
-      "selection": {
-        "Filter": {
-          "type": "single",
-          "fields": ["SEX"],
-          "bind":{
-            "SEX": {
-              "input": "select", "options": [null, "M", "F"], "labels": ["Both"]
+        },
+        {
+          "data": {
+            "url": "../data/vis-geomap-opioid-deaths.csv",
+            "format": {
+              "type": "csv",
+              "parse": {
+                "N_OPIOID_PRESCRIPTIONS": "number",
+                "latitude": "number",
+                "longitude": "number"
+              }
+            }
+          },
+          "transform": [
+            {
+              "filter": {
+                "selection": "data_variable"
+              }
+            },
+            {
+              "filter": {
+                "selection": "period"
+              }
+            }
+          ],
+          "projection": {
+            "type": "mercator"
+          },
+          "mark": {
+            "type": "point",
+            "filled": true
+          },
+          "encoding": {
+            "longitude": {
+              "type": "quantitative",
+              "field": "longitude"
+            },
+            "latitude": {
+              "type": "quantitative",
+              "field": "latitude"
+            },
+            "shape": {
+              "type": "nominal",
+              "field": "HOME_STATE$$shape",
+              "scale": null
+            },
+            "color": {
+              "type": "nominal",
+              "field": "COLOR"
+            },
+            "size": {
+              "value": 10
             }
           }
         }
+      ]
+    },
+    {
+      "width": 703,
+      "height": 150,
+      "view": {
+        "strokeOpacity": 1
       },
+      "resolve": {
+        "scale": {
+          "color": "independent"
+        }
+      },
+      "layer": [
+        {
+          "data": {
+            "url": "../data/vis-geomap-opioid-deaths.csv",
+            "format": {
+              "type": "csv",
+              "parse": {
+                "N_OPIOID_PRESCRIPTIONS": "number",
+                "PERIOD": "date"
+              }
+            }
+          },
+          "transform": [],
+          "mark": {
+            "type": "line"
+          },
+          "selection": {
+            "period": {
+              "type": "interval",
+              "encodings": [
+                "x"
+              ],
+              "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}"
+            },
+            "data_variable": {
+              "type": "multi",
+              "fields": [
+                "LABEL"
+              ],
+              "bind": {
+                "legend": "dblclick"
+              },
+              "init": [
+                {
+                  "LABEL": "Gender"
+                }
+              ]
+            }
+          },
+          "encoding": {
+            "y": {
+              "aggregate": "count",
+              "type": "quantitative",
+              "field": "N_OPIOID_PRESCRIPTIONS"
+            },
+            "x": {
+              "type": "temporal",
+              "field": "PERIOD"
+            },
+            "color": {
+              "type": "ordinal",
+              "field": "LEGEND_COLOR"
+            }
+          }
+        }
+      ],
       "encoding": {
-        "longitude": {
-          "type": "quantitative",
-          "field": "longitude"
-        },
-        "latitude": {
-          "type": "quantitative",
-          "field": "latitude"
-        },
-        "shape": {
-          "type": "nominal",
-          "field": "HOME_STATE$$shape",
-          "scale": null
-        },
         "color": {
           "type": "nominal",
-          "field": "SEX",
+          "field": "LABEL",
+          "title": "Data Variable",
+          "sort": {"field": "LEGEND_ORDER"},
           "scale": {
-            "domain": ["M", "F"],
-            "range": ["blue", "pink"]
+            "domain": [
+              "Gender",
+              "Age",
+              "Opiod Prescriptions within last year before death"
+            ],
+            "range": [
+              "#1f77b4",
+              "#aec7e8",
+              "#ff7f0e"
+            ]
           },
           "legend": {
-            "fillColor": "white",
-            "padding": 15
-          }
-        },
-        "size": {
-          "type": "quantitative",
-          "field": "N_OPIOID_PRESCRIPTIONS",
-          "scale": {
-            "zero": true
-          },
-          "legend": {
-            "fillColor": "white",
-            "padding": 15
+            "symbolType": "circle",
+            "orient": "right"
           }
         },
         "opacity": {
-          "condition": {
-            "selection": "Filter",
-            "value": 1
-          },
-          "value": 0
+          "condition": {"selection": "data_variable", "value": 1},
+          "value": 0.1
         }
       }
     }
