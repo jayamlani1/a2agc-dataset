@@ -1,16 +1,17 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
 
-  "width": 750,
-  "height": 600,
+  "width": 600,
+  "height": 500,
+  "padding": 0,
 
   "data": {
     "url": "../data/visualization2/data.csv"
   },
 
   "encoding": {
-    "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null, "axis": {"labelFontSize": 15}},
-    "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Health", "Health"], "title": null, "axis": {"labelAngle": 0, "labelFontSize": 15}}
+    "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null, "axis": null},
+    "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Health", "Health"], "title": null, "axis": null}
   },
 
   "layer": [
@@ -44,27 +45,21 @@
           "condition": {"test": "datum['Deaths'] == 0", "value": 0},
           "field": "Deaths", 
           "type": "quantitative",
-          "scale": {"range": [200, 6000]}, 
-          "legend": {
-            "values": [20, 100, 200, 400, 800],
-            "symbolStrokeColor": "black",
-            "symbolStrokeWidth": 1,
-            "labelAlign": "center",
-            "labelOffset": -38
-          }
+          "scale": {"range": [200, 6000]},
+          "legend": null
         },
         "color": {
           "field": "Deaths",
           "type": "quantitative",
           "scale": {
             "type": "sqrt", 
-            "scheme": "lightmulti"
+            "scheme": "blues"
           }
         }
       }
     },
     {
-      "mark": {"type": "text", "dy": -60},
+      "mark": {"type": "text", "dy": -50},
       "encoding": {
         "text": {"field": "Set", "type": "nominal"}
       }
@@ -72,7 +67,10 @@
     {
       "mark": {"type": "text"},
       "encoding": {
-        "text": {"field": "Deaths", "type": "quantitative"}
+        "text": {"field": "Deaths", "type": "quantitative"},
+        "color": {
+          "condition": {"test": "datum['Deaths'] > 300", "value": "white"}
+        }
       }
     },
     {
@@ -81,13 +79,14 @@
         "fontSize": 0
       },
       "encoding": {
-        "text": {"field": " ", "type": "ordinal"},
         "fill": {
           "field": " ",
+          "title": null,
           "type": "ordinal",
           "legend": {
             "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "Health: Health Data", "∅: No Touchpoints"],
-            "symbolOffset": -15
+            "symbolOffset": -15,
+            "padding": 5
           }
         }
       }
@@ -95,13 +94,7 @@
   ],
 
   "config": {
-    "scale": {
-      "bandPaddingInner": 0,
-      "bandPaddingOuter": 0
-    },
-    "view": {"step": 40},
-    "axis": {
-      "domain": false
-    }
+    "view": {"strokeOpacity": 0}
   }
 }
+
