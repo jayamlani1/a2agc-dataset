@@ -27,8 +27,8 @@
       "type": "csv",
       "parse": {
         "N_OPIOID_PRESCRIPTIONS": "number",
-        "LATITUDE": "number",
-        "LONGITUDE": "number",
+        "latitude": "number",
+        "longitude": "number",
         "PERIOD": "date",
         "VALUE": "number"
       }
@@ -91,11 +91,11 @@
           "encoding": {
             "longitude": {
               "type": "quantitative",
-              "field": "LONGITUDE"
+              "field": "longitude"
             },
             "latitude": {
               "type": "quantitative",
-              "field": "LATITUDE"
+              "field": "latitude"
             },
             "shape": {
               "type": "nominal",
@@ -136,9 +136,17 @@
             },
             "data_variable": {
               "type": "single",
-              "fields": [ "DATA_VARIABLE" ],
-              "bind": {"input": "select", "options": ["SEX", "AGE","OPIOID_PRESCRIPTIONS_1YEAR"]},
-              "init": {"DATA_VARIABLE": "SEX"}
+              "fields": [ "LABEL" ],
+              "bind": {
+                "input": "select",
+                "name": "Data Variable",
+                "options": [
+                  "Gender",
+                  "Age",
+                  "Opioid Prescriptions within last year before death"
+                ]
+              },
+              "init": {"LABEL": "Gender"}
             }
           },
           "encoding": {
@@ -152,6 +160,9 @@
               "type": "quantitative",
               "field": "N_OPIOID_PRESCRIPTIONS",
               "title": "Record Count"
+            },
+            "color": {
+              "value": "lightgray"
             }
           }
         }
