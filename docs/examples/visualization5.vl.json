@@ -27,8 +27,8 @@
       "type": "csv",
       "parse": {
         "N_OPIOID_PRESCRIPTIONS": "number",
-        "latitude": "number",
-        "longitude": "number",
+        "LATITUDE": "number",
+        "LONGITUDE": "number",
         "PERIOD": "date",
         "VALUE": "number"
       }
@@ -91,11 +91,11 @@
           "encoding": {
             "longitude": {
               "type": "quantitative",
-              "field": "longitude"
+              "field": "LONGITUDE"
             },
             "latitude": {
               "type": "quantitative",
-              "field": "latitude"
+              "field": "LATITUDE"
             },
             "shape": {
               "type": "nominal",
@@ -122,7 +122,9 @@
       },
       "layer": [
         {
-          "transform": [],
+          "transform": [
+            {"filter": "datum.DATA_VARIABLE == 'AGE'"}
+          ],
           "mark": {
             "type": "line"
           },
@@ -159,7 +161,7 @@
               "aggregate": "count",
               "type": "quantitative",
               "field": "N_OPIOID_PRESCRIPTIONS",
-              "title": "Record Count"
+              "title": "# Deaths by Quarter"
             },
             "color": {
               "value": "lightgray"
