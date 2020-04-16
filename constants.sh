@@ -7,7 +7,7 @@ export MYPYPATH=$PYTHONPATH
 export GPG_TTY=$(tty)
 
 ORIG=./raw-data/original
-OUT=./raw-data/derived/2019-11-27
+OUT=./raw-data/derived/2020-04-17
 mkdir -p $ORIG $OUT/site-data
 
 DB=$OUT/a2agc.db
