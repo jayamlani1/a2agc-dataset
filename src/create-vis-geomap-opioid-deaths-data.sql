@@ -1,13 +1,57 @@
+CREATE TEMPORARY TABLE "ALL_AGGREGATES" AS
 SELECT
     -- Data Variables
     d.CASE_NUMBER,
     d.SEX,
     d.HOME_STATE,
+    d.AGE,
+    d.DOD,
+    d.ANY_HEROIN,
+    d.ANY_COCAINE,
+    d.FENTANYL,
+    d.ANY_METHAMPHETAMINE,
     r.N_OPIOID_PRESCRIPTIONS,
+    r.HYDROMORPHONE_1YEAR,
+    r.MORPHINE_1YEAR,
+    r.OXYMORPHONE_1YEAR,
+    r.OXYCODONE_1YEAR,
+    r.FENTANYL_1YEAR,
+    r.ANTIANXIETY_1YEAR,
+    r.ANTIDEPRESSANT_1YEAR,
+    r.BENZODIAZEPINE_1YEAR,
+    r.HYPNOTIC_1YEAR,
+    r.OTHER_OPIOID_1YEAR,
+    r.N_PRESCRIPTIONS,
     l.LATITUDE,
     l.LONGITUDE,
 
     -- Graphic Variables
+    CASE
+        WHEN d.ANY_HEROIN THEN 'green'
+        WHEN d.ANY_COCAINE THEN 'green'
+        WHEN d.FENTANYL THEN 'green'
+        WHEN d.ANY_METHAMPHETAMINE THEN 'green'
+        ELSE 'blue'
+    END AS 'ANY_ILLICIT',
+    ---- Any Prescriptions?
+    CASE
+        WHEN r.N_PRESCRIPTIONS > 0 THEN 'green'
+        ELSE 'blue'
+    END AS 'ANY_PRESCRIPTIONS',
+    ---- Any Opiod Prescription in last year
+    CASE
+        WHEN r.HYDROMORPHONE_1YEAR THEN 'green'
+        WHEN r.MORPHINE_1YEAR THEN 'green'
+        WHEN r.OXYMORPHONE_1YEAR THEN 'green'
+        WHEN r.OXYCODONE_1YEAR THEN 'green'
+        WHEN r.FENTANYL_1YEAR THEN 'green'
+        WHEN r.ANTIANXIETY_1YEAR THEN 'green'
+        WHEN r.ANTIDEPRESSANT_1YEAR THEN 'green'
+        WHEN r.BENZODIAZEPINE_1YEAR THEN 'green'
+        WHEN r.HYPNOTIC_1YEAR THEN 'green'
+        WHEN r.OTHER_OPIOID_1YEAR THEN 'green'
+        ELSE 'blue'
+    END AS 'OPIOD_PRESCRIPTIONS_1YEAR',
     ---- Color coding by SEX
     CASE
         WHEN d.SEX = 'M' THEN 'blue'
@@ -26,6 +70,23 @@ SELECT
     ---- Size coding by N_OPIOID_PRESCRIPTIONS
     (CAST(r.N_OPIOID_PRESCRIPTIONS AS real) / (SELECT max(N_OPIOID_PRESCRIPTIONS) FROM rollup1) * 500) + 25 AS 'N_OPIOID_PRESCRIPTIONS$$areaSize',
 
+    ---- Color coding by AGE
+    CASE
+      WHEN d.AGE BETWEEN 0 AND 15 THEN '#f4f4f4'
+      WHEN d.AGE BETWEEN 16 AND 20 THEN '#e4e4e4'
+      WHEN d.AGE BETWEEN 21 AND 25 THEN '#d6d6d6'
+      WHEN d.AGE BETWEEN 26 AND 30 THEN '#cacaca'
+      WHEN d.AGE BETWEEN 31 AND 35 THEN '#b7b7b7'
+      WHEN d.AGE BETWEEN 36 AND 40 THEN '#a5a5a5'
+      WHEN d.AGE BETWEEN 41 AND 45 THEN '#989898'
+      WHEN d.AGE BETWEEN 46 AND 50 THEN '#8a8a8a'
+      WHEN d.AGE BETWEEN 51 AND 55 THEN '#7b7b7b'
+      WHEN d.AGE BETWEEN 56 AND 60 THEN '#6d6d6d'
+      WHEN d.AGE BETWEEN 61 AND 65 THEN '#616161'
+      WHEN d.AGE BETWEEN 66 AND 70 THEN '#525252'
+      WHEN d.AGE > 70 THEN '#424242'
+    END AS 'AGE$$color',
+
     ---- Fixed-value Graphic Variables
     'Fixed values for visualization' AS 'Fixed',
     '#bebebe' AS 'Fixed$$color',
@@ -41,3 +102,38 @@ FROM
 WHERE l.LATITUDE BETWEEN 37.77191769456694 AND 41.7605318
     AND l.LONGITUDE BETWEEN -88.09054069310693 AND -84.79556880758807
 ORDER BY d.CASE_NUMBER ASC;
+
+SELECT A."CASE_NUMBER" AS "CASE_NUMBER",
+  LATITUDE AS "LATITUDE",
+  LONGITUDE AS "LONGITUDE",
+  -- SUBSTR(DOD, 0, 8) || '-01'  AS "PERIOD", -- Monthly periodicity
+  strftime('%Y', DOD) || CASE
+    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 1 AND 3 THEN '-01-01'
+    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 4 and 6 THEN '-04-01'
+    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 7 and 9 THEN '-07-01'
+    ELSE '-10-01'
+  END AS "PERIOD", -- Quarterly Period
+  "HOME_STATE$$shape",
+  "N_OPIOID_PRESCRIPTIONS",
+  "DATA_VARIABLE",
+  "VALUE",
+  "COLOR",
+  A.SEX AS "SEX"
+  FROM
+    "ALL_AGGREGATES" A INNER JOIN (
+      SELECT CASE_NUMBER, 'SEX' AS "DATA_VARIABLE",
+        SEX AS "VALUE", "SEX$$color" AS "COLOR", SEX AS "SEX"
+      FROM "ALL_AGGREGATES"
+      UNION ALL
+      SELECT CASE_NUMBER, 'AGE' AS "DATA_VARIABLE",
+        AGE AS "VALUE", "AGE$$color" AS "COLOR", SEX AS "SEX"
+      FROM "ALL_AGGREGATES"
+      UNION ALL
+      SELECT CASE_NUMBER, 'ANY_PRESCRIPTIONS' AS "DATA_VARIABLE",
+        AGE AS "VALUE", ANY_PRESCRIPTIONS AS "COLOR", SEX AS "SEX"
+      FROM "ALL_AGGREGATES"
+      UNION ALL
+      SELECT CASE_NUMBER, 'OPIOID_PRESCRIPTIONS_1YEAR' AS "DATA_VARIABLE",
+        OPIOD_PRESCRIPTIONS_1YEAR AS "VALUE", OPIOD_PRESCRIPTIONS_1YEAR AS "COLOR", SEX AS "SEX"
+      FROM "ALL_AGGREGATES"
+    ) AS B ON (A.CASE_NUMBER = B.CASE_NUMBER);
