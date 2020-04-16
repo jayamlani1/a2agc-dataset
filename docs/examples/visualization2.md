@@ -3,6 +3,15 @@
 
 This example visualization shows opioid overdose deaths based on case history of opioid prescription, previous overdose, incarceration and encounters with health services.
 
+## Visualization
+
+The final visualization is shown below.  
+
+{{ vega.header() }}
+{{ vega.include('./visualization2b.vl.json') }}
+
+[(Source Vega-Lite Visualization Spec)](./visualization2b.vl.json)
+
 ## Purpose and Details
 
 The purpose of this visualization is to provide insight on the frequency of common events that commonly occur before an overdose death.
@@ -22,13 +31,6 @@ Data was taken from four separate datasets corresponding to each of the four tou
 2. EMS Incidents: 2011-2018
 3. Incarcerations: 2014-2018
 4. Health Encounters: 2010-2018
-
-## Visualization
-
-The final visualization is shown below.  
-
-{{ vega.header() }}
-{{ vega.include('./visualization2b.vl.json') }}
 
 ## Data and Graphic Variable Extraction
 

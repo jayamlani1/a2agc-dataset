@@ -15,7 +15,6 @@ nav:
   - Visualizations:
     # - Getting Started: examples/getting_started.md
     - Demographic Comparison of Opioid Deaths: examples/visualization1.md
-    - Opioid Death Trajectories: examples/visualization2.md
     - Heatmaps of Deaths with Substance: examples/visualization4a.md
     - Heatmaps of Substance Proportions at Death: examples/visualization4.md
     - Opioid Death Trajectories: examples/visualization2.md
