@@ -2,3 +2,4 @@ LEGEND_ORDER,DATA_VARIABLE,LABEL,LEGEND_COLOR,COLOR_GROUP,SCALING_FACTOR
 01,SEX,Gender,#1f77b4,1,1
 02,AGE,Age,#aec7e8,1,1
 03,OPIOID_PRESCRIPTIONS_1YEAR,Opioid Prescriptions within last year before death,#ff7f0e,2,1
+04,ANY_PRESCRIPTIONS,Any Prescriptions before death,#aec7e8,1,1

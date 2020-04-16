@@ -3,6 +3,16 @@
 
 This example visualization shows a geographic map of opioid deaths that occurred from 2010-2018 in Marion County, Indiana.
 
+## Visualization
+
+{{ vega.header() }}
+{{ js.include('./geo-zoom.js') }}
+{{ vega.include('./visualization5.vl.json', { 'actions': True }) }}
+
+## Visualization Creation
+
+A VegaLite [specification](./visualization5.vl.json) was manually written to conform to the requirements. The resulting specifications are then displayed using [Vega-Embed](https://github.com/vega/vega-embed) with zooming and panning functionality added to the result using a javascript [patch](./geo-zoom.js).
+
 ## Data and Graphic Variable Extraction
 
 Opioid death data was fetched from the database using the following query:
@@ -17,16 +27,3 @@ In addition to extracting raw data, the query also creates columns for data-vari
 * Area Size mapping was created from `N_OPIOID_PRESCRIPTIONS` and results interpolated in the range of `25 - 525`.
 
 The results were exported to a [csv file](../data/vis-geomap-opioid-deaths.csv) for loading into Make-a-Vis.
-
-## Visualization Creation
-
-A VegaLite [specification](./visualization5.vl.json) was manually written to conform to the requirements. The resulting specifications are then displayed using [Vega-Embed](https://github.com/vega/vega-embed) with zooming and panning functionality added to the result using a javascript [patch](./geo-zoom.js).
-
-
-## Visualization
-
-The final product is visualized below.
-
-{{ vega.header() }}
-{{ js.include('./geo-zoom.js') }}
-{{ vega.include('./visualization5.vl.json', { 'actions': True }) }}

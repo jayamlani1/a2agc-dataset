@@ -79,7 +79,9 @@
           "height": 600,
           "transform": [
             {"filter": { "selection": "data_variable" }},
-            {"filter": { "selection": "period" }}
+            {"filter": { "selection": "period" }},
+            {"filter": {"selection": "out_of_state_filter"}},
+            {"filter": {"selection": "gender_select"}}
           ],
           "projection": {
             "type": "mercator"
@@ -123,7 +125,9 @@
       "layer": [
         {
           "transform": [
-            {"filter": "datum.DATA_VARIABLE == 'AGE'"}
+            {"filter": "datum.DATA_VARIABLE == 'AGE'"},
+            {"filter": {"selection": "out_of_state_filter"}},
+            {"filter": {"selection": "gender_select"}}
           ],
           "mark": {
             "type": "line"
@@ -136,6 +140,24 @@
               ],
               "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}"
             },
+            "out_of_state_filter": {
+              "type": "single",
+              "fields": ["HOME_STATE$$shape"],
+              "bind":{
+                "HOME_STATE$$shape": {
+                  "input": "select", "options": [null, "circle", "triangle"], "labels": ["Any", "Indiana", "Not Indiana"], "name": "Home State"
+                }
+              }
+            },
+            "gender_select": {
+              "type": "single",
+              "fields": ["SEX"],
+              "bind":{
+                "SEX": {
+                  "input": "select", "options": [null, "M", "F"], "labels": ["Both", "Male", "Female"], "name": "Gender"
+                }
+              }
+            },
             "data_variable": {
               "type": "single",
               "fields": [ "LABEL" ],
@@ -145,7 +167,8 @@
                 "options": [
                   "Gender",
                   "Age",
-                  "Opioid Prescriptions within last year before death"
+                  "Opioid Prescriptions within last year before death",
+                  "Any Prescriptions before death"
                 ]
               },
               "init": {"LABEL": "Gender"}
