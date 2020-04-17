@@ -76,16 +76,21 @@ SELECT
   CASE_NUMBER,
   A AS "Touchpoint A",
   B AS "Touchpoint B",
-  DOD as "DOD",
+  strftime('%Y', DOD) || CASE
+    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 1 AND 3 THEN '-01-01'
+    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 4 and 6 THEN '-04-01'
+    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 7 and 9 THEN '-07-01'
+    ELSE '-10-01'
+  END AS "PERIOD",
   subset AS "Set",
   TRUE as "True"
 FROM (
   SELECT CASE_NUMBER, A, B, DOD, subset, TRUE FROM labels
-  -- UNION
-  -- SELECT 1 AS CASE_NUMBER, 'Rx + OD' AS A, '∅' AS B, null AS MIN_DATE, 'Rx + OD' AS subset, 0 AS TRUE
-  -- UNION
-  -- SELECT 2 AS CASE_NUMBER, 'Rx + OD' AS A, 'Jail' AS B, null AS MIN_DATE, 'Rx + OD + Jail' AS subset, 0 AS TRUE
-  -- UNION
-  -- SELECT 3 AS CASE_NUMBER, 'Rx' AS A, 'Jail' AS B, null AS MIN_DATE, 'Rx + Jail' AS subset, 0 AS TRUE
+  UNION
+  SELECT 1 AS CASE_NUMBER, 'Rx + OD' AS A, '∅' AS B, null AS PERIOD, 'Rx + OD' AS subset, 0 AS TRUE
+  UNION
+  SELECT 2 AS CASE_NUMBER, 'Rx + OD' AS A, 'Jail' AS B, null AS PERIOD, 'Rx + OD + Jail' AS subset, 0 AS TRUE
+  UNION
+  SELECT 3 AS CASE_NUMBER, 'Rx' AS A, 'Jail' AS B, null AS PERIOD, 'Rx + Jail' AS subset, 0 AS TRUE
 ) AS data
 ORDER BY CASE_NUMBER;

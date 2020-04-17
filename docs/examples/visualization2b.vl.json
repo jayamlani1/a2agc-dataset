@@ -10,7 +10,7 @@
     "format": {
       "type": "csv",
       "parse": {
-        "DOD": "date"
+        "PERIOD": "date"
       }
     }
   },
@@ -58,7 +58,7 @@
               "aggregate": "sum",
               "field": "True",
               "type": "quantitative",
-              "scale": {"range": [200, 6000]},
+              "scale": {"range": [0, 6000]},
               "legend": null
             },
             "color": {
@@ -73,13 +73,13 @@
           }
         },
         {
-          "mark": {"type": "text", "dy": -50},
+          "mark": {"type": "text", "dy": -60},
           "encoding": {
             "text": {"aggregate": "max", "field": "Set", "type": "nominal"}
           }
         },
         {
-          "mark": {"type": "text"},
+          "mark": {"type": "text", "dy": -45},
           "encoding": {
             "text": {"aggregate": "sum", "field": "True", "type": "quantitative"}
           }
@@ -99,8 +99,7 @@
               "type": "ordinal",
               "legend": {
                 "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "Health: Health Data", "∅: No Touchpoints"],
-                "symbolOffset": -15,
-                "padding": 5
+                "symbolOffset": -15
               }
             }
           }
@@ -129,7 +128,7 @@
           },
           "encoding": {
             "x": {
-              "field": "DOD",
+              "field": "PERIOD",
               "type": "temporal",
               "title": "Date of Death",
               "scale": {"nice": true}
