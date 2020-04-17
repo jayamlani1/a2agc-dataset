@@ -79,7 +79,7 @@
           }
         },
         {
-          "mark": {"type": "text", "dy": -45},
+          "mark": {"type": "text", "dy": -45, "fontStyle": "bold"},
           "encoding": {
             "text": {"aggregate": "sum", "field": "True", "type": "quantitative"}
           }
