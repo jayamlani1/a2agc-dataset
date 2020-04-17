@@ -61,7 +61,12 @@
           "op": "sum",
           "field": "count",
           "as": "total_count"
-        },
+        }
+      ],
+      "groupby": ["year"]
+    },
+    {
+      "joinaggregate": [
         {
           "op": "sum",
           "field": "census_count",

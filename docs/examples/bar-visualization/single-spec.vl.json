@@ -77,7 +77,11 @@
           "op": "sum",
           "field": "count",
           "as": "total_count"
-        },
+        }
+      ]
+    },
+    {
+      "joinaggregate": [
         {
           "op": "sum",
           "field": "census_count",
