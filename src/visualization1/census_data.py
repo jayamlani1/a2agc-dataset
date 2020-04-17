@@ -30,6 +30,7 @@ import mypy_extensions as te
 
 RawEntry = t.Tuple[str, str, str]
 Entry = te.TypedDict('Entry', {
+  'key': str,
   'year': int,
   'gender': str,
   'age_group': int,
@@ -38,8 +39,8 @@ Entry = te.TypedDict('Entry', {
 
 # Constants
 
-_ARCHIVE_NAME_PATTERN = re.compile('ACS_(?P<year>\d\d)_(EST|1YR)_S0101')
-_DATA_FILE_NAME_PATTERN = re.compile('ACS_\d\d_(EST|1YR)_S0101_with_ann.csv')
+_ARCHIVE_NAME_PATTERN = re.compile(r'ACS_(?P<year>\d\d)_(EST|1YR)_S0101')
+_DATA_FILE_NAME_PATTERN = re.compile(r'ACS_\d\d_(EST|1YR)_S0101_with_ann.csv')
 
 _FEMALE_TOTAL_PATTERN = re.compile('Female; Estimate; Total population', re.I)
 _MALE_TOTAL_PATTERN = re.compile('Male; Estimate; Total population', re.I)
@@ -51,7 +52,7 @@ _DATA_PATTERN = re.compile(
   'AGE - '
   '(Under (?P<zero>5) years|'
   '(?P<seventeen>85) years and over|'
-  '(?P<between>\d+) to \d+ years)',
+  r'(?P<between>\d+) to \d+ years)',
   re.I
 )
 
@@ -101,7 +102,7 @@ def savef_data(file: t.TextIO, data: t.Iterable[Entry], write_header = True) -> 
     data: A sequence of processed data objects to serialize.
     write_header: Whether a header show be written before the data.
   '''
-  fields = ['year', 'gender', 'age_group', 'count']
+  fields = ['key', 'year', 'gender', 'age_group', 'count']
   writer = csv.DictWriter(file, fields, extrasaction='ignore')
 
   if write_header:
@@ -159,6 +160,7 @@ def process_raw_data(entries: t.Iterable[RawEntry], year = -1) -> t.List[Entry]:
       count = count / 100 * total
 
     result.append({
+      'key': f'{2000 + year}-{gender}-{17 - age_group}',
       'year': 2000 + year,
       'gender': gender,
       'age_group': 17 - age_group,
