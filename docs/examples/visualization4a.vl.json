@@ -1,0 +1,292 @@
+{
+	"$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+	"config": {
+		"mark": {
+			"tooltip": null
+		}
+	},
+	"data": {
+		"url": "../data/visualization4/data.csv"
+	},
+	"vconcat": [
+		{
+			"hconcat": [
+
+				{
+					"mark": "bar",
+					"encoding": {
+						"x": {
+							"axis": {
+								"labels": true
+							},
+							"field": "group",
+							"title": "Age Group",
+							"type": "ordinal"
+						},
+						"y": {
+							"aggregate": "distinct",
+							"field": "CASE_NUMBER",
+							"type": "quantitative",
+							"title": "Deaths"
+						},
+						"tooltip": [
+							{
+								"aggregate": "distinct",
+								"field": "CASE_NUMBER",
+								"type": "quantitative",
+								"title": "Total"
+							},
+							{
+								"field": "group",
+								"title": "Age Group",
+								"type": "ordinal"
+							}
+						]
+					},
+					"transform": [
+						{
+							"filter": {
+								"selection": "pts"
+							}
+						},
+						{
+							"filter": {
+								"selection": "year_selection"
+							}
+						},
+						{
+							"as": "group",
+							"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+						}
+					],
+					"width": 500,
+					"height": 400
+				},
+				{
+					"encoding": {
+						"color": {
+							"field": "TOTAL_DEATHS",
+							"scale": {
+								"scheme": "yellowgreenblue"
+							},
+							"title": "Deaths",
+							"type": "quantitative"
+						},
+						"tooltip": [
+							{
+								"field": "TOTAL_DEATHS",
+								"title": "Deaths",
+								"type": "ordinal"
+							},
+							{
+								"field": "group",
+								"title": "Age Group",
+								"type": "ordinal"
+							},
+							{
+								"field": "YEAR",
+								"title": "YEAR",
+								"type": "ordinal"
+							}
+						],
+						"x": {
+							"field": "YEAR",
+							"title": "",
+							"type": "ordinal"
+						},
+						"y": {
+							"axis": {
+								"labels": true
+							},
+							"field": "group",
+							"title": "Age Group",
+							"type": "ordinal"
+						}
+					},
+					"mark": "rect",
+					"title": "All substances",
+					"transform": [
+						{
+							"filter": {
+								"selection": "pts"
+							}
+						},
+						{
+							"filter": {
+								"selection": "year_selection"
+							}
+						},
+						{
+							"aggregate": [
+								{
+									"as": "TOTAL_DEATHS",
+									"field": "CASE_NUMBER",
+									"op": "distinct"
+								}
+							],
+							"groupby": [
+								"AGE_GROUP",
+								"YEAR"
+							]
+						},
+						{
+							"as": "group",
+							"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+						}
+					],
+					"width": 500,
+					"height": 400
+				}
+			]
+		},
+		{
+			"hconcat": [
+
+				{
+					"mark": "line",
+					"width": 870,
+					"height": 200,
+					"title": "Filters",
+					"encoding": {
+						"x": {
+							"field": "YEAR",
+							"type": "ordinal",
+							"axis": {
+								"title": "YEAR"
+							}
+						},
+						"y": {
+							"field": "TOTAL_DEATHS",
+							"type": "quantitative",
+							"axis": {
+								"title": "Deaths"
+							}
+						}
+					},
+					"selection": {
+						"year_selection": {
+							"type": "interval",
+							"encodings": [
+								"x"
+							]
+						}
+					},
+					"transform": [
+						{
+							"filter": {
+								"selection": "pts"
+							}
+						},
+						{
+							"aggregate": [
+								{
+									"as": "TOTAL_DEATHS",
+									"field": "CASE_NUMBER",
+									"op": "distinct"
+								}
+							],
+							"groupby": [
+								"YEAR"
+							]
+						}
+					]
+				},
+				{
+					"data": {
+						"values": [
+							{
+								"SUBSTANCE_NAME": "Heroin",
+								"SEX": "M"
+							},
+							{
+								"SUBSTANCE_NAME": "Heroin",
+								"SEX": "F"
+							},
+							{
+								"SUBSTANCE_NAME": "Methamphetamine",
+								"SEX": "M"
+							},
+							{
+								"SUBSTANCE_NAME": "Methamphetamine",
+								"SEX": "F"
+							},
+							{
+								"SUBSTANCE_NAME": "Fentanyl",
+								"SEX": "M"
+							},
+							{
+								"SUBSTANCE_NAME": "Fentanyl",
+								"SEX": "F"
+							},
+							{
+								"SUBSTANCE_NAME": "Any Opioid",
+								"SEX": "M"
+							},
+							{
+								"SUBSTANCE_NAME": "Any Opioid",
+								"SEX": "F"
+							},
+							{
+								"SUBSTANCE_NAME": "Benzodiazepine",
+								"SEX": "M"
+							},
+							{
+								"SUBSTANCE_NAME": "Benzodiazepine",
+								"SEX": "F"
+							},
+							{
+								"SUBSTANCE_NAME": "Cocaine",
+								"SEX": "M"
+							},
+							{
+								"SUBSTANCE_NAME": "Cocaine",
+								"SEX": "F"
+							},
+							{
+								"SUBSTANCE_NAME": "Prescription Opioid",
+								"SEX": "M"
+							},
+							{
+								"SUBSTANCE_NAME": "Prescription Opioid",
+								"SEX": "F"
+							}
+						]
+					},
+					"mark": "rect",
+					"height": 200,
+					"width": 70,
+					"selection": {
+						"pts": {
+							"type": "multi",
+							"fields": [
+								"SUBSTANCE_NAME",
+								"SEX"
+							]
+						}
+					},
+					"encoding": {
+						"x": {
+							"field": "SEX",
+							"title": "SEX",
+							"type": "ordinal"
+						},
+						"y": {
+							"field": "SUBSTANCE_NAME",
+							"title": "Substance Name",
+							"type": "ordinal"
+						},
+						"color": {
+							"condition": {
+								"selection": "pts",
+								"aggregate": "count",
+								"type": "quantitative"
+							},
+							"value": "grey"
+						}
+					}
+				}
+			]
+		}
+
+	]
+}
