@@ -18,7 +18,7 @@
   },
 
   "data": {
-    "url": "../../../data/vis1-data/death-counts.csv",
+    "url": "../../data/vis1-data/death-counts.csv",
     "format": {
       "type": "csv",
       "parse": {
@@ -45,7 +45,7 @@
         "key": "key",
         "fields": ["count"],
         "data": {
-          "url": "../../../data/vis1-data/census-counts.csv"
+          "url": "../../data/vis1-data/census-counts.csv"
         }
       },
       "as": ["census_count"],
