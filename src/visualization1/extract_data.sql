@@ -5,6 +5,7 @@
 -- etc.
 
 SELECT
+  printf('%d-%s-%d', YEAR, SEX, (17 - min(CAST((AGE / 5) AS INT), 17))) as key,
   YEAR as year,
   SEX as gender,
   (17 - min(CAST((AGE / 5) AS INT), 17)) AS age_group,

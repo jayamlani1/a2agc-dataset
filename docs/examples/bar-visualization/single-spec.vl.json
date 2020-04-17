@@ -1,0 +1,317 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+
+  "title": {
+    "text": "2010 to 2018",
+    "anchor": "middle",
+    "dx": 15
+  },
+
+  "bounds": "flush",
+  "config": {
+    "view": {
+      "height": 500,
+      "continuousHeight": 400,
+      "continuousWidth": 400,
+      "stroke": "transparent"
+    }
+  },
+  "spacing": 0,
+
+  "data": {
+    "url": "http://localhost:6940/data/vis1-data/death-counts.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "age_group": "number",
+        "count": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "impute": "count",
+      "key": "age_group",
+      "keyvals": { "stop": 17 },
+      "groupby": ["year", "gender"]
+    },
+    {
+      "calculate": "datum.year + '-' + datum.gender + '-' + datum.age_group",
+      "as": "key"
+    },
+    {
+      "lookup": "key",
+      "from": {
+        "key": "key",
+        "fields": ["count"],
+        "data": {
+          "url": "http://localhost:6940/data/vis1-data/census-counts.csv"
+        }
+      },
+      "as": ["census_count"],
+      "default": "0"
+    },
+    {
+      "calculate": "toNumber(datum.census_count)",
+      "as": "census_count"
+    },
+    {
+        "aggregate": [
+          {
+            "op": "sum",
+            "field": "count",
+            "as": "count"
+          },
+          {
+            "op": "sum",
+            "field": "census_count",
+            "as": "census_count"
+          }
+        ],
+        "groupby": ["gender", "age_group"]
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "count",
+          "as": "total_count"
+        },
+        {
+          "op": "sum",
+          "field": "census_count",
+          "as": "total_census_count"
+        }
+      ],
+      "groupby": ["gender"]
+    },
+    {
+      "calculate": "datum.count / datum.total_count",
+      "as": "percentage"
+    },
+    {
+      "calculate": "datum.census_count / datum.total_census_count",
+      "as": "census_percentage"
+    }
+  ],
+
+  "hconcat": [
+    {
+      "data": {
+        "sequence": {
+          "start": 0,
+          "stop": 90,
+          "step": 5,
+          "as": "low"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "if(datum.low < 85, datum.low + '-' + (datum.low + 4), '85+')",
+          "as": "label"
+        }
+      ],
+
+      "mark": "text",
+      "encoding": {
+        "text": {
+          "type": "ordinal",
+          "field": "label"
+        },
+        "y": {
+          "type": "ordinal",
+          "field": "low",
+          "axis": null,
+          "scale": { "reverse": true }
+        }
+      }
+    },
+    {
+      "title": "Male",
+      "transform": [
+        {
+          "filter": {
+            "field": "gender",
+            "equal": "M"
+          }
+        }
+      ],
+
+      "layer": [
+        {
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "title": null,
+              "type": "quantitative",
+              "field": "percentage",
+              "sort": "descending",
+              "axis": {
+                "format": ".1%",
+                "grid": false,
+                "labelFlush": false,
+                "labels": true
+              }
+            },
+            "y": {
+              "title": null,
+              "type": "ordinal",
+              "field": "age_group",
+              "axis": null
+            },
+            "fill": {
+              "value": "grey"
+            }
+          }
+        },
+        {
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "title": null,
+              "type": "quantitative",
+              "field": "census_percentage",
+              "sort": "descending",
+              "axis": {
+                "format": ".1%",
+                "grid": false,
+                "labelFlush": false,
+                "labels": true
+              }
+            },
+            "y": {
+              "title": null,
+              "type": "ordinal",
+              "field": "age_group",
+              "axis": null
+            },
+            "stroke": {
+              "value": "black"
+            },
+            "strokeWidth": {
+              "value": 2
+            },
+            "fillOpacity": {
+              "value": 0
+            }
+          }
+        }
+      ],
+      "encoding": {
+        "tooltip": [
+          {
+            "format": ".1%",
+            "type": "quantitative",
+            "field": "percentage"
+          },
+          {
+            "format": ".1%",
+            "type": "quantitative",
+            "field": "census_percentage"
+          }
+        ]
+      },
+
+      "resolve": {
+        "scale": {
+          "x": "shared",
+          "y": "shared"
+        }
+      }
+    },
+    {
+      "title": "Female",
+      "transform": [
+        {
+          "filter": {
+            "field": "gender",
+            "equal": "F"
+          }
+        }
+      ],
+
+      "layer": [
+        {
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "title": null,
+              "type": "quantitative",
+              "field": "percentage",
+              "sort": "ascending",
+              "axis": {
+                "format": ".1%",
+                "grid": false,
+                "labelFlush": false,
+                "labels": true
+              }
+            },
+            "y": {
+              "title": null,
+              "type": "ordinal",
+              "field": "age_group",
+              "axis": null
+            },
+            "fill": {
+              "value": "dimgrey"
+            }
+          }
+        },
+        {
+          "mark": "bar",
+          "encoding": {
+            "x": {
+              "title": null,
+              "type": "quantitative",
+              "field": "census_percentage",
+              "sort": "ascending",
+              "axis": {
+                "format": ".1%",
+                "grid": false,
+                "labelFlush": false,
+                "labels": true
+              }
+            },
+            "y": {
+              "title": null,
+              "type": "ordinal",
+              "field": "age_group",
+              "axis": null
+            },
+            "stroke": {
+              "value": "black"
+            },
+            "strokeWidth": {
+              "value": 2
+            },
+            "fillOpacity": {
+              "value": 0
+            }
+          }
+        }
+      ],
+      "encoding": {
+        "tooltip": [
+          {
+            "format": ".1%",
+            "type": "quantitative",
+            "field": "percentage"
+          },
+          {
+            "format": ".1%",
+            "type": "quantitative",
+            "field": "census_percentage"
+          }
+        ]
+      },
+
+      "resolve": {
+        "scale": {
+          "x": "shared",
+          "y": "shared"
+        }
+      }
+    }
+  ]
+}
