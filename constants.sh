@@ -1,17 +1,24 @@
 shopt -s expand_aliases
 
+# Set global configuration
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
-export PYTHONPATH=./src
-export MYPYPATH=$PYTHONPATH
+export PYTHONPATH="./src"
 export GPG_TTY=$(tty)
 
-ORIG=./raw-data/original
-OUT=./raw-data/derived/2019-11-27
-mkdir -p $ORIG $OUT/site-data
+# Load environment
+source env.sh
 
-DB=$OUT/a2agc.db
-EDB=$OUT/a2agc.db.e
+# Shorthands and configuration options
+VERSION="2019-11-27"
+
+SRC="./src"
+ORIG="./raw-data/original"
+OUT="./raw-data/derived/$VERSION"
+
+DB="$OUT/a2agc.db"
+EDB="$OUT/a2agc.db.e"
+
 DATA_SOURCES="$ORIG/box-health/[Box Health] Final Datasets"
 
 SCHEMA_DIR=./docs/schema
@@ -23,7 +30,16 @@ AGGREGATE_DATA="$OUT/aggregate-table-data.yml"
 
 BASE_URL="https://demo.cns.iu.edu/a2agc-dataset/"
 
+# Check required configuration
+# _=${VARIABLE:?"Error message"}
+
+# Set defaults
+# _=${VARIABLE:=default_value} OR
+# _=${VARIABLE=}
+
+# Create aliases
 alias sqlite="sqlcipher $DB"
 alias sqlite3="sqlcipher"
 
-source env.sh
+# Create directories
+mkdir -p "$ORIG" "$OUT/site-data"
