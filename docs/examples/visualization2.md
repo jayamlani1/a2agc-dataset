@@ -12,6 +12,10 @@ The final visualization is shown below.
 
 [(Source Vega-Lite Visualization Spec)](./visualization2b.vl.json)
 
+## Usage
+
+Click and drag a region in the Date of Death vs # Deaths graph in order to filter the data by time interval. Use the mouse wheel in order to increase or decrease the length of the interval. You may also slide the selected interval left or right along the date axis. 
+
 ## Purpose and Details
 
 The purpose of this visualization is to provide insight on the frequency of common events that commonly occur before an overdose death.
@@ -25,12 +29,12 @@ Four touchpoints are analyzed:
 
 The visualization provides a comparison of the number of cases across each possible combination of the above touchpoints, including the case where no touchpoints apply (∅).
 
-Data was taken from four separate datasets corresponding to each of the four touchpoints. The timeframes for each dataset are as follows:
+2331 total overdose deaths from 2010-2018 were referenced across four separate datasets corresponding to each of the four touchpoints. The timeframes for each dataset are as follows:
 
-1. Medications: 2010-2018
-2. EMS Incidents: 2011-2018
-3. Incarcerations: 2014-2018
-4. Health Encounters: 2010-2018
+1. Medications: 2010-2018 (based on date of death)
+2. EMS Incidents: 2011-2018 (based on date of overdose incident)
+3. Incarcerations: 2014-2018 (based on date of incarceration)
+4. Health Encounters: 2010-2018 (based on date of death)
 
 ## Data and Graphic Variable Extraction
 
