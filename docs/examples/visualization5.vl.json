@@ -29,8 +29,7 @@
         "N_OPIOID_PRESCRIPTIONS": "number",
         "LATITUDE": "number",
         "LONGITUDE": "number",
-        "PERIOD": "date",
-        "VALUE": "number"
+        "PERIOD": "date"
       }
     }
   },
@@ -41,8 +40,7 @@
         "key": "DATA_VARIABLE",
         "fields": [
           "LEGEND_ORDER",
-          "LABEL",
-          "LEGEND_COLOR"
+          "LABEL"
         ],
         "data": {
           "url": "../data/vis5-data-variables.csv"
@@ -51,7 +49,7 @@
     }
   ],
   "vconcat": [
-    {  
+    {
       "layer": [
         {
           "width": 550,
@@ -71,17 +69,33 @@
           "mark": {
             "type": "geoshape",
             "fill": "white",
-            "stroke": "lightgray"
+            "stroke": "darkgray"
           }
         },
         {
           "width": 550,
           "height": 600,
           "transform": [
-            {"filter": { "selection": "data_variable" }},
-            {"filter": { "selection": "period" }},
-            {"filter": {"selection": "out_of_state_filter"}},
-            {"filter": {"selection": "gender_select"}}
+            {
+              "filter": {
+                "selection": "data_variable"
+              }
+            },
+            {
+              "filter": {
+                "selection": "period"
+              }
+            },
+            {
+              "filter": {
+                "selection": "out_of_state_filter"
+              }
+            },
+            {
+              "filter": {
+                "selection": "gender_select"
+              }
+            }
           ],
           "projection": {
             "type": "mercator"
@@ -106,8 +120,53 @@
             },
             "color": {
               "type": "nominal",
-              "field": "COLOR",
-              "scale": null
+              "field": "VALUE",
+              "scale": {
+                "domain": [
+                  "Male",
+                  "Female",
+                  "Prescription",
+                  "Illicit",
+                  "True",
+                  "False",
+                  "Neither",
+                  "0 - 15",
+                  "16 - 20",
+                  "21 - 25",
+                  "26 - 30",
+                  "31 - 35",
+                  "36 - 40",
+                  "41 - 45",
+                  "46 - 50",
+                  "51 - 55",
+                  "56 - 60",
+                  "61 - 65",
+                  "66 - 70",
+                  "> 70"
+                ],
+                "range": [
+                  "blue",
+                  "pink",
+                  "purple",
+                  "orange",
+                  "#1dbd00",
+                  "#dedede",
+                  "#dedede",
+                  "#f4f4f4",
+                  "#e4e4e4",
+                  "#d6d6d6",
+                  "#cacaca",
+                  "#b7b7b7",
+                  "#a5a5a5",
+                  "#989898",
+                  "#8a8a8a",
+                  "#7b7b7b",
+                  "#6d6d6d",
+                  "#616161",
+                  "#525252",
+                  "#424242"
+                ]
+              }
             },
             "size": {
               "value": 100
@@ -125,9 +184,19 @@
       "layer": [
         {
           "transform": [
-            {"filter": "datum.DATA_VARIABLE == 'AGE'"},
-            {"filter": {"selection": "out_of_state_filter"}},
-            {"filter": {"selection": "gender_select"}}
+            {
+              "filter": "datum.DATA_VARIABLE == 'AGE'"
+            },
+            {
+              "filter": {
+                "selection": "out_of_state_filter"
+              }
+            },
+            {
+              "filter": {
+                "selection": "gender_select"
+              }
+            }
           ],
           "mark": {
             "type": "line"
@@ -142,25 +211,53 @@
             },
             "out_of_state_filter": {
               "type": "single",
-              "fields": ["HOME_STATE$$shape"],
-              "bind":{
+              "fields": [
+                "HOME_STATE$$shape"
+              ],
+              "bind": {
                 "HOME_STATE$$shape": {
-                  "input": "select", "options": [null, "circle", "triangle"], "labels": ["Any", "Indiana", "Not Indiana"], "name": "Home State"
+                  "input": "select",
+                  "options": [
+                    null,
+                    "circle",
+                    "triangle"
+                  ],
+                  "labels": [
+                    "Any",
+                    "Indiana",
+                    "Not Indiana"
+                  ],
+                  "name": "Home State"
                 }
               }
             },
             "gender_select": {
               "type": "single",
-              "fields": ["SEX"],
-              "bind":{
+              "fields": [
+                "SEX"
+              ],
+              "bind": {
                 "SEX": {
-                  "input": "select", "options": [null, "M", "F"], "labels": ["Both", "Male", "Female"], "name": "Gender"
+                  "input": "select",
+                  "options": [
+                    null,
+                    "M",
+                    "F"
+                  ],
+                  "labels": [
+                    "Both",
+                    "Male",
+                    "Female"
+                  ],
+                  "name": "Gender"
                 }
               }
             },
             "data_variable": {
               "type": "single",
-              "fields": [ "LABEL" ],
+              "fields": [
+                "LABEL"
+              ],
               "bind": {
                 "input": "select",
                 "name": "Data Variable",
@@ -168,10 +265,13 @@
                   "Gender",
                   "Age",
                   "Opioid Prescriptions within last year before death",
-                  "Any Prescriptions before death"
+                  "Any Prescriptions before death",
+                  "Prescription vs. Illicit Drugs"
                 ]
               },
-              "init": {"LABEL": "Gender"}
+              "init": {
+                "LABEL": "Gender"
+              }
             }
           },
           "encoding": {
@@ -187,7 +287,7 @@
               "title": "# Deaths by Quarter"
             },
             "color": {
-              "value": "lightgray"
+              "value": "darkgray"
             }
           }
         }
