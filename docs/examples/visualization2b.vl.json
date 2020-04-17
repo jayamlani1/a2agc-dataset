@@ -1,0 +1,100 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+
+  "width": 600,
+  "height": 500,
+  "padding": 0,
+
+  "data": {
+    "url": "../data/visualization2/data.csv"
+  },
+
+  "encoding": {
+    "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null, "axis": null},
+    "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Health", "Health"], "title": null, "axis": null}
+  },
+
+  "layer": [
+    {
+      "selection": {"highlight": {"type": "single"}},
+      "mark": {
+        "type": "circle", 
+        "strokeWidth": 1,
+        "stroke": "black",
+        "opacity": 1
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "Touchpoint A",
+            "title": "Touchpoint A",
+            "type": "ordinal"
+          },
+          {
+            "field": "Touchpoint B",
+            "title": "Touchpoint B",
+            "type": "ordinal"
+          },
+          {
+            "field": "Deaths",
+            "title": "Deaths",
+            "type": "ordinal"
+          }
+        ],
+        "size": {
+          "condition": {"test": "datum['Deaths'] == 0", "value": 0},
+          "field": "Deaths", 
+          "type": "quantitative",
+          "scale": {"range": [200, 6000]},
+          "legend": null
+        },
+        "color": {
+          "field": "Deaths",
+          "type": "quantitative",
+          "scale": {
+            "type": "sqrt", 
+            "scheme": "blues"
+          }
+        }
+      }
+    },
+    {
+      "mark": {"type": "text", "dy": -50},
+      "encoding": {
+        "text": {"field": "Set", "type": "nominal"}
+      }
+    },
+    {
+      "mark": {"type": "text"},
+      "encoding": {
+        "text": {"field": "Deaths", "type": "quantitative"},
+        "color": {
+          "condition": {"test": "datum['Deaths'] > 300", "value": "white"}
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 0
+      },
+      "encoding": {
+        "fill": {
+          "field": " ",
+          "title": null,
+          "type": "ordinal",
+          "legend": {
+            "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "Health: Health Data", "∅: No Touchpoints"],
+            "symbolOffset": -15,
+            "padding": 5
+          }
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "view": {"strokeOpacity": 0}
+  }
+}
+

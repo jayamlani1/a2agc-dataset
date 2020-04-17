@@ -10,7 +10,7 @@ export GPG_TTY=$(tty)
 source env.sh
 
 # Shorthands and configuration options
-VERSION="2019-11-27"
+VERSION="2020-04-17"
 
 SRC="./src"
 ORIG="./raw-data/original"

@@ -3,6 +3,20 @@
 
 Changelog for A2AGC.
 
+## 0.3.0 - 2020-04-17
+
+### Added in 0.3.0
+
+- Addressed much of the [feedback](https://docs.google.com/document/d/1Ed2xnKydlTSF_61jsuKElFiynM3ZIb6UkQxHU8C5saA/edit#) given from the last sprint
+- Refreshed theme, navigation, and UI
+- Added more data source documentation
+- Fixed spelling errors
+- Revised geomap, now called "Accidental drug overdose deaths in Marion County by place of injury 2010-2018"
+- Revised demographic comparisons, now called "Age group and gender of accidental drug overdose deaths and population in Marion County 2010-2018"
+- Revised heamaps, now called "Accidental drug overdose death in Marion County by substance, sex and age group 2010-2018"
+- Added an interactive version of above, called "Accidental drug overdose death in Marion County by substance, sex and age group 2010-2018 (interactive)"
+- Revised death trajectories to add a visualization of the trajectories instead of a table
+
 ## 0.2.0 - 2019-11-27
 
 ### Added in 0.2.0
