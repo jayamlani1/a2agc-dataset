@@ -17,7 +17,7 @@
 
   "vconcat": [
     {
-      "width": 600,
+      "width": 703,
       "height": 500,
       "transform": [
         {"filter": { "selection": "period" }}
