@@ -27,40 +27,50 @@ SELECT
 
     -- Graphic Variables
     CASE
-        WHEN d.ANY_HEROIN THEN 'green'
-        WHEN d.ANY_COCAINE THEN 'green'
-        WHEN d.FENTANYL THEN 'green'
-        WHEN d.ANY_METHAMPHETAMINE THEN 'green'
-        ELSE 'blue'
-    END AS 'ANY_ILLICIT',
+        WHEN d.ANY_HEROIN THEN 'Illicit'
+        WHEN d.ANY_COCAINE THEN 'Illicit'
+        WHEN d.FENTANYL THEN 'Illicit'
+        WHEN d.ANY_METHAMPHETAMINE THEN 'Prescription'
+        WHEN r.HYDROMORPHONE_1YEAR THEN 'Prescription'
+        WHEN r.MORPHINE_1YEAR THEN 'Prescription'
+        WHEN r.OXYMORPHONE_1YEAR THEN 'Prescription'
+        WHEN r.OXYCODONE_1YEAR THEN 'Prescription'
+        WHEN r.FENTANYL_1YEAR THEN 'Prescription'
+        WHEN r.ANTIANXIETY_1YEAR THEN 'Prescription'
+        WHEN r.ANTIDEPRESSANT_1YEAR THEN 'Prescription'
+        WHEN r.BENZODIAZEPINE_1YEAR THEN 'Prescription'
+        WHEN r.HYPNOTIC_1YEAR THEN 'Prescription'
+        WHEN r.OTHER_OPIOID_1YEAR THEN 'Prescription'
+        ELSE 'Neither'
+    END AS 'ILLICIT_V_PRESCRIPTION',
     ---- Any Prescriptions?
     CASE
-        WHEN r.N_PRESCRIPTIONS > 0 THEN 'green'
-        ELSE 'blue'
+        WHEN r.N_PRESCRIPTIONS > 0 THEN 'True'
+        ELSE 'False'
     END AS 'ANY_PRESCRIPTIONS',
     ---- Any Opiod Prescription in last year
     CASE
-        WHEN r.HYDROMORPHONE_1YEAR THEN 'green'
-        WHEN r.MORPHINE_1YEAR THEN 'green'
-        WHEN r.OXYMORPHONE_1YEAR THEN 'green'
-        WHEN r.OXYCODONE_1YEAR THEN 'green'
-        WHEN r.FENTANYL_1YEAR THEN 'green'
-        WHEN r.ANTIANXIETY_1YEAR THEN 'green'
-        WHEN r.ANTIDEPRESSANT_1YEAR THEN 'green'
-        WHEN r.BENZODIAZEPINE_1YEAR THEN 'green'
-        WHEN r.HYPNOTIC_1YEAR THEN 'green'
-        WHEN r.OTHER_OPIOID_1YEAR THEN 'green'
-        ELSE 'blue'
-    END AS 'OPIOD_PRESCRIPTIONS_1YEAR',
+        WHEN r.HYDROMORPHONE_1YEAR THEN 'True'
+        WHEN r.MORPHINE_1YEAR THEN 'True'
+        WHEN r.OXYMORPHONE_1YEAR THEN 'True'
+        WHEN r.OXYCODONE_1YEAR THEN 'True'
+        WHEN r.FENTANYL_1YEAR THEN 'True'
+        WHEN r.ANTIANXIETY_1YEAR THEN 'True'
+        WHEN r.ANTIDEPRESSANT_1YEAR THEN 'True'
+        WHEN r.BENZODIAZEPINE_1YEAR THEN 'True'
+        WHEN r.HYPNOTIC_1YEAR THEN 'True'
+        WHEN r.OTHER_OPIOID_1YEAR THEN 'True'
+        ELSE 'False'
+    END AS 'OPIOID_PRESCRIPTIONS_1YEAR',
     ---- Color coding by SEX
     CASE
-        WHEN d.SEX = 'M' THEN 'blue'
-        WHEN d.SEX = 'F' THEN 'pink'
-    ELSE 'black' END AS 'SEX$$color',
+        WHEN d.SEX = 'M' THEN 'Male'
+        WHEN d.SEX = 'F' THEN 'Female'
+    ELSE 'Neither' END AS 'SEX$$label',
     ---- Color coding by HOME_STATE
     CASE
-        WHEN d.HOME_STATE = 'IN' THEN '#bebebe'
-        ELSE 'black'
+        WHEN d.HOME_STATE = 'IN' THEN 'True'
+        ELSE 'False'
     END AS 'HOME_STATE$$color',
     ---- Shape coding by HOME_STATE
     CASE
@@ -70,22 +80,22 @@ SELECT
     ---- Size coding by N_OPIOID_PRESCRIPTIONS
     (CAST(r.N_OPIOID_PRESCRIPTIONS AS real) / (SELECT max(N_OPIOID_PRESCRIPTIONS) FROM rollup1) * 500) + 25 AS 'N_OPIOID_PRESCRIPTIONS$$areaSize',
 
-    ---- Color coding by AGE
+    ---- For Color coding by AGE
     CASE
-      WHEN d.AGE BETWEEN 0 AND 15 THEN '#f4f4f4'
-      WHEN d.AGE BETWEEN 16 AND 20 THEN '#e4e4e4'
-      WHEN d.AGE BETWEEN 21 AND 25 THEN '#d6d6d6'
-      WHEN d.AGE BETWEEN 26 AND 30 THEN '#cacaca'
-      WHEN d.AGE BETWEEN 31 AND 35 THEN '#b7b7b7'
-      WHEN d.AGE BETWEEN 36 AND 40 THEN '#a5a5a5'
-      WHEN d.AGE BETWEEN 41 AND 45 THEN '#989898'
-      WHEN d.AGE BETWEEN 46 AND 50 THEN '#8a8a8a'
-      WHEN d.AGE BETWEEN 51 AND 55 THEN '#7b7b7b'
-      WHEN d.AGE BETWEEN 56 AND 60 THEN '#6d6d6d'
-      WHEN d.AGE BETWEEN 61 AND 65 THEN '#616161'
-      WHEN d.AGE BETWEEN 66 AND 70 THEN '#525252'
-      WHEN d.AGE > 70 THEN '#424242'
-    END AS 'AGE$$color',
+      WHEN d.AGE BETWEEN 0 AND 15 THEN '0 - 15'
+      WHEN d.AGE BETWEEN 16 AND 20 THEN '16 - 20'
+      WHEN d.AGE BETWEEN 21 AND 25 THEN '21 - 25'
+      WHEN d.AGE BETWEEN 26 AND 30 THEN '26 - 30'
+      WHEN d.AGE BETWEEN 31 AND 35 THEN '31 - 35'
+      WHEN d.AGE BETWEEN 36 AND 40 THEN '36 - 40'
+      WHEN d.AGE BETWEEN 41 AND 45 THEN '41 - 45'
+      WHEN d.AGE BETWEEN 46 AND 50 THEN '46 - 50'
+      WHEN d.AGE BETWEEN 51 AND 55 THEN '51 - 55'
+      WHEN d.AGE BETWEEN 56 AND 60 THEN '56 - 60'
+      WHEN d.AGE BETWEEN 61 AND 65 THEN '61 - 65'
+      WHEN d.AGE BETWEEN 66 AND 70 THEN '66 - 70'
+      WHEN d.AGE > 70 THEN '> 70'
+    END AS 'AGE_GROUP',
 
     ---- Fixed-value Graphic Variables
     'Fixed values for visualization' AS 'Fixed',
@@ -117,23 +127,26 @@ SELECT A."CASE_NUMBER" AS "CASE_NUMBER",
   "N_OPIOID_PRESCRIPTIONS",
   "DATA_VARIABLE",
   "VALUE",
-  "COLOR",
   A.SEX AS "SEX"
   FROM
     "ALL_AGGREGATES" A INNER JOIN (
       SELECT CASE_NUMBER, 'SEX' AS "DATA_VARIABLE",
-        SEX AS "VALUE", "SEX$$color" AS "COLOR", SEX AS "SEX"
+        "SEX$$label" AS "VALUE", SEX AS "SEX"
       FROM "ALL_AGGREGATES"
       UNION ALL
       SELECT CASE_NUMBER, 'AGE' AS "DATA_VARIABLE",
-        AGE AS "VALUE", "AGE$$color" AS "COLOR", SEX AS "SEX"
+        AGE_GROUP AS "VALUE", SEX AS "SEX"
       FROM "ALL_AGGREGATES"
       UNION ALL
       SELECT CASE_NUMBER, 'ANY_PRESCRIPTIONS' AS "DATA_VARIABLE",
-        AGE AS "VALUE", ANY_PRESCRIPTIONS AS "COLOR", SEX AS "SEX"
+        ANY_PRESCRIPTIONS AS "VALUE", SEX AS "SEX"
       FROM "ALL_AGGREGATES"
       UNION ALL
       SELECT CASE_NUMBER, 'OPIOID_PRESCRIPTIONS_1YEAR' AS "DATA_VARIABLE",
-        OPIOD_PRESCRIPTIONS_1YEAR AS "VALUE", OPIOD_PRESCRIPTIONS_1YEAR AS "COLOR", SEX AS "SEX"
+        OPIOID_PRESCRIPTIONS_1YEAR AS "VALUE", SEX AS "SEX"
+      FROM "ALL_AGGREGATES"
+      UNION ALL
+      SELECT CASE_NUMBER, 'ILLICIT_V_PRESCRIPTION' AS "DATA_VARIABLE",
+        ILLICIT_V_PRESCRIPTION AS "VALUE", SEX AS "SEX"
       FROM "ALL_AGGREGATES"
     ) AS B ON (A.CASE_NUMBER = B.CASE_NUMBER);
