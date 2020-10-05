@@ -111,7 +111,7 @@
       "width": 703,
       "height": 150,
       "view": {
-        "strokeOpacity": 1
+        "strokeOpacity": 0
       },
       "layer": [
         {
@@ -131,16 +131,37 @@
               "field": "PERIOD",
               "type": "temporal",
               "title": "Date of Death",
-              "scale": {"nice": true}
+              "axis": {
+                "labelFlush": false,
+                "labelExpr": "[timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']",
+                "gridDash": {
+                  "condition": {"test": {"field": "value", "timeUnit": "month", "equal": 7}, "value": [2,2]},
+                  "value": []
+                }
+              }
             },
             "y": {
               "aggregate": "sum",
               "field": "True",
               "type": "quantitative",
-              "title": "# Deaths"
+              "title": "# Deaths by Quarter",
+              "axis": {
+                "gridOpacity": {
+                  "condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+                  "value": 1
+                },
+                "tickOpacity": {
+                  "condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+                  "value": 1
+                },
+                "labelFontSize": {
+                  "condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+                  "value": 10
+                }
+              }
             },
             "color": {
-              "value": "lightgray"
+              "value": "blue"
             }
           }
         }
