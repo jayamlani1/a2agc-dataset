@@ -29,12 +29,7 @@
       "layer": [
         {
           "selection": {"click": {"encodings": ["size"], "type": "multi"}},
-          "mark": {
-            "type": "circle", 
-            "strokeWidth": 1,
-            "stroke": "black",
-            "opacity": 1
-          },
+          "mark": "circle",
           "encoding": {
             "tooltip": [
               {
@@ -72,36 +67,60 @@
             }
           }
         },
+
         {
           "mark": {"type": "text", "dy": -60},
           "encoding": {
             "text": {"aggregate": "max", "field": "Set", "type": "nominal"}
           }
         },
-        {
-          "mark": {"type": "text", "dy": -45, "fontStyle": "bold"},
-          "encoding": {
-            "text": {"aggregate": "sum", "field": "True", "type": "quantitative"}
-          }
-        },
-
-
 
         {
           "mark": {
             "type": "text",
             "fontSize": 0
           },
+
           "encoding": {
             "fill": {
               "field": " ",
-              "title": null,
+              "title": "Legend",
               "type": "ordinal",
               "legend": {
+                "orient": "left",
                 "values": ["Rx: Opioid Prescription", "OD: Overdose", "Jail: Incarceration", "Health: Health Data", "∅: No Touchpoints"],
-                "symbolOffset": -15
+                "symbolOffset": -15,
+                "titlePadding": 10
+
               }
             }
+          }
+        },
+
+        {
+          "mark": {"type": "text", "fontSize": 0},
+          "encoding": {
+            "color": {
+              "title": "# Deaths",
+              "aggregate": "sum",
+              "field": "True",
+              "type": "quantitative",
+              "legend": {
+                "orient": "none",
+                "legendX": -160,
+                "legendY": 100,
+                "titleAlign": "center",
+                "titleAnchor": "middle",
+                "titlePadding": 10
+              }
+            }
+          }
+        },
+
+        {
+          "mark": {"type": "text", "dy": -45, "fontStyle": "bold"},
+          "encoding": {
+            "text": {"aggregate": "sum", "field": "True", "type": "quantitative"}
           }
         }
       ]
@@ -185,3 +204,4 @@
     }
   ]
 }
+
