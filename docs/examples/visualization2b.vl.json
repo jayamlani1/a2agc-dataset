@@ -121,22 +121,33 @@
           "transform": [{"filter": {"selection": "click"}}],
           "selection": {
             "period": {
-              "type": "interval",
+              "type": "interval", 
               "encodings": ["x"],
-              "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}"
+              "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}",
+              "mark": {"fill": "#6ea7ef", "fillOpacity": 0.15}
             }
           },
           "encoding": {
             "x": {
               "field": "PERIOD",
               "type": "temporal",
-              "title": "Date of Death",
+              "title": "Year",
               "axis": {
+                "labelFont": "lato",
+                "minExtent": 30,
+                "titleFontSize": 14,
+                "gridColor": "#e0e0e0",
+                "tickColor": "#757575",
+                "domainColor": "#757575",
                 "labelFlush": false,
                 "labelExpr": "[timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']",
                 "gridDash": {
                   "condition": {"test": {"field": "value", "timeUnit": "month", "equal": 7}, "value": [2,2]},
                   "value": []
+                },
+                "gridWidth": {
+                  "condition": {"test": {"field": "value", "timeUnit": "month", "equal": 1}, "value": 2},
+                  "value": 1
                 }
               }
             },
@@ -144,8 +155,13 @@
               "aggregate": "sum",
               "field": "True",
               "type": "quantitative",
-              "title": "# Deaths by Quarter",
+              "title": "# Deaths",
               "axis": {
+                "labelFont": "lato",
+                "titleFontSize": 14,
+                "gridColor": "#e0e0e0",
+                "tickColor": "#757575",
+                "domainColor": "#757575",
                 "gridOpacity": {
                   "condition": {"test": {"field": "index", "equal": 1}, "value": 0},
                   "value": 1
@@ -161,7 +177,7 @@
               }
             },
             "color": {
-              "value": "#8cb9f2"
+              "value": "#6ea7ef"
             }
           }
         }
@@ -169,4 +185,3 @@
     }
   ]
 }
-
