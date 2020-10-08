@@ -17,19 +17,50 @@
 
   "vconcat": [
     {
-      "width": 703,
-      "height": 500,
+      "width": 903,
+      "height": 600,
       "transform": [
         {"filter": { "selection": "period" }}
       ],
       "encoding": {
-        "y": {"field": "Touchpoint A", "type": "ordinal", "sort": ["Rx", "Rx + OD", "OD", "∅"], "title": null, "axis": null},
-        "x": {"field": "Touchpoint B", "type": "ordinal", "sort": ["∅", "Jail", "Jail + Health", "Health"], "title": null, "axis": null}
+        "y": {
+          "field": "Touchpoint A", 
+          "type": "quantitative", 
+          "title": null, 
+          "scale": {
+            "domain": [-0.5,3.5]
+          },
+          "axis": {
+            "grid": false,
+            "domain": false,
+            "labels": false,
+            "ticks": false
+          }
+        },
+        "x": {
+          "field": "Touchpoint B",
+          "type": "quantitative", 
+          "title": null,
+          "scale": {
+            "domain": [-0.5,3.5]
+          },
+          "axis": {
+            "grid": false,
+            "domain": false,
+            "labels": false,
+            "ticks": false
+          }
+        }
       },
       "layer": [
         {
+          "transform": [
+            {
+              "aggregate": [{"op": "sum", "field": "True", "as": "cat"}], "groupby": ["Touchpoint A", "Touchpoint B"]
+            }
+          ],
           "selection": {"click": {"encodings": ["size"], "type": "multi"}},
-          "mark": "circle",
+          "mark": {"type": "circle", "yOffset": 10},
           "encoding": {
             "tooltip": [
               {
@@ -50,15 +81,13 @@
               }
             ],
             "size": {
-              "aggregate": "sum",
-              "field": "True",
+              "field": "cat",
               "type": "quantitative",
               "scale": {"range": [0, 6000]},
               "legend": null
             },
             "color": {
-              "aggregate": "sum",
-              "field": "True",
+              "field": "cat",
               "type": "quantitative",
               "scale": {
                 "type": "sqrt", 
@@ -69,7 +98,7 @@
         },
 
         {
-          "mark": {"type": "text", "dy": -60},
+          "mark": {"type": "text", "dy": -65, "fontSize": 16},
           "encoding": {
             "text": {"aggregate": "max", "field": "Set", "type": "nominal"}
           }
@@ -120,7 +149,7 @@
         },
 
         {
-          "mark": {"type": "text", "dy": -45, "fontStyle": "bold"},
+          "mark": {"type": "text", "dy": -45, "fontStyle": "bold", "fontSize": 16},
           "encoding": {
             "text": {"aggregate": "sum", "field": "True", "type": "quantitative"}
           }
@@ -129,7 +158,14 @@
     },
 
     {
-      "width": 703,
+      "title": {
+        "text": "Select Date Range to Update Datasets",
+        "align": "right",
+        "dx": -200,
+        "dy": -20,
+        "fontSize": 16
+      },
+      "width": 903,
       "height": 150,
       "view": {
         "strokeOpacity": 0
