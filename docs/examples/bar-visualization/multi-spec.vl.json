@@ -3,12 +3,9 @@
 
   "config": {
     "view": {
-      "width": 150,
+      "width": 100,
       "stroke": "transparent"
     }
-  },
-  "spacing": {
-    "column": 0
   },
 
   "data": {
@@ -78,15 +75,49 @@
       "as": "census_percentage"
     }
   ],
+  
   "facet": {
     "field": "year",
-    "title": null
+    "title": null,
+    "header": {"labelFontSize": 15},
+    "sort": "descending" 
   },
   "columns": 3,
   "spec": {
     "bounds": "flush",
     "spacing": 0,
+
     "hconcat": [
+      {
+        "data": {
+          "sequence": {
+            "start": 0,
+            "stop": 90,
+            "step": 5,
+            "as": "low"
+          }
+        },
+        "transform": [
+          {
+            "calculate": "if(datum.low < 85, datum.low + '-' + (datum.low + 4), '85+')",
+            "as": "label"
+          }
+        ],
+
+        "mark": "text",
+        "encoding": {
+          "text": {
+            "type": "ordinal",
+            "field": "label"
+          },
+          "y": {
+            "type": "ordinal",
+            "field": "low",
+            "axis": null,
+            "scale": { "reverse": true }
+          }
+        }
+      },
       {
         "transform": [
           {
@@ -99,10 +130,36 @@
 
         "layer": [
           {
+            "selection": {
+              "year": {
+                "type": "multi",
+                "fields": [
+                  "year"
+                ],
+                "bind": {
+                  "legend": "dblclick"
+                },
+                "init": [
+
+                ]
+              },
+              "gender": {
+                "type": "multi",
+                "fields": [
+                  "gender"
+                ],
+                "bind": {
+                  "legend": "dblclick"
+                },
+                "init": [
+
+                ]
+              }
+            },
             "mark": "bar",
             "encoding": {
               "x": {
-                "title": null,
+                "title": "Percent",
                 "type": "quantitative",
                 "field": "percentage",
                 "sort": "descending",
@@ -118,10 +175,18 @@
               "y": {
                 "title": null,
                 "type": "ordinal",
-                "field": "age_group"
+                "field": "age_group",
+                "axis": {
+                  "labels": false
+                }
               },
-              "fill": {
-                "value": "#586CBB"
+              "color": {
+                "field": "gender",
+                "scale": {"range": ["#DA5E8C", "#586CBB"]}
+              },
+              "opacity": {
+                "condition": {"selection": "gender", "value": 1},
+                "value": 0
               }
             }
           },
@@ -129,7 +194,7 @@
             "mark": "bar",
             "encoding": {
               "x": {
-                "title": null,
+                "title": "",
                 "type": "quantitative",
                 "field": "census_percentage",
                 "sort": "descending",
@@ -144,7 +209,10 @@
               "y": {
                 "title": null,
                 "type": "ordinal",
-                "field": "age_group"
+                "field": "age_group",
+                "axis": {
+                  "labels": false
+                }
               },
               "stroke": {
                 "value": "black"
@@ -214,8 +282,12 @@
                 "field": "age_group",
                 "axis": null
               },
-              "fill": {
-                "value": "#DA5E8C"
+              "color": {
+                "field": "gender"
+              },
+              "opacity": {
+                "condition": {"selection": "gender", "value": 1},
+                "value": 0
               }
             }
           },
@@ -232,8 +304,7 @@
                   "format": ".1%",
                   "grid": true,
                   "labelFlush": false,
-                  "labels": true,
-                  "offset": 360
+                  "labels": true
                 },
                 "scale": {"domain": [0,0.13]}
               },
