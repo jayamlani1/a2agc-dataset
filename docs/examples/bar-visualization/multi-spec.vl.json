@@ -3,7 +3,7 @@
 
   "config": {
     "view": {
-      "width": 100,
+      "width": 120,
       "stroke": "transparent"
     }
   },
@@ -27,7 +27,7 @@
     {
       "impute": "count",
       "key": "age_group",
-      "keyvals": { "stop": 17 },
+      "keyvals": { "stop": 7 },
       "groupby": ["year", "gender"]
     },
     {
@@ -83,7 +83,7 @@
   "facet": {
     "field": "year",
     "title": null,
-    "header": {"labelFontSize": 15},
+    "header": {"labelFontSize": 0},
     "sort": "descending"
   },
   "columns": 3,
@@ -102,18 +102,18 @@
         "data": {
           "sequence": {
             "start": 0,
-            "stop": 90,
-            "step": 5,
+            "stop": 75,
+            "step": 10,
             "as": "low"
           }
         },
         "transform": [
           {
-            "calculate": "if(datum.low < 85, datum.low + '-' + (datum.low + 4), '85+')",
+            "calculate": "if(datum.low < 70, datum.low + '-' + (datum.low + 9), '70+')",
             "as": "label"
           }
         ],
-
+        "width": 50,
         "mark": "text",
         "encoding": {
           "text": {
@@ -180,22 +180,23 @@
                   "grid": false,
                   "labelFlush": false,
                   "labels": true,
-                  "offset": 360
+                  "offset": 160
                 },
-                "scale": {"domain": [0,0.13]}
+                "scale": {"domain": [0,0.3]}
               },
               "y": {
                 "title": null,
-                "type": "ordinal",
-                "field": "age_group",
-                "axis": {
-                  "labels": false
-                }
+                "type": "nominal",
+                "field": "age_group"
               },
               "color": {
                 "field": "gender",
+                "title": "Filter by",
                 "legend": {
-                  "orient": "left"
+                  "clipHeight": 10,
+                  "rowPadding": 10,
+                  "orient": "left",
+                  "values": ["M", "F", "Total Population"]
                 },
                 "scale": {"range": ["#DA5E8C", "#586CBB"]}
               },
@@ -206,11 +207,13 @@
               "strokeWidth": {
                 "field": "year",
                 "legend": {
-                  "symbolType": "triangle",
+                  "clipHeight": 10,
+                  "labelBaseline": "top",
+                  "labelOffset": -10,
                   "orient": "left",
-                  "symbolFillColor": "white",
-                  "symbolStrokeColor": "white",
-                  "title": "Year",
+                  "rowPadding": 10,
+                  "symbolSize": 0,
+                  "title": "",
                   "values": [2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010]
                 }
               }
@@ -227,10 +230,8 @@
                 "axis": {
                   "format": ".1%",
                   "grid": false,
-                  "labelFlush": false,
                   "labels": true
-                },
-                "scale": {"domain": [0,0.13]}
+                }
               },
               "y": {
                 "title": null,
@@ -244,7 +245,7 @@
                 "value": "black"
               },
               "strokeWidth": {
-                "value": 2
+                "value": 1
               },
               "fillOpacity": {
                 "value": 0
@@ -296,11 +297,10 @@
                 "axis": {
                   "format": ".1%",
                   "grid": false,
-                  "labelFlush": false,
                   "labels": true,
-                  "offset": 360
+                  "offset": 160
                 },
-                "scale": {"domain": [0,0.13]}
+                "scale": {"domain": [0,0.3]}
               },
               "y": {
                 "title": null,
@@ -344,7 +344,7 @@
                 "value": "black"
               },
               "strokeWidth": {
-                "value": 2
+                "value": 1
               },
               "fillOpacity": {
                 "value": 0
