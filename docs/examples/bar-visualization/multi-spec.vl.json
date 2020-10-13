@@ -4,7 +4,17 @@
   "config": {
     "view": {
       "width": 120,
+      "height": 150,
       "stroke": "transparent"
+    },
+    "style": {
+      "label": {
+        "align": "left",
+        "baseline": "middle",
+        "dx": 100,
+        "dy": -25,
+        "fontSize": 15
+      }
     }
   },
   "autosize": {
@@ -83,7 +93,9 @@
   "facet": {
     "field": "year",
     "title": null,
-    "header": {"labelFontSize": 0},
+    "header": { 
+      "labelFontSize": 0
+    },
     "sort": "descending"
   },
   "columns": 3,
@@ -121,10 +133,25 @@
             "field": "label"
           },
           "y": {
+            "title": "Age",
             "type": "ordinal",
             "field": "low",
-            "axis": null,
+            "axis": {
+              "domain": false,
+              "ticks": false,
+              "labels": false
+            },
             "scale": { "reverse": true }
+          }
+        }
+      },
+      {
+        "width": 1,
+        "height": 1,
+        "mark": {"type": "text", "style": "label"},
+        "encoding": {
+          "text": {
+            "field": "year"
           }
         }
       },
@@ -146,9 +173,7 @@
                 "fields": [
                   "year"
                 ],
-                "bind": {
-                  "legend": "click"
-                },
+                "bind": "legend",
                 "init": [
                   {"year": 2018},
                   {"year": 2017},
@@ -160,40 +185,39 @@
                 "fields": [
                   "gender"
                 ],
-                "bind": {
-                  "legend": "dblclick"
-                },
-                "init": [
-
-                ]
+                "bind": "legend"
               }
             },
             "mark": "bar",
             "encoding": {
               "x": {
-                "title": "Percent",
                 "type": "quantitative",
                 "field": "percentage",
                 "sort": "descending",
                 "axis": {
+                  "title": "Percent",
+                  "titleX": 120,
                   "format": ".1%",
                   "grid": false,
                   "labelFlush": false,
-                  "labels": true,
-                  "offset": 160
+                  "labels": true
                 },
                 "scale": {"domain": [0,0.3]}
               },
               "y": {
                 "title": null,
                 "type": "nominal",
-                "field": "age_group"
+                "field": "age_group",
+                "axis": {
+                  "labels": false
+                }
               },
               "color": {
                 "field": "gender",
                 "title": "Filter by",
                 "legend": {
-                  "clipHeight": 10,
+                  "symbolStrokeColor": "black",
+                  "clipHeight": 12,
                   "rowPadding": 10,
                   "orient": "left",
                   "values": ["M", "F", "Total Population"]
@@ -207,7 +231,7 @@
               "strokeWidth": {
                 "field": "year",
                 "legend": {
-                  "clipHeight": 10,
+                  "clipHeight": 5,
                   "labelBaseline": "top",
                   "labelOffset": -10,
                   "orient": "left",
@@ -234,12 +258,8 @@
                 }
               },
               "y": {
-                "title": null,
                 "type": "ordinal",
-                "field": "age_group",
-                "axis": {
-                  "labels": false
-                }
+                "field": "age_group"
               },
               "stroke": {
                 "value": "black"
@@ -297,8 +317,7 @@
                 "axis": {
                   "format": ".1%",
                   "grid": false,
-                  "labels": true,
-                  "offset": 160
+                  "labels": true
                 },
                 "scale": {"domain": [0,0.3]}
               },
