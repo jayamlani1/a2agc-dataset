@@ -6,9 +6,7 @@ This example visualization shows a bar graph of opioid deaths broken down by gen
 ## Visualization
 
 {{ vega.header() }}
-{{ vega.include('./single-spec.vl.json') }}
-<br/>
-{{ vega.include('./multi-spec.vl.json') }}
+{{ vega.include('./combined-spec.vl.json') }}
 
 #### Legend
 
