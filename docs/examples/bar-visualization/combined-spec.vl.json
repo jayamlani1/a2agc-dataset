@@ -13,6 +13,9 @@
         "dy": -25,
         "fontSize": 15
       }
+    },
+    "axis": {
+      "labelColor": "#757575"
     }
   },
 
@@ -108,13 +111,16 @@
       "title": {
         "text": "2010-2018",
         "anchor": "middle",
-        "dx": 25
+        "dx": 25,
+        "dy": -25,
+        "fontSize": 14
       },
       "bounds": "flush",
       "spacing": 0,
       "hconcat": [
         {
-          "height": 271,
+          "height": 250,
+          "width": 50,
           "data": {
             "sequence": {
               "start": 0,
@@ -129,8 +135,10 @@
               "as": "label"
             }
           ],
-          "width": 50,
-          "mark": "text",
+          "mark": {
+            "type": "text",
+            "color": "#757575"
+          },
           "encoding": {
             "text": {
               "type": "ordinal",
@@ -143,14 +151,15 @@
               "axis": {
                 "domain": false,
                 "ticks": false,
-                "labels": false
+                "labels": false,
+                "titleFontSize": 14
               },
               "scale": { "reverse": true }
             }
           }
         },
         {
-          "height": 271,
+          "height": 250,
           "width": 240,
           "transform": [
             {
@@ -193,10 +202,12 @@
                   "axis": {
                     "title": "Percent",
                     "titleX": 240,
+                    "titleY": 30,
                     "format": ".1%",
                     "grid": false,
                     "labelFlush": false,
-                    "labels": true
+                    "labels": true,
+                    "titleFontSize": 14
                   },
                   "scale": {"domain": [0,0.3]}
                 },
@@ -216,7 +227,11 @@
                     "clipHeight": 12,
                     "rowPadding": 10,
                     "orient": "left",
-                    "values": ["M", "F", "Total Population"]
+                    "values": ["M", "F", "Total Population"],
+                    "titlePadding": 10,
+                    "titleColor": "#757575",
+                    "symbolOffset": 5,
+                    "labelColor": "#212121"
                   },
                   "scale": {"range": ["#DA5E8C", "#586CBB"]}
                 },
@@ -227,10 +242,12 @@
                 "strokeWidth": {
                   "field": "year",
                   "legend": {
+                    "labelColor": "#212121",
                     "clipHeight": 5,
                     "labelBaseline": "top",
                     "labelOffset": -10,
                     "orient": "left",
+                    "padding": 5,
                     "rowPadding": 10,
                     "symbolSize": 0,
                     "title": "",
@@ -292,7 +309,7 @@
           }
         },
         {
-          "height": 271,
+          "height": 250,
           "width": 240,
           "transform": [
             {
@@ -499,7 +516,10 @@
               }
             ],
             "width": 50,
-            "mark": "text",
+            "mark": {
+              "type": "text",
+              "color": "#757575"
+            },
             "encoding": {
               "text": {
                 "type": "ordinal",
@@ -512,7 +532,8 @@
                 "axis": {
                   "domain": false,
                   "ticks": false,
-                  "labels": false
+                  "labels": false,
+                  "titleFontSize": 14
                 },
                 "scale": { "reverse": true }
               }
@@ -521,7 +542,11 @@
           {
             "width": 1,
             "height": 1,
-            "mark": {"type": "text", "style": "label"},
+            "mark": {
+              "type": "text", 
+              "style": "label", 
+              "fontSize": 14
+            },
             "encoding": {
               "text": {
                 "field": "year"
@@ -572,10 +597,12 @@
                     "axis": {
                       "title": "Percent",
                       "titleX": 120,
+                      "titleY": 30,
                       "format": ".1%",
                       "grid": false,
                       "labelFlush": false,
-                      "labels": true
+                      "labels": true,
+                      "titleFontSize": 14
                     }
                   },
                   "y": {
