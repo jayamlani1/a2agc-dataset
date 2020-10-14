@@ -3,7 +3,10 @@
 	"config": {
 		"mark": {
 			"tooltip": null
-		}
+		},
+	    "view": {
+      		"stroke": "transparent"
+    	}
 	},
 	"data": {
 		"url": "../data/visualization4/data.csv"
@@ -11,23 +14,104 @@
 	"vconcat": [
 		{
 			"hconcat": [
-
 				{
-					"mark": "bar",
 					"encoding": {
+						"color": {
+							"legend": null,
+							"field": "TOTAL_DEATHS",
+							"scale": {
+								"scheme": "yellowgreenblue"
+							},
+							"title": "Deaths",
+							"type": "quantitative"
+						},
+						"tooltip": [
+							{
+								"field": "TOTAL_DEATHS",
+								"title": "Deaths",
+								"type": "ordinal"
+							},
+							{
+								"field": "group",
+								"title": "Age Group",
+								"type": "ordinal"
+							},
+							{
+								"field": "YEAR",
+								"title": "YEAR",
+								"type": "ordinal"
+							}
+						],
 						"x": {
+							"field": "YEAR",
+							"title": "Year",
+							"type": "ordinal",
+							"axis": { 
+								"labelAngle": 0
+							}
+						},
+						"y": {
 							"axis": {
 								"labels": true
 							},
 							"field": "group",
 							"title": "Age Group",
-							"type": "ordinal"
+							"type": "ordinal",
+							"scale": { "reverse": true }
+						}
+					},
+					"mark": "rect",
+					"title": "All Substances",
+					"transform": [
+						{
+							"filter": {
+								"selection": "pts"
+							}
 						},
-						"y": {
+						{
+							"filter": {
+								"selection": "year_selection"
+							}
+						},
+						{
+							"aggregate": [
+								{
+									"as": "TOTAL_DEATHS",
+									"field": "CASE_NUMBER",
+									"op": "distinct"
+								}
+							],
+							"groupby": [
+								"AGE_GROUP",
+								"YEAR"
+							]
+						},
+						{
+							"as": "group",
+							"calculate": "toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9)"
+						}
+					],
+					"width": 500,
+					"height": 400
+				},
+				{
+					"title": "All Substances",
+					"mark": "bar",
+					"encoding": {
+						"x": {
 							"aggregate": "distinct",
 							"field": "CASE_NUMBER",
 							"type": "quantitative",
 							"title": "Deaths"
+						},
+						"y": {
+							"axis": {
+								"labels": true
+							},
+							"field": "group",
+							"title": "Age Group",
+							"type": "ordinal",
+							"scale": { "reverse": true }
 						},
 						"tooltip": [
 							{
@@ -56,82 +140,7 @@
 						},
 						{
 							"as": "group",
-							"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
-						}
-					],
-					"width": 500,
-					"height": 400
-				},
-				{
-					"encoding": {
-						"color": {
-							"field": "TOTAL_DEATHS",
-							"scale": {
-								"scheme": "yellowgreenblue"
-							},
-							"title": "Deaths",
-							"type": "quantitative"
-						},
-						"tooltip": [
-							{
-								"field": "TOTAL_DEATHS",
-								"title": "Deaths",
-								"type": "ordinal"
-							},
-							{
-								"field": "group",
-								"title": "Age Group",
-								"type": "ordinal"
-							},
-							{
-								"field": "YEAR",
-								"title": "YEAR",
-								"type": "ordinal"
-							}
-						],
-						"x": {
-							"field": "YEAR",
-							"title": "",
-							"type": "ordinal"
-						},
-						"y": {
-							"axis": {
-								"labels": true
-							},
-							"field": "group",
-							"title": "Age Group",
-							"type": "ordinal"
-						}
-					},
-					"mark": "rect",
-					"title": "All substances",
-					"transform": [
-						{
-							"filter": {
-								"selection": "pts"
-							}
-						},
-						{
-							"filter": {
-								"selection": "year_selection"
-							}
-						},
-						{
-							"aggregate": [
-								{
-									"as": "TOTAL_DEATHS",
-									"field": "CASE_NUMBER",
-									"op": "distinct"
-								}
-							],
-							"groupby": [
-								"AGE_GROUP",
-								"YEAR"
-							]
-						},
-						{
-							"as": "group",
-							"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+							"calculate": "toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9)"
 						}
 					],
 					"width": 500,
@@ -141,25 +150,25 @@
 		},
 		{
 			"hconcat": [
-
 				{
 					"mark": "line",
 					"width": 870,
 					"height": 200,
-					"title": "Filters",
+					"title": "Update Graphs Using Filters Below",
 					"encoding": {
 						"x": {
 							"field": "YEAR",
 							"type": "ordinal",
 							"axis": {
-								"title": "YEAR"
+								"title": "Year",
+								"labelAngle": 0
 							}
 						},
 						"y": {
 							"field": "TOTAL_DEATHS",
 							"type": "quantitative",
 							"axis": {
-								"title": "Deaths"
+								"title": "# Deaths"
 							}
 						}
 					},
@@ -267,7 +276,7 @@
 					"encoding": {
 						"x": {
 							"field": "SEX",
-							"title": "SEX",
+							"title": "Sex",
 							"type": "ordinal"
 						},
 						"y": {
@@ -277,6 +286,7 @@
 						},
 						"color": {
 							"condition": {
+								"legend": null,
 								"selection": "pts",
 								"aggregate": "count",
 								"type": "quantitative"
@@ -287,6 +297,5 @@
 				}
 			]
 		}
-
 	]
 }
