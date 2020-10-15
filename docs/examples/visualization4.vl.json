@@ -1,300 +1,188 @@
 {
-	"$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-	"data": {
-		"url": "../data/visualization4/data.csv"
-	},
-	"resolve": {
-		"scale": {
-			"color": "shared",
-			"y": "shared"
-		}
-	},
-	"facet": {
-		"field": "SUBSTANCE_NAME",
-		"title": null
-	},
-	"columns": 1,
-	"spec": {
-		"transform": [
-			{
-				"filter": {
-					"selection": "substance_selection"
-				}
-			}
-		],
-		"hconcat": [
-			{
-				"layer": [
-					{
-						"mark": {
-							"type": "text",
-							"fontSize": 0
-						},
-						"selection": {
-							"substance_selection": {
-								"type": "multi",
-								"fields": [
-									"SUBSTANCE_NAME"
-								],
-								"bind": "legend"
-							}
-						},
-						"encoding": {
-							"fill": {
-								"field": "SUBSTANCE_NAME",
-								"title": "Filter by",
-								"type": "ordinal",
-								"legend": {
-									"orient": "left",
-									"titlePadding": 10,
-									"titleColor": "black",
-									"values": [
-										"Heroin",
-										"Cocaine",
-										"Fentanyl",
-										"Prescription Opioid",
-										"Any Opioid",
-										"Methamphetamine",
-										"Benzodiazepine"
-									]
-								}
-							},
-							"opacity": {
-								"condition": {
-									"selection": "substance_selection",
-									"value": 1
-								},
-								"value": 0.75
-							},
-							"color": {
-								"field": "TOTAL_DEATHS",
-								"scale": {
-									"scheme": "yellowgreenblue"
-								},
-								"title": "Deaths",
-								"type": "quantitative",
-								"legend": {
-									"orient": "left"
-								}
-							}
-						}
-					},
-					{
-						"encoding": {
-							"color": {
-								"field": "TOTAL_DEATHS",
-								"scale": {
-									"scheme": "yellowgreenblue"
-								},
-								"title": "Deaths",
-								"type": "quantitative",
-								"legend": {
-									"orient": "left",
-									"titlePadding": 10
-								}
-							},
-							"tooltip": [
-								{
-									"field": "TOTAL_DEATHS",
-									"title": "Deaths",
-									"type": "ordinal"
-								},
-								{
-									"field": "group",
-									"title": "Age Group",
-									"type": "ordinal"
-								},
-								{
-									"field": "YEAR",
-									"title": "YEAR",
-									"type": "ordinal"
-								}
-							],
-							"x": {
-								"field": "YEAR",
-								"title": "",
-								"type": "ordinal"
-							},
-							"y": {
-								"axis": {
-									"labels": true
-								},
-								"field": "group",
-								"title": "Age Group",
-								"type": "ordinal"
-							}
-						},
-						"mark": "rect",
-						"title": "All",
-						"transform": [
-							{
-								"aggregate": [
-									{
-										"as": "TOTAL_DEATHS",
-										"field": "CASE_NUMBER",
-										"op": "distinct"
-									}
-								],
-								"groupby": [
-									"AGE_GROUP",
-									"YEAR"
-								]
-							},
-							{
-								"as": "group",
-								"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
-							}
-						],
-						"width": 300
-					}
-				]
-			},
-			{
-				"encoding": {
-					"color": {
-						"field": "TOTAL_DEATHS",
-						"scale": {
-							"scheme": "yellowgreenblue"
-						},
-						"title": "Deaths",
-						"type": "quantitative"
-					},
-					"tooltip": [
-						{
-							"field": "TOTAL_DEATHS",
-							"title": "Deaths",
-							"type": "ordinal"
-						},
-						{
-							"field": "group",
-							"title": "Age Group",
-							"type": "ordinal"
-						},
-						{
-							"field": "YEAR",
-							"title": "YEAR",
-							"type": "ordinal"
-						}
-					],
-					"x": {
-						"field": "YEAR",
-						"title": "",
-						"type": "ordinal"
-					},
-					"y": {
-						"axis": {
-							"labels": false
-						},
-						"field": "group",
-						"title": "",
-						"type": "ordinal"
-					}
-				},
-				"mark": "rect",
-				"title": "Male",
-				"transform": [
-					{
-						"filter": "datum.SEX == 'M'"
-					},
-					{
-						"aggregate": [
-							{
-								"as": "TOTAL_DEATHS",
-								"field": "CASE_NUMBER",
-								"op": "distinct"
-							}
-						],
-						"groupby": [
-							"AGE_GROUP",
-							"YEAR"
-						]
-					},
-					{
-						"as": "group",
-						"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
-					}
-				],
-				"width": 300
-			},
-			{
-				"encoding": {
-					"color": {
-						"field": "TOTAL_DEATHS",
-						"scale": {
-							"scheme": "yellowgreenblue"
-						},
-						"title": "Deaths",
-						"type": "quantitative"
-					},
-					"tooltip": [
-						{
-							"field": "TOTAL_DEATHS",
-							"title": "Deaths",
-							"type": "ordinal"
-						},
-						{
-							"field": "group",
-							"title": "Age Group",
-							"type": "ordinal"
-						},
-						{
-							"field": "YEAR",
-							"title": "YEAR",
-							"type": "ordinal"
-						}
-					],
-					"x": {
-						"field": "YEAR",
-						"title": "",
-						"type": "ordinal"
-					},
-					"y": {
-						"axis": {
-							"labels": false
-						},
-						"field": "group",
-						"title": "",
-						"type": "ordinal"
-					}
-				},
-				"mark": "rect",
-				"title": "Female",
-				"transform": [
-					{
-						"filter": "datum.SEX == 'F'"
-					},
-					{
-						"aggregate": [
-							{
-								"as": "TOTAL_DEATHS",
-								"field": "CASE_NUMBER",
-								"op": "distinct"
-							}
-						],
-						"groupby": [
-							"AGE_GROUP",
-							"YEAR"
-						]
-					},
-					{
-						"as": "group",
-						"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
-					}
-				],
-				"width": 300
-			}
-		],
-		"resolve": {
-			"scale": {
-				"y": "shared"
-			}
-		}
-	},
-	"config": {
-		"style": {
-			"guide-label": {
-				"fontSize": 12
-			}
-		}
-	}
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "data": {"url": "../data/visualization4/data.csv"},
+  "resolve": {"scale": {"color": "shared", "y": "shared"}},
+  "facet": {"field": "SUBSTANCE_NAME", "title": null},
+  "columns": 1,
+  "autosize": {
+    "type": "pad",
+    "resize": true
+  },
+  "spec": {
+    "transform": [{"filter": {"selection": "substance_selection"}}],
+    "hconcat": [
+      {
+        "layer": [
+          {
+            "mark": {"type": "text", "fontSize": 0},
+            "selection": {
+              "substance_selection": {
+                "type": "multi",
+                "fields": ["SUBSTANCE_NAME"],
+                "bind": "legend",
+                "init": [
+                  {"SUBSTANCE_NAME": "Heroin"},
+                  {"SUBSTANCE_NAME": "Cocaine"},
+                  {"SUBSTANCE_NAME": "Any Opioid"}
+                ]
+              }
+            },
+            "encoding": {
+              "fill": {
+                "field": "SUBSTANCE_NAME",
+                "title": "Filter by",
+                "type": "ordinal",
+                "legend": {
+                  "orient": "left",
+                  "titlePadding": 10,
+                  "titleColor": "black",
+                  "values": [
+                    "Heroin",
+                    "Cocaine",
+                    "Fentanyl",
+                    "Prescription Opioid",
+                    "Any Opioid",
+                    "Methamphetamine",
+                    "Benzodiazepine"
+                  ],
+                  "symbolSize": 0
+                }
+              },
+              "opacity": {
+                "condition": {"selection": "substance_selection", "value": 1},
+                "value": 0.75
+              },
+              "color": {
+                "field": "TOTAL_DEATHS",
+                "scale": {"scheme": "yellowgreenblue"},
+                "title": "# Deaths",
+                "type": "quantitative",
+                "legend": {"orient": "left"}
+              }
+            }
+          },
+          {
+            "encoding": {
+              "color": {
+                "field": "TOTAL_DEATHS",
+                "scale": {"scheme": "yellowgreenblue"},
+                "title": "# Deaths",
+                "type": "quantitative",
+                "legend": {"orient": "left", "titlePadding": 10}
+              },
+              "tooltip": [
+                {"field": "TOTAL_DEATHS", "title": "Deaths", "type": "ordinal"},
+                {"field": "group", "title": "Age Group", "type": "ordinal"},
+                {"field": "YEAR", "title": "YEAR", "type": "ordinal"}
+              ],
+              "x": {"field": "YEAR", "title": "", "type": "ordinal"},
+              "y": {
+                "axis": {"labels": true},
+                "field": "group",
+                "title": "Age Group",
+                "type": "ordinal"
+              }
+            },
+            "mark": "rect",
+            "title": "All",
+            "transform": [
+              {
+                "aggregate": [
+                  {
+                    "as": "TOTAL_DEATHS",
+                    "field": "CASE_NUMBER",
+                    "op": "distinct"
+                  }
+                ],
+                "groupby": ["AGE_GROUP", "YEAR"]
+              },
+              {
+                "as": "group",
+                "calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+              }
+            ],
+            "width": 300
+          }
+        ]
+      },
+      {
+        "encoding": {
+          "color": {
+            "field": "TOTAL_DEATHS",
+            "scale": {"scheme": "yellowgreenblue"},
+            "title": "# Deaths",
+            "type": "quantitative"
+          },
+          "tooltip": [
+            {"field": "TOTAL_DEATHS", "title": "Deaths", "type": "ordinal"},
+            {"field": "group", "title": "Age Group", "type": "ordinal"},
+            {"field": "YEAR", "title": "YEAR", "type": "ordinal"}
+          ],
+          "x": {"field": "YEAR", "title": "", "type": "ordinal"},
+          "y": {
+            "axis": {"labels": false},
+            "field": "group",
+            "title": "",
+            "type": "ordinal"
+          }
+        },
+        "mark": "rect",
+        "title": "Male",
+        "transform": [
+          {"filter": "datum.SEX == 'M'"},
+          {
+            "aggregate": [
+              {"as": "TOTAL_DEATHS", "field": "CASE_NUMBER", "op": "distinct"}
+            ],
+            "groupby": ["AGE_GROUP", "YEAR"]
+          },
+          {
+            "as": "group",
+            "calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+          }
+        ],
+        "width": 300
+      },
+      {
+        "encoding": {
+          "color": {
+            "field": "TOTAL_DEATHS",
+            "scale": {"scheme": "yellowgreenblue"},
+            "title": "# Deaths",
+            "type": "quantitative"
+          },
+          "tooltip": [
+            {"field": "TOTAL_DEATHS", "title": "Deaths", "type": "ordinal"},
+            {"field": "group", "title": "Age Group", "type": "ordinal"},
+            {"field": "YEAR", "title": "YEAR", "type": "ordinal"}
+          ],
+          "x": {"field": "YEAR", "title": "", "type": "ordinal"},
+          "y": {
+            "axis": {"labels": false},
+            "field": "group",
+            "title": "",
+            "type": "ordinal"
+          }
+        },
+        "mark": "rect",
+        "title": "Female",
+        "transform": [
+          {"filter": "datum.SEX == 'F'"},
+          {
+            "aggregate": [
+              {"as": "TOTAL_DEATHS", "field": "CASE_NUMBER", "op": "distinct"}
+            ],
+            "groupby": ["AGE_GROUP", "YEAR"]
+          },
+          {
+            "as": "group",
+            "calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+          }
+        ],
+        "width": 300
+      }
+    ],
+    "resolve": {"scale": {"y": "shared"}}
+  },
+  "config": {"style": {"guide-label": {"fontSize": 12}}}
 }
