@@ -91,8 +91,7 @@
 							"calculate": "toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9)"
 						}
 					],
-					"width": 500,
-					"height": 400
+					"width": 500
 				},
 				{
 					"title": "All Substances",
@@ -143,8 +142,7 @@
 							"calculate": "toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9)"
 						}
 					],
-					"width": 500,
-					"height": 400
+					"width": 500
 				}
 			]
 		},
@@ -152,23 +150,53 @@
 			"hconcat": [
 				{
 					"mark": "line",
-					"width": 870,
-					"height": 200,
+					"width": 900,
 					"title": "Update Graphs Using Filters Below",
 					"encoding": {
+						"color": { "value": "#6ea7ef" },
 						"x": {
 							"field": "YEAR",
 							"type": "ordinal",
+							"title": "Year",
 							"axis": {
-								"title": "Year",
-								"labelAngle": 0
+								"minExtent": 30,
+								"titleFontSize": 14,
+								"tickColor": "#757575",
+								"domainColor": "#757575",
+								"labelFlush": false,
+								"labelAngle": 0,
+								"labelExpr": "[timeFormat(datum.value, '%m') == '01' ? timeFormat(datum.value, '%Y') : '']",
+								"gridDash": {
+                  					"condition": {"test": {"field": "value", "timeUnit": "month", "equal": 7}, "value": [2,2]},
+				  					"value": []
+                				},
+								"gridColor": {
+								"condition": {"test": {"field": "value", "timeUnit": "month", "equal": 1}, "value": "#BDBDBD"},
+								"value": "#e0e0e0"
+								}
 							}
 						},
 						"y": {
 							"field": "TOTAL_DEATHS",
 							"type": "quantitative",
+							"title": "# Deaths",
 							"axis": {
-								"title": "# Deaths"
+								"titleFontSize": 14,
+								"gridColor": "#e0e0e0",
+								"tickColor": "#757575",
+								"domainColor": "#757575",
+								"gridOpacity": {
+									"condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+									"value": 1
+								},
+								"tickOpacity": {
+									"condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+									"value": 1
+								},
+								"labelFontSize": {
+									"condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+									"value": 10
+								}
 							}
 						}
 					},
@@ -177,7 +205,9 @@
 							"type": "interval",
 							"encodings": [
 								"x"
-							]
+							],
+						"on": "[mousedown, window:mouseup] > window:mousemove{150, 300}",
+						"mark": {"fill": "#6ea7ef", "fillOpacity": 0.15}
 						}
 					},
 					"transform": [
@@ -262,8 +292,8 @@
 						]
 					},
 					"mark": "rect",
-					"height": 200,
 					"width": 70,
+					"height": 200,
 					"selection": {
 						"pts": {
 							"type": "multi",
