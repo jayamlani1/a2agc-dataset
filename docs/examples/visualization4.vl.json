@@ -4,10 +4,7 @@
   "resolve": {"scale": {"color": "shared", "y": "shared"}},
   "facet": {"field": "SUBSTANCE_NAME", "title": null},
   "columns": 1,
-  "autosize": {
-    "type": "pad",
-    "resize": true
-  },
+  "autosize": {"type": "pad", "resize": true},
   "spec": {
     "transform": [{"filter": {"selection": "substance_selection"}}],
     "hconcat": [
@@ -21,9 +18,9 @@
                 "fields": ["SUBSTANCE_NAME"],
                 "bind": "legend",
                 "init": [
+                  {"SUBSTANCE_NAME": "All Substances"},
                   {"SUBSTANCE_NAME": "Heroin"},
-                  {"SUBSTANCE_NAME": "Cocaine"},
-                  {"SUBSTANCE_NAME": "Any Opioid"}
+                  {"SUBSTANCE_NAME": "Cocaine"}
                 ]
               }
             },
@@ -37,6 +34,7 @@
                   "titlePadding": 10,
                   "titleColor": "black",
                   "values": [
+                    "All Substances",
                     "Heroin",
                     "Cocaine",
                     "Fentanyl",
@@ -65,7 +63,12 @@
             "encoding": {
               "color": {
                 "field": "TOTAL_DEATHS",
-                "scale": {"scheme": "yellowgreenblue"},
+                "scale": {
+                  "scheme": "yellowgreenblue",
+                  "type": "quantize",
+                  "rangeMax": 60,
+                  "rangeMin": 0
+                },
                 "title": "# Deaths",
                 "type": "quantitative",
                 "legend": {"orient": "left", "titlePadding": 10}
@@ -109,7 +112,7 @@
         "encoding": {
           "color": {
             "field": "TOTAL_DEATHS",
-            "scale": {"scheme": "yellowgreenblue"},
+            "scale": {"scheme": "yellowgreenblue", "type": "quantize"},
             "title": "# Deaths",
             "type": "quantitative"
           },
@@ -147,7 +150,7 @@
         "encoding": {
           "color": {
             "field": "TOTAL_DEATHS",
-            "scale": {"scheme": "yellowgreenblue"},
+            "scale": {"scheme": "yellowgreenblue", "type": "quantize"},
             "title": "# Deaths",
             "type": "quantitative"
           },
