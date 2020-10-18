@@ -18,8 +18,6 @@ Data can be filtered based on the following:
 
 * Substance Name and Sex: The heatmap with y-axis with substance names and x-axis with sex can be used to select the particular substance and sex. Press **shift** for multiple selections.
 
-<img src="./visualization4a.gif" style="width:50%">
-
 ## Data and Graphic Variable Extraction
 
 Opiod death data was fetched from the database using the following query
