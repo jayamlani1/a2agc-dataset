@@ -270,6 +270,11 @@
 										] 
 									}
 								},
+								"stroke": {
+									"value": "black"
+								},
+								"strokeWidth": {"condition": {"selection": "deaths_binned", "value": 0}, "value": 1},
+								"fillOpacity": {"condition": {"selection": "deaths_binned", "value": 0}, "value": 1},
 								"color": {"value": "red"}
 							}
 						}
