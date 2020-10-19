@@ -4,8 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ThemeModule } from './services/theme/theme.module';
-import { StateModule } from './state/state.module';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
@@ -14,10 +13,7 @@ import { StateModule } from './state/state.module';
     BrowserAnimationsModule,
 
     AppRoutingModule,
-    StateModule,
-    ThemeModule.forRoot({
-      default: 'a2agc'
-    })
+    CoreModule
   ],
   declarations: [AppComponent],
   providers: [],
