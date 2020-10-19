@@ -1,5 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
+import { PageFooterModule } from './components/page-footer/page-footer.module';
 import { PageHeaderModule } from './components/page-header/page-header.module';
 import { ThemeModule } from './services/theme/theme.module';
 import { StateModule } from './state/state.module';
@@ -12,10 +13,12 @@ import { StateModule } from './state/state.module';
       default: 'a2agc'
     }),
 
-    PageHeaderModule
+    PageHeaderModule,
+    PageFooterModule
   ],
   exports: [
-    PageHeaderModule
+    PageHeaderModule,
+    PageFooterModule
   ]
 })
 export class CoreModule {
