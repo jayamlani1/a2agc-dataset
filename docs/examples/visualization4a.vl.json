@@ -15,11 +15,55 @@
 		{
 			"hconcat": [
 				{
-					"height": 200,
+					"transform": [
+						{
+							"filter": {"selection": "pts"}
+						},
+
+						{
+							"filter": {"selection": "year_selection"}
+						},
+						{
+							"joinaggregate": [
+								{
+									"as": "TOTAL_DEATHS",
+									"field": "CASE_NUMBER",
+									"op": "distinct"
+								}
+							],
+							"groupby": [
+								"AGE_GROUP",
+								"YEAR"
+							]
+						},
+						{
+							"as": "deaths_max69",
+							"calculate": "min(69, datum.TOTAL_DEATHS)"
+						},
+						{
+							"bin": {
+								"anchor": 0,
+								"maxbins": 7,
+								"step": 10,
+								"extent": [0, 69]
+							},
+							"field": "deaths_max69",
+							"as": "deaths_binned"
+						},
+						{
+							"as": "group",
+							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70+')"
+						}
+					],
+					"title": "All Substances",
+					"width": 500,
+					"height": 200,						
+					"mark": "rect",
 					"encoding": {
 						"color": {
+							"condition": {"selection": "deaths_binned", "field": "deaths_binned", "legend": null, "type": "quantitative"},
+							"value": "white",
 							"legend": null,
-							"field": "deaths_binned",
 							"title": "Deaths",
 							"type": "quantitative"
 						},
@@ -82,56 +126,7 @@
 								] 
 							}
 						}
-					},
-					"mark": "rect",
-					"title": "All Substances",
-					"transform": [
-						{
-							"filter": {
-								"selection": "pts"
-							}
-						},
-						{
-							"filter": {"selection": "deaths_binned"}
-						},
-						{
-							"filter": {
-								"selection": "year_selection"
-							}
-						},
-						{
-							"joinaggregate": [
-								{
-									"as": "TOTAL_DEATHS",
-									"field": "CASE_NUMBER",
-									"op": "distinct"
-								}
-							],
-							"groupby": [
-								"AGE_GROUP",
-								"YEAR"
-							]
-						},
-						{
-							"as": "deaths_max69",
-							"calculate": "min(69, datum.TOTAL_DEATHS)"
-						},
-						{
-							"bin": {
-								"anchor": 0,
-								"maxbins": 7,
-								"step": 10,
-								"extent": [0, 69]
-							},
-							"field": "deaths_max69",
-							"as": "deaths_binned"
-						},
-						{
-							"as": "group",
-							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70+')"
-						}
-					],
-					"width": 500
+					}
 				},
 				{
 					"transform": [
@@ -360,7 +355,6 @@
 						}
 					},
 					"transform": [
-
 						{
 							"aggregate": [
 								{
