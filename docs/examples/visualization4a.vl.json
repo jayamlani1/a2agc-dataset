@@ -41,6 +41,10 @@
 							"calculate": "min(69, datum.TOTAL_DEATHS)"
 						},
 						{
+							"calculate": "['#d4eeb4', '#a9ddb7', '#74c9bd', '#45b4c2', '#2997be', '#2173b1', '#234ea0'][datum.deaths_binned/10]",
+							"as": "color"
+						},
+						{
 							"bin": {
 								"anchor": 0,
 								"maxbins": 7,
@@ -61,11 +65,14 @@
 					"mark": "rect",
 					"encoding": {
 						"color": {
-							"condition": {"selection": "deaths_binned", "field": "deaths_binned", "legend": null, "type": "quantitative"},
-							"value": "white",
-							"legend": null,
-							"title": "Deaths",
-							"type": "quantitative"
+							"condition": {
+								"selection": "deaths_binned",
+								"field": "deaths_binned",
+								"type": "nominal",
+								"scale": {"range": {"field": "color"}},
+								"legend": null
+							},
+							"value": "white"
 						},
 						"tooltip": [
 							{
@@ -297,10 +304,11 @@
 							"field": "YEAR",
 							"type": "quantitative",
 							"title": "Year",
+							"scale": {"nice": false, "domain": [2010, 2018.75]},
 							"axis": {
 								"titleFontSize": 14,
 								"tickColor": "#757575",
-								"domainColor": "#757575",
+								"domainColor": "#757575", 
 								"labelFlush": false,
 								"labelAngle": 0,
 								"labelExpr": "[datum.value%1 == 0 ? datum.value : '']",
@@ -318,9 +326,6 @@
 									},
 									"value": "#e0e0e0"
 								}
-							},
-							"scale": {
-								"domainMax": 2018
 							}
 						},
 						"y": {
@@ -378,7 +383,7 @@
 					},
 					"transform": [
 						{
-						"calculate": "if(datum.low < 60, datum.low + '-' + (datum.low + 9), '60+')",
+						"calculate": "if(datum.deaths_binned < 60, datum.deaths_binned + '-' + (datum.deaths_binned + 9), '60+')",
 						"as": "label"
 						}
 					],
