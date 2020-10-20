@@ -234,6 +234,7 @@
 								"strokeWidth": {
 									"value": 1
 								},
+								"opacity": {"condition": {"selection": "deaths_binned", "value": 0}, "value": 1},
 								"color": {"value": "white"}
 							}
 						},
@@ -272,17 +273,59 @@
 										] 
 									}
 								},
+								"strokeWidth": {"value": 0},
+								"color": {
+									"condition": {
+										"selection": "deaths_binned",
+										"field": "deaths_binned",
+										"type": "nominal",
+										"legend": null
+									},
+									"value": "white"
+								}
+							}
+						},
+						{
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"aggregate": "distinct",
+									"field": "CASE_NUMBER",
+									"type": "quantitative",
+									"title": "Total"
+								},
+								"y": {
+									"axis": {
+										"labels": true
+									},
+									"field": "group",
+									"title": "Age Group",
+									"type": "ordinal",
+									"scale": { 
+										"reverse": true,
+										"domain": [
+											"0-9",
+											"10-19",
+											"20-29",
+											"30-39",
+											"40-49",
+											"50-59",
+											"60-69",
+											"70+"
+										] 
+									}
+								},
 								"stroke": {
 									"value": "black"
 								},
-								"strokeWidth": {"condition": {"selection": "deaths_binned", "value": 0}, "value": 1},
-								"fillOpacity": {"condition": {"selection": "deaths_binned", "value": 0}, "value": 1},
-								"color": {"value": "red"}
+								"strokeWidth": {
+									"value": 1
+								},
+								"opacity": {"condition": {"selection": "deaths_binned", "value": 1}, "value": 0},
+								"color": {"value": "white"}
 							}
 						}
-
 					]
-
 				}
 			]
 		},
@@ -409,10 +452,17 @@
 							}
 						},
 						"y": {
-							"field": "deaths_binned",
+							"field": "label",
 							"type": "ordinal",
-							"scale": {"reverse": true}
+							"scale": {"reverse": true},
+							"axis": {
+								"orient": "right",
+								"ticks": false,
+								"title": null
+							}
 						},
+						"stroke": {"value": "white"},
+						"strokeWidth": {"value": 2},
 						"color": {
 							"field": "deaths_binned",
 							"legend": null,
@@ -483,6 +533,16 @@
 							}
 						]
 					},
+					"transform": [
+						{
+							"calculate": "if(datum.SEX == 'F', 'Female', 'Male')",
+							"as": "sex_label"
+						},
+						{
+							"calculate": "if(datum.SEX == 'F', 1, 2)",
+							"as": "count"
+						}
+					],
 					"mark": "rect",
 					"width": 70,
 					"height": 200,
@@ -497,23 +557,30 @@
 					},
 					"encoding": {
 						"x": {
-							"field": "SEX",
+							"field": "sex_label",
 							"title": "Sex",
-							"type": "ordinal"
+							"type": "ordinal",
+							"scale": {"reverse": true},
+							"axis": {
+								"labelAngle": 0
+							}
 						},
 						"y": {
 							"field": "SUBSTANCE_NAME",
 							"title": "Substance Name",
 							"type": "ordinal"
 						},
+						"stroke": {"value": "white"},
+						"strokeWidth": {"value": 2},
 						"color": {
 							"condition": {
 								"legend": null,
 								"selection": "pts",
-								"aggregate": "count",
-								"type": "quantitative"
+								"field": "count",
+								"type": "quantitative",
+								"scale": {"range": ["#DA5E8C", "#586CBB"]}
 							},
-							"value": "grey"
+							"value": "#e0e0e0"
 						}
 					}
 				}
