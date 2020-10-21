@@ -8,11 +8,13 @@
       		"stroke": "transparent"
     	}
 	},
+
 	"data": {
 		"url": "../data/visualization4/data.csv"
 	},
 	"vconcat": [
 		{
+			"spacing": 40,
 			"hconcat": [
 				{
 					"transform": [
@@ -61,10 +63,11 @@
 					],
 					"title": {
 						"text": "All Substances",
-						"offset": 20
+						"offset": 20,
+						"fontSize": 14
 					},
-					"width": 577,
-					"height": 200,					
+					"width": 470,
+					"height": 175,				
 					"mark": "rect",
 					"encoding": {
 						"color": {
@@ -182,11 +185,12 @@
 							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70>')"
 						}
 					],
-					"width": 577,
-					"height": 200,
+					"width": 470,
+					"height": 175,
 					"title": {
 						"text": "All Substances",
-						"offset": 20
+						"offset": 20,
+						"fontSize": 14
 					},
 					"encoding": {
 						"tooltip": [
@@ -211,7 +215,7 @@
 									"aggregate": "distinct",
 									"field": "CASE_NUMBER",
 									"type": "quantitative",
-									"title": "Total",
+									"title": "# Total Deaths",
 									"axis": {
 										"domainColor": "#757575",
 										"tickColor": "#757575",
@@ -310,12 +314,12 @@
 			]
 		},
 		{
-			"spacing": 100,
+			"spacing": 70,
 			"hconcat": [
 				{
 					"mark": "line",
-					"width": 740,
-					"height": 200,
+					"width": 600,
+					"height": 175,
 					"title": {
 						"text": "Update Graphs Using Filters Below",
 						"anchor": "start",
@@ -330,7 +334,6 @@
 							"title": "Year",
 							"scale": {"nice": false, "domain": [2010, 2018.75]},
 							"axis": {
-								"titleFontSize": 14,
 								"tickColor": "#757575",
 								"domainColor": "#757575", 
 								"labelFlush": false,
@@ -357,7 +360,6 @@
 							"type": "quantitative",
 							"title": "# Deaths",
 							"axis": {
-								"titleFontSize": 14,
 								"gridColor": "#e0e0e0",
 								"tickColor": "#757575",
 								"domainColor": "#757575",
@@ -400,6 +402,7 @@
 					"spacing": 0,
 					"hconcat": [
 						{
+							"height": 175,
 							"data": {
 								"sequence": {
 									"start": 0,
@@ -415,8 +418,8 @@
 								}
 							],
 							"mark": "rect",
-							"width": 70,
-							"height": 200,
+							"width": 50,
+							
 							"selection": {
 								"deaths_binned": {
 									"type": "single",
@@ -485,7 +488,7 @@
 										"as": "label"
 										}
 									],
-									"height": 200,
+									"height": 175,
 									"mark": {
 										"type": "text",
 										"fontStyle": "bold"
@@ -524,7 +527,7 @@
 										"as": "label"
 										}
 									],
-									"height": 200,
+									"height": 175,
 									"mark": {
 										"type": "text"
 									},
@@ -617,8 +620,8 @@
 						}
 					],
 					"mark": "rect",
-					"width": 70,
-					"height": 200,
+					"width": 80,
+					"height": 175,
 					"selection": {
 						"pts": {
 							"type": "multi",
