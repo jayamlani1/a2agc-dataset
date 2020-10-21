@@ -59,9 +59,12 @@
 							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70>')"
 						}
 					],
-					"title": "All Substances",
-					"width": 500,
-					"height": 200,						
+					"title": {
+						"text": "All Substances",
+						"offset": 20
+					},
+					"width": 577,
+					"height": 200,					
 					"mark": "rect",
 					"encoding": {
 						"color": {
@@ -179,9 +182,12 @@
 							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70>')"
 						}
 					],
-					"width": 500,
+					"width": 577,
 					"height": 200,
-					"title": "All Substances",
+					"title": {
+						"text": "All Substances",
+						"offset": 20
+					},
 					"encoding": {
 						"tooltip": [
 							{
@@ -205,11 +211,19 @@
 									"aggregate": "distinct",
 									"field": "CASE_NUMBER",
 									"type": "quantitative",
-									"title": "Total"
+									"title": "Total",
+									"axis": {
+										"domainColor": "#757575",
+										"tickColor": "#757575",
+										"labelColor": "#212121"
+									}
 								},
 								"y": {
 									"axis": {
-										"labels": true
+										"labels": true,
+										"domainColor": "#757575",
+										"tickColor": "#757575",
+										"labelColor": "#212121"
 									},
 									"field": "group",
 									"title": "Age Group",
@@ -296,6 +310,7 @@
 			]
 		},
 		{
+			"spacing": 100,
 			"hconcat": [
 				{
 					"mark": "line",
@@ -614,19 +629,30 @@
 						}
 					},
 					"encoding": {
+						"tooltip": {
+							"value": "Shift-Click to add more than one item"
+						},
 						"x": {
 							"field": "sex_label",
 							"title": "Sex",
 							"type": "ordinal",
 							"scale": {"reverse": true},
 							"axis": {
+								"domainColor": "#757575",
+								"tickColor": "#757575",
+								"domainWidth": 2,
 								"labelAngle": 0
 							}
 						},
 						"y": {
 							"field": "SUBSTANCE_NAME",
 							"title": "Substance Name",
-							"type": "ordinal"
+							"type": "ordinal",
+							"axis": {
+								"domainColor": "#757575",
+								"tickColor": "#757575",
+								"domainWidth": 2
+							}
 						},
 						"stroke": {"value": "white"},
 						"strokeWidth": {"value": 2},
