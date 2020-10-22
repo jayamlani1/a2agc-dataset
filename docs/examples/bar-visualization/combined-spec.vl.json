@@ -18,7 +18,7 @@
       "labelColor": "#757575"
     }
   },
-
+  "center": true,
   "autosize": {
     "type": "pad",
     "resize": true
@@ -112,7 +112,7 @@
         "text": "2010-2018",
         "anchor": "middle",
         "dx": 25,
-        "dy": -25,
+        "dy": -10,
         "fontSize": 14
       },
       "bounds": "flush",
@@ -131,7 +131,7 @@
           },
           "transform": [
             {
-              "calculate": "if(datum.low < 70, datum.low + '-' + (datum.low + 9), '70+')",
+              "calculate": "if(datum.low < 70, datum.low + '-' + (datum.low + 9), '70>')",
               "as": "label"
             }
           ],
@@ -203,7 +203,7 @@
                     "title": "Percent",
                     "titleX": 240,
                     "titleY": 30,
-                    "format": ".1%",
+                    "format": "1%",
                     "grid": false,
                     "labelFlush": false,
                     "labels": true,
@@ -265,7 +265,7 @@
                   "field": "census_percentage",
                   "sort": "descending",
                   "axis": {
-                    "format": ".1%",
+                    "format": "1%",
                     "grid": false,
                     "labels": true
                   }
@@ -286,6 +286,7 @@
               }
             }
           ],
+
           "encoding": {
             "tooltip": [
               {
@@ -299,13 +300,6 @@
                 "field": "census_percentage"
               }
             ]
-          },
-
-          "resolve": {
-            "scale": {
-              "x": "shared",
-              "y": "shared"
-            }
           }
         },
         {
@@ -330,7 +324,7 @@
                   "field": "percentage",
                   "sort": "ascending",
                   "axis": {
-                    "format": ".1%",
+                    "format": "1%",
                     "grid": false,
                     "labels": true
                   },
@@ -361,7 +355,7 @@
                   "sort": "ascending",
                   "axis": {
                     "type": "quantitative",
-                    "format": ".1%",
+                    "format": "1%",
                     "grid": true,
                     "labelFlush": false,
                     "labels": true
@@ -386,6 +380,7 @@
               }
             }
           ],
+
           "encoding": {
             "tooltip": [
               {
@@ -399,13 +394,6 @@
                 "field": "census_percentage"
               }
             ]
-          },
-
-          "resolve": {
-            "scale": {
-              "x": "shared",
-              "y": "shared"
-            }
           }
         }
       ]
@@ -511,7 +499,7 @@
             },
             "transform": [
               {
-                "calculate": "if(datum.low < 70, datum.low + '-' + (datum.low + 9), '70+')",
+                "calculate": "if(datum.low < 70, datum.low + '-' + (datum.low + 9), '70>')",
                 "as": "label"
               }
             ],
@@ -598,7 +586,7 @@
                       "title": "Percent",
                       "titleX": 120,
                       "titleY": 30,
-                      "format": ".1%",
+                      "format": "1%",
                       "grid": false,
                       "labelFlush": false,
                       "labels": true,
@@ -653,7 +641,7 @@
                     "field": "census_percentage",
                     "sort": "descending",
                     "axis": {
-                      "format": ".1%",
+                      "format": "1%",
                       "grid": false,
                       "labels": true
                     },
@@ -688,13 +676,6 @@
                   "field": "census_percentage"
                 }
               ]
-            },
-
-            "resolve": {
-              "scale": {
-                "x": "shared",
-                "y": "shared"
-              }
             }
           },
           {
@@ -719,7 +700,7 @@
                     "field": "percentage",
                     "sort": "ascending",
                     "axis": {
-                      "format": ".1%",
+                      "format": "1%",
                       "grid": false,
                       "labels": true
                     }
@@ -749,7 +730,7 @@
                     "sort": "ascending",
                     "axis": {
                       "type": "quantitative",
-                      "format": ".1%",
+                      "format": "1%",
                       "grid": true,
                       "labelFlush": false,
                       "labels": true
@@ -787,13 +768,6 @@
                   "field": "census_percentage"
                 }
               ]
-            },
-
-            "resolve": {
-              "scale": {
-                "x": "shared",
-                "y": "shared"
-              }
             }
           }
         ]
