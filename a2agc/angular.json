@@ -127,46 +127,7 @@
           }
         }
       }
-    },
-    "ngx-vega": {
-      "projectType": "library",
-      "root": "projects/ngx-vega",
-      "sourceRoot": "projects/ngx-vega/src",
-      "prefix": "ngx",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/ngx-vega/tsconfig.lib.json",
-            "project": "projects/ngx-vega/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ngx-vega/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-vega/src/test.ts",
-            "tsConfig": "projects/ngx-vega/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-vega/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-vega/tsconfig.lib.json",
-              "projects/ngx-vega/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    }},
+    }
+  },
   "defaultProject": "a2agc"
 }
