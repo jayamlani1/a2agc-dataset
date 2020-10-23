@@ -1,11 +1,7 @@
-# Opioid Death Trajectories
+# Opioid Death Datasets
 ---------------------------
 
-This example visualization shows opioid overdose deaths based on case history of opioid prescription, previous overdose, incarceration and encounters with health services.
-
-## Visualization
-
-The final visualization is shown below.  
+Marion County by History of Opioid Prescription, Previous Overdose, Incarceration, Health Data (2010-2018)
 
 {{ vega.header() }}
 {{ vega.include('./visualization2b.vl.json') }}
