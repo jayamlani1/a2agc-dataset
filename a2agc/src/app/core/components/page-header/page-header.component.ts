@@ -9,4 +9,5 @@ import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 })
 export class PageHeaderComponent {
   @HostBinding('class') readonly clsName = 'agc-page-header';
+  @HostBinding('class.mat-elevation-z3') readonly elevation = true;
 }

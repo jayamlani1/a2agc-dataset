@@ -3,8 +3,6 @@
   height: 3.5rem;
   align-items: center;
 
-  // TODO: Add box shadow - Ask Leonard for specific values
-
   .menu {
     width: 5rem;
     height: 3.5rem;
@@ -12,7 +10,6 @@
     border-radius: 0;
     border-right-width: 1px;
     border-right-style: solid;
-    border-right-color: rgba(0, 0, 0, 0.15); // TODO: Move to theme file
 
     .content {
       display: flex;
@@ -32,15 +29,16 @@
   .logos {
     display: flex;
     flex-direction: row;
+    height: 100%;
     justify-content: flex-start;
     align-items: center;
 
     border-radius: 0;
     border-left-width: 1px;
     border-left-style: solid;
-    border-left-color: rgba(255, 255, 255, 0.1); // TODO: Move to theme file
 
     & > * {
+      height: 2.25rem;
       margin-left: 1rem;
     }
   }
