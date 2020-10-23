@@ -2,5 +2,5 @@ LEGEND_ORDER,DATA_VARIABLE,LABEL,SCALING_FACTOR
 01,SEX,Gender,1
 02,AGE,Age,1
 03,OPIOID_PRESCRIPTIONS_1YEAR,Opioid Prescriptions within last year before death,1
-04,ANY_PRESCRIPTIONS,Any Prescriptions before death,1
+04,ANY_PRESCRIPTIONS,Any Opioid Prescriptions before death,1
 05,ILLICIT_V_PRESCRIPTION,Prescription vs. Illicit Drugs,1
