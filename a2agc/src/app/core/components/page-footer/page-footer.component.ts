@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, O
 export class PageFooterComponent {
   @HostBinding('class') readonly clsName = 'agc-page-footer';
 
-  @Input() buildDate!: Date;
+  @Input() buildDate?: Date;
 
   @Output() readonly contactClick = new EventEmitter<void>();
   @Output() readonly privacyClick = new EventEmitter<void>();
