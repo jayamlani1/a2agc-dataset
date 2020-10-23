@@ -17,15 +17,35 @@
 
   "vconcat": [
     {
-      "width": 903,
-      "height": 600,
+      "width": 800,
+      "height": 500,
       "transform": [
-        {"filter": { "selection": "period" }}
+        {"filter": { "selection": "period" }},
+        {
+          "calculate": "if(datum['Touchpoint A'] == 1 || datum['Touchpoint A'] == 2, 1, 0)",
+          "as": "OD"
+        },
+        {
+          "calculate": "if(datum['Touchpoint A'] == 3 || datum['Touchpoint A'] == 2, 1, 0)",
+          "as": "Rx"
+        },
+        {
+          "calculate": "if(datum['Touchpoint B'] == 3 || datum['Touchpoint B'] == 2, 1, 0)",
+          "as": "Health"
+        },
+        {
+          "calculate": "if(datum['Touchpoint B'] == 1 || datum['Touchpoint B'] == 2, 1, 0)",
+          "as": "Jail"
+        },
+        {
+          "calculate": "if(datum['Touchpoint A'] == 0 || datum['Touchpoint B'] == 0, 1, 0)",
+          "as": "∅"
+        }
       ],
       "encoding": {
         "y": {
           "field": "Touchpoint A", 
-          "type": "quantitative", 
+          "type": "quantitative",
           "title": null, 
           "scale": {
             "domain": [-0.5,3.5]
@@ -39,7 +59,7 @@
         },
         "x": {
           "field": "Touchpoint B",
-          "type": "quantitative", 
+          "type": "quantitative",
           "title": null,
           "scale": {
             "domain": [-0.5,3.5]
@@ -56,38 +76,31 @@
         {
           "transform": [
             {
-              "aggregate": [{"op": "sum", "field": "True", "as": "cat"}], "groupby": ["Touchpoint A", "Touchpoint B"]
+              "aggregate": [{"op": "sum", "field": "True", "as": "sum"}], "groupby": ["Touchpoint A", "Touchpoint B"]
             }
           ],
-          "selection": {"click": {"encodings": ["size"], "type": "multi"}},
           "mark": {"type": "circle", "yOffset": 10},
           "encoding": {
             "tooltip": [
               {
-                "field": "Touchpoint A",
-                "title": "Touchpoint A",
+                "field": "label",
+                "title": "Set",
                 "type": "ordinal"
               },
               {
-                "field": "Touchpoint B",
-                "title": "Touchpoint B",
-                "type": "ordinal"
-              },
-              {
-                "aggregate": "sum",
-                "field": "True",
+                "field": "sum",
                 "title": "Deaths",
                 "type": "quantitative"
               }
             ],
             "size": {
-              "field": "cat",
+              "field": "sum",
               "type": "quantitative",
               "scale": {"range": [0, 6000]},
               "legend": null
             },
             "color": {
-              "field": "cat",
+              "field": "sum",
               "type": "quantitative",
               "scale": {
                 "type": "sqrt", 
@@ -98,9 +111,19 @@
         },
 
         {
+          "transform": [
+            {
+              "aggregate": [{
+              "op": "max",
+              "field": "Set",
+              "as": "label"
+              }],
+              "groupby": ["Touchpoint A", "Touchpoint B"]
+            }
+          ],
           "mark": {"type": "text", "dy": -65, "fontSize": 16},
           "encoding": {
-            "text": {"aggregate": "max", "field": "Set", "type": "nominal"}
+            "text": {"field": "label", "type": "nominal"}
           }
         },
 
@@ -109,15 +132,19 @@
             "type": "text",
             "fontSize": 0
           },
+          "selection": {
+            "group": {"type": "multi", "bind": "legend", "fields": ["a"]}
+          },
 
           "encoding": {
             "fill": {
-              "field": " ",
+              "field": "a",
               "title": "Legend",
               "type": "ordinal",
               "legend": {
                 "orient": "left",
                 "values": ["Rx = Opioid Prescription", "OD = Overdose", "Jail = Incarceration", "Health = Health Data", "∅ = No Touchpoints"],
+                "offset": 58,
                 "symbolOffset": -15,
                 "titlePadding": 10,
                 "titleColor": "#9e9e9e"
@@ -136,7 +163,7 @@
               "type": "quantitative",
               "legend": {
                 "orient": "none",
-                "legendX": -170,
+                "legendX": -215,
                 "legendY": 110,
                 "titleAlign": "center",
                 "titlePadding": 10,
@@ -149,9 +176,19 @@
         },
 
         {
+          "transform": [
+            {
+              "aggregate": [{
+              "op": "sum",
+              "field": "True",
+              "as": "sum"
+              }],
+              "groupby": ["Touchpoint A", "Touchpoint B"]
+            }
+          ],
           "mark": {"type": "text", "dy": -45, "fontStyle": "bold", "fontSize": 16},
           "encoding": {
-            "text": {"aggregate": "sum", "field": "True", "type": "quantitative"}
+            "text": {"field": "sum", "type": "quantitative"}
           }
         }
       ]
@@ -161,12 +198,12 @@
       "title": {
         "text": "Select Date Range to Update Datasets",
         "align": "right",
-        "dx": -200,
+        "dx": -160,
         "dy": -20,
         "fontSize": 16
       },
-      "width": 903,
-      "height": 150,
+      "width": 800,
+      "height": 120,
       "view": {
         "strokeOpacity": 0
       },
@@ -175,7 +212,6 @@
           "mark": {
             "type": "line"
           },
-          "transform": [{"filter": {"selection": "click"}}],
           "selection": {
             "period": {
               "type": "interval", 

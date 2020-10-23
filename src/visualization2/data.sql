@@ -70,27 +70,646 @@ WITH
       ELSE "∅"
     END AS subset
     FROM CN_POJH
+  ),
+
+  all_data as (
+    SELECT
+      CASE_NUMBER,
+      A AS "Touchpoint A",
+      B AS "Touchpoint B",
+      strftime('%Y', DOD) || CASE
+        WHEN cast(strftime('%m', DOD) as integer) BETWEEN 1 AND 3 THEN '-01-01'
+        WHEN cast(strftime('%m', DOD) as integer) BETWEEN 4 and 6 THEN '-04-01'
+        WHEN cast(strftime('%m', DOD) as integer) BETWEEN 7 and 9 THEN '-07-01'
+        ELSE '-10-01'
+      END AS "PERIOD",
+      subset AS "Set",
+      TRUE as "True"
+    FROM (
+      SELECT CASE_NUMBER, A, B, DOD, subset, TRUE FROM labels
+    )
   )
 
 SELECT
-  CASE_NUMBER,
-  A AS "Touchpoint A",
-  B AS "Touchpoint B",
-  strftime('%Y', DOD) || CASE
-    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 1 AND 3 THEN '-01-01'
-    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 4 and 6 THEN '-04-01'
-    WHEN cast(strftime('%m', DOD) as integer) BETWEEN 7 and 9 THEN '-07-01'
-    ELSE '-10-01'
-  END AS "PERIOD",
-  subset AS "Set",
-  TRUE as "True"
+  *
 FROM (
-  SELECT CASE_NUMBER, A, B, DOD, subset, TRUE FROM labels
-  -- UNION
-  -- SELECT 1 AS CASE_NUMBER, 'Rx + OD' AS A, '∅' AS B, null AS PERIOD, 'Rx + OD' AS subset, 0 AS TRUE
-  -- UNION
-  -- SELECT 2 AS CASE_NUMBER, 'Rx + OD' AS A, 'Jail' AS B, null AS PERIOD, 'Rx + OD + Jail' AS subset, 0 AS TRUE
-  -- UNION
-  -- SELECT 3 AS CASE_NUMBER, 'Rx' AS A, 'Jail' AS B, null AS PERIOD, 'Rx + Jail' AS subset, 0 AS TRUE
+  SELECT CASE_NUMBER, "Touchpoint A", "Touchpoint B", "PERIOD", "Set", True from all_data
+  UNION
+  SELECT CASE_NUMBER, "Touchpoint A", "Touchpoint B", "PERIOD", "Set", True FROM BLANKS
 ) AS data
 ORDER BY CASE_NUMBER;
+
+DROP TABLE BLANKS;
+CREATE TABLE BLANKS (CASE_NUMBER int, "Touchpoint A" int, "Touchpoint B" int, "PERIOD" varchar(255), "Set" varchar(255), True int);
+INSERT INTO BLANKS (CASE_NUMBER, "Touchpoint A", "Touchpoint B", "PERIOD", "Set", True) 
+VALUES (0, 0, 0, '2010-01-01', '∅', 0);
+VALUES (0, 0, 1, '2010-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2010-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2010-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2010-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2010-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2010-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2010-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2010-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2010-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2010-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2010-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2010-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2010-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2010-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2010-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2010-04-01', '∅', 0);
+VALUES (0, 0, 1, '2010-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2010-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2010-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2010-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2010-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2010-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2010-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2010-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2010-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2010-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2010-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2010-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2010-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2010-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2010-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2010-07-01', '∅', 0);
+VALUES (0, 0, 1, '2010-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2010-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2010-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2010-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2010-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2010-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2010-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2010-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2010-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2010-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2010-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2010-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2010-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2010-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2010-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2010-10-01', '∅', 0);
+VALUES (0, 0, 1, '2010-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2010-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2010-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2010-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2010-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2010-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2010-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2010-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2010-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2010-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2010-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2010-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2010-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2010-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2010-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2011-01-01', '∅', 0);
+VALUES (0, 0, 1, '2011-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2011-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2011-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2011-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2011-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2011-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2011-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2011-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2011-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2011-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2011-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2011-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2011-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2011-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2011-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2011-04-01', '∅', 0);
+VALUES (0, 0, 1, '2011-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2011-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2011-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2011-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2011-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2011-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2011-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2011-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2011-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2011-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2011-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2011-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2011-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2011-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2011-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2011-07-01', '∅', 0);
+VALUES (0, 0, 1, '2011-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2011-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2011-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2011-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2011-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2011-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2011-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2011-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2011-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2011-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2011-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2011-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2011-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2011-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2011-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2011-10-01', '∅', 0);
+VALUES (0, 0, 1, '2011-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2011-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2011-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2011-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2011-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2011-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2011-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2011-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2011-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2011-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2011-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2011-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2011-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2011-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2011-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2012-01-01', '∅', 0);
+VALUES (0, 0, 1, '2012-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2012-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2012-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2012-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2012-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2012-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2012-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2012-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2012-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2012-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2012-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2012-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2012-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2012-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2012-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2012-04-01', '∅', 0);
+VALUES (0, 0, 1, '2012-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2012-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2012-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2012-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2012-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2012-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2012-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2012-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2012-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2012-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2012-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2012-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2012-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2012-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2012-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2012-07-01', '∅', 0);
+VALUES (0, 0, 1, '2012-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2012-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2012-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2012-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2012-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2012-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2012-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2012-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2012-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2012-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2012-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2012-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2012-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2012-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2012-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2012-10-01', '∅', 0);
+VALUES (0, 0, 1, '2012-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2012-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2012-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2012-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2012-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2012-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2012-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2012-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2012-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2012-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2012-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2012-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2012-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2012-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2012-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2013-01-01', '∅', 0);
+VALUES (0, 0, 1, '2013-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2013-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2013-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2013-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2013-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2013-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2013-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2013-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2013-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2013-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2013-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2013-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2013-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2013-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2013-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2013-04-01', '∅', 0);
+VALUES (0, 0, 1, '2013-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2013-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2013-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2013-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2013-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2013-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2013-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2013-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2013-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2013-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2013-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2013-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2013-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2013-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2013-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2013-07-01', '∅', 0);
+VALUES (0, 0, 1, '2013-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2013-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2013-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2013-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2013-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2013-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2013-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2013-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2013-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2013-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2013-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2013-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2013-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2013-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2013-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2013-10-01', '∅', 0);
+VALUES (0, 0, 1, '2013-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2013-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2013-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2013-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2013-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2013-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2013-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2013-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2013-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2013-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2013-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2013-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2013-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2013-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2013-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2014-01-01', '∅', 0);
+VALUES (0, 0, 1, '2014-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2014-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2014-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2014-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2014-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2014-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2014-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2014-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2014-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2014-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2014-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2014-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2014-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2014-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2014-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2014-04-01', '∅', 0);
+VALUES (0, 0, 1, '2014-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2014-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2014-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2014-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2014-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2014-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2014-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2014-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2014-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2014-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2014-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2014-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2014-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2014-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2014-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2014-07-01', '∅', 0);
+VALUES (0, 0, 1, '2014-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2014-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2014-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2014-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2014-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2014-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2014-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2014-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2014-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2014-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2014-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2014-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2014-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2014-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2014-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2014-10-01', '∅', 0);
+VALUES (0, 0, 1, '2014-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2014-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2014-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2014-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2014-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2014-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2014-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2014-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2014-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2014-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2014-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2014-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2014-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2014-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2014-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2015-01-01', '∅', 0);
+VALUES (0, 0, 1, '2015-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2015-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2015-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2015-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2015-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2015-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2015-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2015-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2015-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2015-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2015-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2015-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2015-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2015-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2015-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2015-04-01', '∅', 0);
+VALUES (0, 0, 1, '2015-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2015-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2015-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2015-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2015-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2015-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2015-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2015-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2015-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2015-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2015-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2015-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2015-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2015-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2015-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2015-07-01', '∅', 0);
+VALUES (0, 0, 1, '2015-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2015-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2015-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2015-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2015-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2015-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2015-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2015-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2015-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2015-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2015-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2015-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2015-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2015-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2015-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2015-10-01', '∅', 0);
+VALUES (0, 0, 1, '2015-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2015-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2015-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2015-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2015-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2015-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2015-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2015-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2015-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2015-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2015-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2015-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2015-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2015-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2015-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2016-01-01', '∅', 0);
+VALUES (0, 0, 1, '2016-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2016-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2016-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2016-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2016-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2016-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2016-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2016-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2016-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2016-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2016-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2016-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2016-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2016-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2016-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2016-04-01', '∅', 0);
+VALUES (0, 0, 1, '2016-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2016-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2016-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2016-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2016-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2016-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2016-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2016-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2016-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2016-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2016-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2016-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2016-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2016-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2016-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2016-07-01', '∅', 0);
+VALUES (0, 0, 1, '2016-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2016-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2016-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2016-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2016-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2016-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2016-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2016-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2016-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2016-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2016-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2016-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2016-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2016-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2016-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2016-10-01', '∅', 0);
+VALUES (0, 0, 1, '2016-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2016-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2016-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2016-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2016-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2016-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2016-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2016-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2016-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2016-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2016-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2016-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2016-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2016-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2016-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2017-01-01', '∅', 0);
+VALUES (0, 0, 1, '2017-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2017-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2017-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2017-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2017-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2017-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2017-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2017-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2017-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2017-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2017-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2017-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2017-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2017-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2017-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2017-04-01', '∅', 0);
+VALUES (0, 0, 1, '2017-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2017-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2017-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2017-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2017-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2017-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2017-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2017-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2017-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2017-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2017-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2017-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2017-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2017-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2017-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2017-07-01', '∅', 0);
+VALUES (0, 0, 1, '2017-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2017-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2017-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2017-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2017-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2017-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2017-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2017-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2017-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2017-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2017-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2017-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2017-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2017-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2017-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2017-10-01', '∅', 0);
+VALUES (0, 0, 1, '2017-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2017-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2017-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2017-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2017-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2017-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2017-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2017-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2017-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2017-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2017-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2017-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2017-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2017-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2017-10-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2018-01-01', '∅', 0);
+VALUES (0, 0, 1, '2018-01-01', 'Jail', 0);
+VALUES (0, 0, 2, '2018-01-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2018-01-01', 'Health', 0);
+VALUES (0, 1, 0, '2018-01-01', 'OD', 0);
+VALUES (0, 1, 1, '2018-01-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2018-01-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2018-01-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2018-01-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2018-01-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2018-01-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2018-01-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2018-01-01', 'Rx', 0);
+VALUES (0, 3, 1, '2018-01-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2018-01-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2018-01-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2018-04-01', '∅', 0);
+VALUES (0, 0, 1, '2018-04-01', 'Jail', 0);
+VALUES (0, 0, 2, '2018-04-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2018-04-01', 'Health', 0);
+VALUES (0, 1, 0, '2018-04-01', 'OD', 0);
+VALUES (0, 1, 1, '2018-04-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2018-04-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2018-04-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2018-04-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2018-04-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2018-04-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2018-04-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2018-04-01', 'Rx', 0);
+VALUES (0, 3, 1, '2018-04-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2018-04-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2018-04-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2018-07-01', '∅', 0);
+VALUES (0, 0, 1, '2018-07-01', 'Jail', 0);
+VALUES (0, 0, 2, '2018-07-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2018-07-01', 'Health', 0);
+VALUES (0, 1, 0, '2018-07-01', 'OD', 0);
+VALUES (0, 1, 1, '2018-07-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2018-07-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2018-07-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2018-07-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2018-07-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2018-07-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2018-07-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2018-07-01', 'Rx', 0);
+VALUES (0, 3, 1, '2018-07-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2018-07-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2018-07-01', 'Rx + Health', 0);
+
+VALUES (0, 0, 0, '2018-10-01', '∅', 0);
+VALUES (0, 0, 1, '2018-10-01', 'Jail', 0);
+VALUES (0, 0, 2, '2018-10-01', 'Jail + Health', 0);
+VALUES (0, 0, 3, '2018-10-01', 'Health', 0);
+VALUES (0, 1, 0, '2018-10-01', 'OD', 0);
+VALUES (0, 1, 1, '2018-10-01', 'OD + Jail', 0);
+VALUES (0, 1, 2, '2018-10-01', 'OD + Jail + Health', 0);
+VALUES (0, 1, 3, '2018-10-01', 'OD + Health', 0);
+VALUES (0, 2, 0, '2018-10-01', 'Rx + OD', 0);
+VALUES (0, 2, 1, '2018-10-01', 'Rx + OD + Jail', 0);
+VALUES (0, 2, 2, '2018-10-01', 'Rx + OD + Jail + Health', 0);
+VALUES (0, 2, 3, '2018-10-01', 'Rx + OD + Health', 0);
+VALUES (0, 3, 0, '2018-10-01', 'Rx', 0);
+VALUES (0, 3, 1, '2018-10-01', 'Rx + Jail', 0);
+VALUES (0, 3, 2, '2018-10-01', 'Rx + Jail + Health', 0);
+VALUES (0, 3, 3, '2018-10-01', 'Rx + Health', 0);
