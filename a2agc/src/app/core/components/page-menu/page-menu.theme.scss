@@ -19,7 +19,7 @@
       .link {
         color: mat-color($accent, "100-contrast");
 
-        .active {
+        &.active > div {
           background-color: mat-color($accent, 300);
         }
 

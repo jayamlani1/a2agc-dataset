@@ -1,9 +1,12 @@
 :host {
-  display: flex;
-  flex-direction: column;
+  display: block;
   height: 100%;
 
-  .content {
-    flex-grow: 1;
+  mat-sidenav-container {
+    height: calc(100% - 3.5rem);
+
+    mat-sidenav-content .outlet-wrapper {
+      min-height: calc(100% - 8rem - 7.5rem);
+    }
   }
 }
