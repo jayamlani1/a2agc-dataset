@@ -22,6 +22,16 @@
   },
   "transform": [
     {
+      "filter": {
+        "selection": "filter_selection"
+      }
+    },
+    {
+      "filter": {
+        "selection": "substance_selection"
+      }
+    },
+    {
       "joinaggregate": [
         {
           "as": "TOTAL_DEATHS",
@@ -41,16 +51,6 @@
     {
       "calculate": "datum.HAS_OVERDOSE_DATA == true && datum.MAX_INCIDENT_DATE < datum.DATE_OF_DEATH ? 'Had Previous Overdose' : 'No Previous Overdose'",
       "as": "HAD_PREVIOUS_OVERDOSE"
-    },
-    {
-      "filter": {
-        "selection": "substance_selection"
-      }
-    },
-    {
-      "filter": {
-        "selection": "filter_selection"
-      }
     }
   ],
   "spacing": 150,
@@ -69,7 +69,9 @@
               "fields": [
                 "SUBSTANCE_NAME"
               ],
-              "bind": "legend",
+              "bind": {
+                "legend": "dblclick"
+              },
               "init": [
                 {
                   "SUBSTANCE_NAME": "All Substances"
@@ -122,11 +124,13 @@
           },
           "selection": {
             "filter_selection": {
-              "type": "single",
+              "type": "multi",
               "fields": [
                 "HAD_PREVIOUS_OVERDOSE"
               ],
-              "bind": "legend"
+              "bind": {
+                "legend": "click"
+              }
             }
           },
           "encoding": {
@@ -162,11 +166,11 @@
               "spacing": 0,
               "hconcat": [
                 {
-                "height": 175,
-                    "title": {
-                      "orient": "top",
-                      "text": "# Deaths"
-                    },
+                  "height": 175,
+                  "title": {
+                    "orient": "top",
+                    "text": "# Deaths"
+                  },
                   "data": {
                     "sequence": {
                       "start": 0,
