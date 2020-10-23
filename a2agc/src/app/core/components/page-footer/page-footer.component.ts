@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 
 
 @Component({
@@ -8,4 +8,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageFooterComponent {
+  @HostBinding('class') readonly clsName = 'agc-page-footer';
+
+  @Input() buildDate!: Date;
+
+  @Output() readonly contactClick = new EventEmitter<void>();
+  @Output() readonly privacyClick = new EventEmitter<void>();
 }
