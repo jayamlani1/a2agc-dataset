@@ -32,3 +32,9 @@ body {
   transition: text-decoration-color 0s !important;
   transition: text-emphasis-color 0s !important;
 }
+
+// NgxVega's resize sensor is not working correctly. It keeps growing the element.
+// Further investigation of issue is needed but for now just disable the sensor.
+ngx-vega .resize-sensor {
+  display: none;
+}
