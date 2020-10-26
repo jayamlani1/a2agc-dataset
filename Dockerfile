@@ -20,6 +20,9 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install nodeenv && \
   nodeenv /usr/local --force --prebuilt
 
+# Install angular cli
+RUN npm install -g @angular/cli
+
 # Install a simple file server for testing
 RUN npm install -g http-server
 

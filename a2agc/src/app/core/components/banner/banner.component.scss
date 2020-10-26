@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  height: 8rem;
+  align-items: center;
+
+  .info {
+    display: flex;
+    height: 4rem;
+    padding-left: 2rem;
+    padding-right: 1rem;
+    align-items: center;
+  }
+
+  .image {
+    height: 8rem;
+  }
+
+  .filler {
+    flex-grow: 1;
+  }
+}
