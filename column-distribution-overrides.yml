@@ -5,3 +5,19 @@
 #   ...
 # ...
 #
+
+ems_incidents:
+  EMS_ID: summary
+  MiddleName: summary
+  IncidentNumber: summary
+  HomeAddressLine2: summary
+  HomeZip: summary
+
+encounters:
+  ENCOUNTER_ID: summary
+
+incarcerations:
+  JAIL_ID: summary
+  PERMANENT_NO: summary
+  BOOKING_NO: summary
+  MIDDLE_NAME: summary

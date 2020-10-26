@@ -12,15 +12,13 @@ use_directory_urls: false
 
 nav:
   - About: index.md
-  - Change Log: CHANGELOG.md
   - Visualizations:
     # - Getting Started: examples/getting_started.md
-    - Demographic Comparison of Opioid Deaths: examples/visualization1.md
-    - Opioid Death Trajectories: examples/visualization2.md
-    - Heatmaps of Deaths with Substance: examples/visualization4a.md
-    - Heatmaps of Substance Proportions at Death: examples/visualization4.md
-    - Opioid Death Trajectories: examples/visualization2.md
     - Geographic Map of Opioid Deaths: examples/visualization5.md
+    - Age group and gender of accidental drug overdose deaths and population in Marion County 2010-2018: examples/bar-visualization/page.md
+    - Heatmaps of Substance Proportions at Death: examples/visualization4.md
+    - Interactive Heatmap of Substance Proportions at Death: examples/visualization4a.md
+    - Opioid Death Trajectories: examples/visualization2.md
   - Dataset:
     # - Overview: dataset/index.md
     # - Data Access Requirements: dataset/access.md
@@ -32,21 +30,22 @@ nav:
       - Ems Incidents: dataset/tables/table-ems_incidents.md
       - Encounters: dataset/tables/table-encounters.md
       - Incarcerations: dataset/tables/table-incarcerations.md
-      - Incarcerations Weekly: dataset/tables/table-incarcerations_weekly.md
+      # - Incarcerations Weekly: dataset/tables/table-incarcerations_weekly.md
       - Labs: dataset/tables/table-labs.md
       - Medications: dataset/tables/table-medications.md
       - Procedures: dataset/tables/table-procedures.md
       - Referrals: dataset/tables/table-referrals.md
-      - Rollup1: dataset/tables/table-rollup1.md
+      # - Rollup1: dataset/tables/table-rollup1.md
   #  - Validation Results: dataset/validation.md
   #- Source Code:
   #  - Dataset Generation: dataset/workflow.md
   #  - Data Analytics: analytics.md
+  - Change Log: CHANGELOG.md
 
 plugins:
   - search
   - macros:
-      module_name: src.mkdocs_macros
+      module_name: mkdocs_macros
   # MkPDFs doesn't work with readthedocs theme and
   # the generated schema html. So for now, we'll
   # turn PDF generation off.

@@ -1,6 +1,6 @@
 import json
 
-from src.mkdocs_macros import common, javascript as js
+from mkdocs_macros import common, javascript as js
 
 
 DEFAULT_VEGA_OPTIONS = { 'renderer': 'canvas', 'actions': True }

@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS ems_incidents;
 CREATE TABLE ems_incidents (
   "EMS_ID" INT NOT NULL CHECK(typeof(ems_id) == 'integer'), -- PRIMARY KEY,
   "CASE_NUMBER" CHARACTER(6) NOT NULL CHECK(length(case_number) = 6 OR case_number = '172987a'),
-      -- FIXME: case_number = 172987a is the only row that is not length 6 and is a duplicate of 172987 
+      -- FIXME: case_number = 172987a is the only row that is not length 6 and is a duplicate of 172987
   "YEAR" INT NOT NULL CHECK(typeof(year) = 'integer'),
   "YOB" INT NOT NULL CHECK(typeof(yob) = 'integer'),
   "PatientID" VARCHAR(64) NOT NULL CHECK(length(last_name) BETWEEN 1 AND 64),
@@ -14,10 +14,9 @@ CREATE TABLE ems_incidents (
       -- Note: Some middlenames were just a single space. Translated this to NULL.
   "GENDER" CHARACTER NOT NULL CHECK(gender = 'M' OR gender = 'F'),
       -- Note: Translated Male/Female to M/F
-  "Race_Ethnicity" CHARACTER NOT NULL CHECK(length(race_ethnicity) == 1),
-      -- FIXME: Need to know what race numbers map to
-  "RACE_ONLY" CHARACTER NOT NULL CHECK(length(race_only) == 1),
-      -- FIXME: Need to know what race numbers map to
+  "Race_Ethnicity" CHARACTER NOT NULL CHECK(length(race_ethnicity) = 1),
+      -- FIXME: Need to know what race_ethnicity numbers map to
+  "RACE_ONLY" CHARACTER NOT NULL CHECK(race_only IN (NULL, 'White', 'Black', 'Hispanic')),
   "PCRDateTime" DATE NOT NULL CHECK((typeof(pcrdatetime) = 'text' AND length(pcrdatetime) = 10)),
   "IncidentNumber" INT CHECK(typeof(incidentnumber) = 'integer' OR incidentnumber IS NULL),
       -- Note: 6 incidents have no incident number...
@@ -62,7 +61,7 @@ CREATE TABLE ems_incidents (
   FOREIGN KEY("CASE_NUMBER") REFERENCES deaths("CASE_NUMBER")
 );
 INSERT INTO ems_incidents
-  SELECT 
+  SELECT
     CAST(ems_id AS INT),
     case_number,
     CAST(year AS INT),
@@ -74,7 +73,12 @@ INSERT INTO ems_incidents
     CASE middlename WHEN ' ' THEN NULL ELSE middlename END,
     CASE gender WHEN 'Female' THEN 'F' WHEN 'Male' THEN 'M' ELSE NULL END,
     race_ethnicity,
-    race_only,
+    CASE race_only
+        WHEN '1' THEN 'White'
+        WHEN '2' THEN 'Black'
+        WHEN '3' THEN 'Hispanic'
+        ELSE NULL
+    END,
     date(pcrdatetime),
     NULLIF(CAST(incidentnumber AS INT), 0),
     incidentlocationtypeall_text,
