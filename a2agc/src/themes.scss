@@ -4,6 +4,7 @@
 @use "./themes/default";
 
 @use "./app/core/core.theme" as core;
+@use "./app/shared/shared.theme.scss" as shared;
 
 // Plus imports for other components in your app.
 
@@ -17,6 +18,7 @@
   @include angular-material-theme($theme); // TODO select specific components
 
   @include core.theme($theme);
+  @include shared.theme($theme);
 }
 
 // Default theme

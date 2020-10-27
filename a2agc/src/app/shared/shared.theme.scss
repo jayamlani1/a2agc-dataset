@@ -1,0 +1,5 @@
+@use "./menu-icon/menu-icon.theme.scss";
+
+@mixin theme($theme-or-config) {
+  @include menu-icon.theme($theme-or-config);
+}
