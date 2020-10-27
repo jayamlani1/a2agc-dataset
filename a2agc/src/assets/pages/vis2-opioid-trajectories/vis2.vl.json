@@ -6,7 +6,7 @@
   },
 
   "data": {
-    "url": "generated/visualization2/data.csv",
+    "url": "assets/generated/visualization2/data.csv",
     "format": {
       "type": "csv",
       "parse": {
