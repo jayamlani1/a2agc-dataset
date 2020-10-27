@@ -1,0 +1,65 @@
+@import "~@angular/material/theming";
+
+
+@mixin color($config-or-theme) {
+  $config: mat-get-color-config($config-or-theme);
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+
+  .agc-page-footer {
+    .resources {
+      background-color: mat-color($primary, 800);
+
+      .contact, .privacy {
+        color: mat-color($primary, '800-contrast');
+
+        &:hover {
+          color: mat-color($primary);
+        }
+      }
+
+      .build-date {
+        color: mat-color($accent, text);
+      }
+    }
+
+    .copyright {
+      background-color: mat-color($primary, 900);
+      color: mat-color($accent, text);
+    }
+  }
+}
+
+@mixin typography($config-or-theme) {
+  $config: mat-get-typography-config($config-or-theme);
+
+  .agc-page-footer {
+    .resources .build-date {
+      font: {
+        family: mat-font-family($config, 'body-2');
+        size: mat-font-size($config, 'body-2');
+        weight: mat-font-weight($config, 'body-2');
+      }
+    }
+
+    .copyright {
+      font: {
+        family: mat-font-family($config, caption);
+        size: mat-font-size($config, caption);
+        weight: mat-font-weight($config, caption);
+      }
+    }
+  }
+}
+
+@mixin theme($theme) {
+  $color: mat-get-color-config($theme);
+  $typography: mat-get-typography-config($theme);
+
+  @if $color != null {
+    @include color($color);
+  }
+  @if $typography != null {
+    @include typography($typography);
+  }
+}

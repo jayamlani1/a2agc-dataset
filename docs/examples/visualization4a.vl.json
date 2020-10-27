@@ -3,74 +3,82 @@
 	"config": {
 		"mark": {
 			"tooltip": null
-		}
+		},
+	    "view": {
+      		"stroke": "transparent"
+    	}
 	},
+
 	"data": {
 		"url": "../data/visualization4/data.csv"
 	},
 	"vconcat": [
 		{
+			"spacing": 40,
 			"hconcat": [
-
 				{
-					"mark": "bar",
-					"encoding": {
-						"x": {
-							"axis": {
-								"labels": true
-							},
-							"field": "group",
-							"title": "Age Group",
-							"type": "ordinal"
-						},
-						"y": {
-							"aggregate": "distinct",
-							"field": "CASE_NUMBER",
-							"type": "quantitative",
-							"title": "Deaths"
-						},
-						"tooltip": [
-							{
-								"aggregate": "distinct",
-								"field": "CASE_NUMBER",
-								"type": "quantitative",
-								"title": "Total"
-							},
-							{
-								"field": "group",
-								"title": "Age Group",
-								"type": "ordinal"
-							}
-						]
-					},
 					"transform": [
 						{
-							"filter": {
-								"selection": "pts"
-							}
+							"filter": {"selection": "pts"}
+						},
+
+						{
+							"filter": {"selection": "year_selection"}
 						},
 						{
-							"filter": {
-								"selection": "year_selection"
-							}
+							"joinaggregate": [
+								{
+									"as": "TOTAL_DEATHS",
+									"field": "CASE_NUMBER",
+									"op": "distinct"
+								}
+							],
+							"groupby": [
+								"AGE_GROUP",
+								"YEAR"
+							]
+						},
+						{
+							"as": "deaths_max69",
+							"calculate": "min(69, datum.TOTAL_DEATHS)"
+						},
+						{
+							"calculate": "['#d4eeb4', '#a9ddb7', '#74c9bd', '#45b4c2', '#2997be', '#2173b1', '#234ea0'][datum.deaths_binned/10]",
+							"as": "color"
+						},
+						{
+							"bin": {
+								"anchor": 0,
+								"maxbins": 7,
+								"step": 10,
+								"extent": [0, 69]
+							},
+							"field": "deaths_max69",
+							"as": "deaths_binned"
 						},
 						{
 							"as": "group",
-							"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70>')"
 						}
 					],
-					"width": 500,
-					"height": 400
-				},
-				{
+					"title": {
+						"text": "All Substances",
+						"offset": 20,
+						"fontSize": 14
+					},
+					"width": 470,
+					"height": 175,				
+					"mark": "rect",
 					"encoding": {
 						"color": {
-							"field": "TOTAL_DEATHS",
-							"scale": {
-								"scheme": "yellowgreenblue"
+							"condition": {
+								"selection": "deaths_binned",
+								"field": "deaths_binned",
+								"type": "nominal",
+								"scale": {"range": {"field": "color"}},
+								"legend": null
 							},
-							"title": "Deaths",
-							"type": "quantitative"
+							"value": "white"
 						},
 						"tooltip": [
 							{
@@ -91,8 +99,24 @@
 						],
 						"x": {
 							"field": "YEAR",
-							"title": "",
-							"type": "ordinal"
+							"title": "Year",
+							"type": "ordinal",
+							"axis": { 
+								"labelAngle": 0
+							},
+							"scale": {
+								"domain": [
+									2010,
+									2011,
+									2012,
+									2013,
+									2014,
+									2015,
+									2016,
+									2017,
+									2018
+								]
+							}
 						},
 						"y": {
 							"axis": {
@@ -100,11 +124,24 @@
 							},
 							"field": "group",
 							"title": "Age Group",
-							"type": "ordinal"
+							"type": "ordinal",
+							"scale": { 
+								"reverse": true,
+								"domain": [
+									"0-9",
+									"10-19",
+									"20-29",
+									"30-39",
+									"40-49",
+									"50-59",
+									"60-69",
+									"70>"
+								] 
+							}
 						}
-					},
-					"mark": "rect",
-					"title": "All substances",
+					}
+				},
+				{
 					"transform": [
 						{
 							"filter": {
@@ -117,7 +154,7 @@
 							}
 						},
 						{
-							"aggregate": [
+							"joinaggregate": [
 								{
 									"as": "TOTAL_DEATHS",
 									"field": "CASE_NUMBER",
@@ -130,53 +167,225 @@
 							]
 						},
 						{
+							"as": "deaths_max69",
+							"calculate": "min(69, datum.TOTAL_DEATHS)"
+						},
+						{
+							"bin": {
+								"anchor": 0,
+								"maxbins": 7,
+								"step": 10,
+								"extent": [0, 69]
+							},
+							"field": "deaths_max69",
+							"as": "deaths_binned"
+						},
+						{
 							"as": "group",
-							"calculate": "toString(5 * datum.AGE_GROUP) + \"-\" + toString(5 * datum.AGE_GROUP + 4)"
+							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70>')"
 						}
 					],
-					"width": 500,
-					"height": 400
+					"width": 470,
+					"height": 175,
+					"title": {
+						"text": "All Substances",
+						"offset": 20,
+						"fontSize": 14
+					},
+					"encoding": {
+						"tooltip": [
+							{
+								"aggregate": "distinct",
+								"field": "CASE_NUMBER",
+								"type": "quantitative",
+								"title": "Total"
+							},
+							{
+								"field": "group",
+								"title": "Age Group",
+								"type": "ordinal"
+							}
+						]
+					},
+					"layer": [
+						{
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"aggregate": "distinct",
+									"field": "CASE_NUMBER",
+									"type": "quantitative",
+									"title": "# Total Deaths",
+									"axis": {
+										"domainColor": "#757575",
+										"tickColor": "#757575",
+										"labelColor": "#212121"
+									}
+								},
+								"y": {
+									"axis": {
+										"labels": true,
+										"domainColor": "#757575",
+										"tickColor": "#757575",
+										"labelColor": "#212121"
+									},
+									"field": "group",
+									"title": "Age Group",
+									"type": "ordinal",
+									"scale": { 
+										"reverse": true,
+										"domain": [
+											"0-9",
+											"10-19",
+											"20-29",
+											"30-39",
+											"40-49",
+											"50-59",
+											"60-69",
+											"70>"
+										] 
+									}
+								},
+								"stroke": {
+									"value": "black"
+								},
+								"strokeWidth": {
+									"value": 1
+								},
+								"opacity": {"condition": {"selection": "deaths_binned", "value": 0}, "value": 1},
+								"color": {"value": "white"}
+							}
+						},
+						{
+							"transform": [
+								{
+									"filter": {"selection": "deaths_binned"}
+								}
+							],
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"aggregate": "distinct",
+									"field": "CASE_NUMBER",
+									"type": "quantitative"
+								},
+								"y": {
+									"field": "group",
+									"title": "Age Group",
+									"type": "ordinal"
+								},
+								"strokeWidth": {"value": 0},
+								"color": {
+									"condition": {
+										"selection": "deaths_binned",
+										"field": "deaths_binned",
+										"type": "nominal",
+										"legend": null
+									},
+									"value": "white"
+								}
+							}
+						},
+						{
+							"mark": "bar",
+							"encoding": {
+								"x": {
+									"aggregate": "distinct",
+									"field": "CASE_NUMBER",
+									"type": "quantitative"
+								},
+								"y": {
+									"field": "group",
+									"title": "Age Group",
+									"type": "ordinal"
+								},
+								"stroke": {
+									"value": "black"
+								},
+								"strokeWidth": {
+									"value": 1
+								},
+								"opacity": {"condition": {"selection": "deaths_binned", "value": 1}, "value": 0},
+								"color": {"value": "white"}
+							}
+						}
+					]
 				}
 			]
 		},
 		{
+			"spacing": 70,
 			"hconcat": [
-
 				{
 					"mark": "line",
-					"width": 870,
-					"height": 200,
-					"title": "Filters",
+					"width": 600,
+					"height": 175,
+					"title": {
+						"text": "Update Graphs Using Filters Below",
+						"anchor": "start",
+						"offset": 30,
+						"fontSize": 14
+					},
 					"encoding": {
+						"color": { "value": "#6ea7ef" },
 						"x": {
 							"field": "YEAR",
-							"type": "ordinal",
+							"type": "quantitative",
+							"title": "Year",
+							"scale": {"nice": false, "domain": [2010, 2018.75]},
 							"axis": {
-								"title": "YEAR"
+								"tickColor": "#757575",
+								"domainColor": "#757575", 
+								"labelFlush": false,
+								"labelAngle": 0,
+								"labelExpr": "[datum.value%1 == 0 ? datum.value : '']",
+								"gridDash": {
+                  					"condition": {
+										"test": "(datum.value+.5)%1 == 0", 
+										"value": [2,2]
+									},
+				  					"value": []
+                				},
+								"gridColor": {
+									"condition": {
+										"test": "datum.value%1 == 0", 
+										"value": "#BDBDBD"
+									},
+									"value": "#e0e0e0"
+								}
 							}
 						},
 						"y": {
 							"field": "TOTAL_DEATHS",
 							"type": "quantitative",
+							"title": "# Deaths",
 							"axis": {
-								"title": "Deaths"
+								"gridColor": "#e0e0e0",
+								"tickColor": "#757575",
+								"domainColor": "#757575",
+								"gridOpacity": {
+									"condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+									"value": 1
+								},
+								"tickOpacity": {
+									"condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+									"value": 1
+								},
+								"labelFontSize": {
+									"condition": {"test": {"field": "index", "equal": 1}, "value": 0},
+									"value": 10
+								}
 							}
 						}
 					},
 					"selection": {
 						"year_selection": {
 							"type": "interval",
-							"encodings": [
-								"x"
-							]
+							"encodings": ["x"],
+							"mark": {"fill": "#6ea7ef", "fillOpacity": 0.15}
 						}
 					},
 					"transform": [
-						{
-							"filter": {
-								"selection": "pts"
-							}
-						},
 						{
 							"aggregate": [
 								{
@@ -185,8 +394,156 @@
 									"op": "distinct"
 								}
 							],
-							"groupby": [
-								"YEAR"
+							"groupby": ["YEAR"]
+						}
+					]
+				},
+				{
+					"spacing": 0,
+					"hconcat": [
+						{
+							"height": 175,
+							"data": {
+								"sequence": {
+									"start": 0,
+									"stop": 65,
+									"step": 10,
+									"as": "deaths_binned"
+								}
+							},
+							"transform": [
+								{
+								"calculate": "if(datum.deaths_binned < 60, datum.deaths_binned + '-' + (datum.deaths_binned + 9), '60>')",
+								"as": "label"
+								}
+							],
+							"mark": "rect",
+							"width": 50,
+							
+							"selection": {
+								"deaths_binned": {
+									"type": "single",
+									"fields": [
+										"deaths_binned"
+									]
+								},
+								"label": {
+									"type": "single",
+									"empty": "none",
+									"fields": [
+										"label"
+									]
+								}
+							},
+							"encoding": {
+								"x": {
+									"type": "nominal",
+									"field": "YEAR",
+									"title": "# Deaths",
+									"axis": {
+										"labels": false,
+										"ticks": false,
+										"domain": false,
+										"titlePadding": 20
+									}
+								},
+								"y": {
+									"field": "deaths_binned",
+									"type": "ordinal",
+									"scale": {"reverse": true},
+									"axis": {
+										"orient": "right",
+										"ticks": false,
+										"domain": false,
+										"labels": false,
+										"title": null ,
+										"labelFontSize": 12
+									}
+								},
+								"stroke": {"value": "white"},
+								"strokeWidth": {"value": 2},
+								"color": {
+									"legend": null,
+									"field": "deaths_binned",
+									"scale": {
+										"scheme": "yellowgreenblue"
+									}
+								}
+							}
+						},
+						{
+							"layer": [
+								{
+									"data": {
+										"sequence": {
+											"start": 0,
+											"stop": 65,
+											"step": 10,
+											"as": "deaths_binned"
+										}
+									},
+									"transform": [
+										{
+										"calculate": "if(datum.deaths_binned < 60, datum.deaths_binned + '-' + (datum.deaths_binned + 9), '60>')",
+										"as": "label"
+										}
+									],
+									"height": 175,
+									"mark": {
+										"type": "text",
+										"fontStyle": "bold"
+									},
+									"encoding": {
+										"color": {
+											"value": "white",
+											"condition": {
+												"selection": "label", "value": "black"
+											}
+										},
+										"text": {
+											"type": "ordinal",
+											"field": "label"
+										},
+										"y": {
+											"type": "ordinal",
+											"field": "deaths_binned",
+											"axis": null,
+											"scale": { "reverse": true }
+										}
+									}
+								},
+								{
+									"data": {
+										"sequence": {
+											"start": 0,
+											"stop": 65,
+											"step": 10,
+											"as": "deaths_binned"
+										}
+									},
+									"transform": [
+										{
+										"calculate": "if(datum.deaths_binned < 60, datum.deaths_binned + '-' + (datum.deaths_binned + 9), '60>')",
+										"as": "label"
+										}
+									],
+									"height": 175,
+									"mark": {
+										"type": "text"
+									},
+									"encoding": {
+										"text": {
+											"type": "ordinal",
+											"field": "label"
+										},
+										"y": {
+											"type": "ordinal",
+											"field": "deaths_binned",
+											"axis": null,
+											"scale": { "reverse": true }
+										}
+									}
+								}
 							]
 						}
 					]
@@ -252,9 +609,19 @@
 							}
 						]
 					},
+					"transform": [
+						{
+							"calculate": "if(datum.SEX == 'F', 'Female', 'Male')",
+							"as": "sex_label"
+						},
+						{
+							"calculate": "if(datum.SEX == 'F', 1, 2)",
+							"as": "count"
+						}
+					],
 					"mark": "rect",
-					"height": 200,
-					"width": 70,
+					"width": 80,
+					"height": 175,
 					"selection": {
 						"pts": {
 							"type": "multi",
@@ -265,28 +632,46 @@
 						}
 					},
 					"encoding": {
+						"tooltip": {
+							"value": "Shift-Click to add more than one item"
+						},
 						"x": {
-							"field": "SEX",
-							"title": "SEX",
-							"type": "ordinal"
+							"field": "sex_label",
+							"title": "Sex",
+							"type": "ordinal",
+							"scale": {"reverse": true},
+							"axis": {
+								"domainColor": "#757575",
+								"tickColor": "#757575",
+								"domainWidth": 2,
+								"labelAngle": 0
+							}
 						},
 						"y": {
 							"field": "SUBSTANCE_NAME",
 							"title": "Substance Name",
-							"type": "ordinal"
+							"type": "ordinal",
+							"axis": {
+								"domainColor": "#757575",
+								"tickColor": "#757575",
+								"domainWidth": 2
+							}
 						},
+						"stroke": {"value": "white"},
+						"strokeWidth": {"value": 2},
 						"color": {
 							"condition": {
+								"legend": null,
 								"selection": "pts",
-								"aggregate": "count",
-								"type": "quantitative"
+								"field": "count",
+								"type": "quantitative",
+								"scale": {"range": ["#DA5E8C", "#586CBB"]}
 							},
-							"value": "grey"
+							"value": "#e0e0e0"
 						}
 					}
 				}
 			]
 		}
-
 	]
 }

@@ -1,11 +1,9 @@
 # Accidental drug overdose death in Marion County by substance, sex and age group 2010-2018
 --------------------------------------------
 
-This example visualization shows heatmap of opioid deaths categorized by sex, age group, substance and year
+This visualization shows heatmaps of opioid deaths categorized by gender, age group, substance and year.
 
-## Visualization
-
-{{vega_script_tags}}
+{{vega.header()}}
 {{include_vega_ext('visualization4.vl.json')}}
 
 ([Source Vega-Lite Visualization Spec](./visualization4.vl.json))
