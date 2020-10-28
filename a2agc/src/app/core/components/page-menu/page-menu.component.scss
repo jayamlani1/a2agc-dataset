@@ -35,5 +35,10 @@
 
   .info div {
     cursor: pointer;
+
+    .link {
+      outline: none;
+      text-decoration: none;
+    }
   }
 }
