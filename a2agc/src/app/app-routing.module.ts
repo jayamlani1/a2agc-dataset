@@ -10,7 +10,9 @@ const routes: Routes = [
   {
     path: 'vis2-opioid-trajectories',
     loadChildren: () => import('./pages/vis2-opioid-trajectories/vis2-opioid-trajectories.module').then(m => m.Vis2OpioidTrajectoriesModule)
-  }
+  },
+  { path: 'vis4-tree-graph-of-age-and-gender', loadChildren: () => import('./pages/vis4-tree-graph-of-age-and-gender/vis4-tree-graph-of-age-and-gender.module').then(m => m.Vis4TreeGraphOfAgeAndGenderModule) },
+  { path: 'vis4-combined-visualization', loadChildren: () => import('./pages/vis4-combined-visualization/vis4-combined-visualization.module').then(m => m.Vis4CombinedVisualizationModule) }
 ];
 
 @NgModule({
