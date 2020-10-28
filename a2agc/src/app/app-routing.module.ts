@@ -18,7 +18,8 @@ const routes: Routes = [
   {
     path: 'vis5-opioid-trajectories',
     loadChildren: () => import('./pages/vis5-opioid-trajectories/vis5-opioid-trajectories.module').then(m => m.Vis5OpioidTrajectoriesModule)
-  }
+  },
+  { path: 'change-log', loadChildren: () => import('./pages/change-log/change-log.module').then(m => m.ChangeLogModule) }
 ];
 
 @NgModule({
