@@ -3,7 +3,7 @@
 
 Marion County by History of Opioid Prescription, Previous Overdose, Incarceration, Health Data (2010-2018)
 
-[(Source Vega-Lite Visualization Spec)]
+[(Source Vega-Lite Visualization Spec)](assets/pages/vis5-opioid-trajectories/vis5.vl.json)
 
 ## Usage
 
@@ -33,7 +33,7 @@ The visualization provides a comparison of the number of cases across each possi
 
 The table was created using the following SQL script:
 
-The resulting aggregated data can be found [here].
+The resulting aggregated data can be found [here](assets/generated/visualization2/data.csv).
 
 Following rules were used to determined each of the following attributes:
 
