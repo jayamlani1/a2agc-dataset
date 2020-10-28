@@ -8,12 +8,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/geomap/geomap.module').then(m => m.GeomapModule)
   },
   {
-    path: 'vis2-opioid-trajectories',
-    loadChildren: () => import('./pages/vis2-opioid-trajectories/vis2-opioid-trajectories.module').then(m => m.Vis2OpioidTrajectoriesModule)
-  },
-  {
     path: 'vis3-heatmap-of-accidental-overdoses',
     loadChildren: () => import('./pages/vis3-heatmap-of-accidental-overdoses/vis3-heatmap-of-accidental-overdoses.module').then(m => m.Vis3HeatmapOfAccidentalOverdosesModule)
+  },
+  {
+    path: 'vis5-opioid-trajectories',
+    loadChildren: () => import('./pages/vis5-opioid-trajectories/vis5-opioid-trajectories.module').then(m => m.Vis5OpioidTrajectoriesModule)
   }
 ];
 
