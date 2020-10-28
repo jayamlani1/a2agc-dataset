@@ -1,5 +1,6 @@
 import { ScrollDispatcher } from '@angular/cdk/overlay';
 import { Component, HostBinding } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { PageLink } from './core/components/page-menu/page-menu.component';
 
@@ -44,9 +45,9 @@ export class AppComponent {
 
   menuOpen = false;
 
-  constructor(foo: ScrollDispatcher) {
-    // console.log(foo);
+  constructor(foo: ScrollDispatcher, router: Router) {
+    router.events.subscribe(event => {
+      this.menuOpen = false;
+    });
   }
-
-  // TODO on navigation close menu!
 }
