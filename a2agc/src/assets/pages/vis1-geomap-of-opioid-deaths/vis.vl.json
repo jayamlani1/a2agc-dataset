@@ -1,0 +1,238 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "name": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
+  "title": {
+    "text": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
+    "anchor": "middle",
+    "fontSize": 24
+  },
+  "config": {"view": {"stroke": "transparent"}},
+  "padding": {"left": 65, "right": 10, "bottom": 10, "top": 10},
+  "autosize": {"type": "pad", "resize": true},
+  "data": {
+    "url": "assets/generated/vis-geomap-opioid-deaths.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "N_OPIOID_PRESCRIPTIONS": "number",
+        "LATITUDE": "number",
+        "LONGITUDE": "number",
+        "PERIOD": "date"
+      }
+    }
+  },
+  "transform": [
+    {
+      "lookup": "DATA_VARIABLE",
+      "from": {
+        "key": "DATA_VARIABLE",
+        "fields": ["LEGEND_ORDER", "LABEL"],
+        "data": {"url": "assets/pages/vis1-geomap-of-opioid-deaths/vis-data-variables.csv"}
+      }
+    }
+  ],
+  "vconcat": [
+    {
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 0
+          },
+          "selection": {
+            "data_variable_selection": {
+              "type": "multi",
+              "fields": ["LABEL"],
+              "bind": "legend",
+              "init": [{ "LABEL": "Age" }]
+            }
+          },
+          "encoding": {
+            "fill": {
+              "field": "LABEL",
+              "title": "Select Data Variable",
+              "type": "ordinal",
+              "legend": {
+                "orient": "left",
+                "titlePadding": 10,
+                "titleColor": "black"
+              }
+            },
+            "opacity": {
+              "condition": {
+                "selection": "data_variable_selection",
+                "value": 1
+              },
+              "value": 0.2
+            }
+          }
+        },
+        {
+          "width": 550,
+          "height": 600,
+          "data": {
+            "name": "counties",
+            "url": "assets/pages/vis1-geomap-of-opioid-deaths/indiana.topojson",
+            "format": {"type": "topojson", "feature": "counties"}
+          },
+          "transform": [],
+          "projection": {"type": "mercator"},
+          "mark": {"type": "geoshape", "fill": "white", "stroke": "darkgray"}
+        },
+        {
+          "width": 550,
+          "height": 600,
+          "transform": [
+            {"filter": {"selection": "data_variable_selection"}},
+            {"filter": {"selection": "period"}},
+            {"filter": {"selection": "out_of_state_filter"}},
+            {"filter": {"selection": "gender_select"}}
+          ],
+          "projection": {"type": "mercator"},
+          "mark": {"type": "point"},
+          "selection": {
+            "filter_selection": {
+              "type": "multi",
+              "fields": ["VALUE"],
+              "bind": "legend"
+            }
+          },
+          "encoding": {
+            "longitude": {"type": "quantitative", "field": "LONGITUDE"},
+            "latitude": {"type": "quantitative", "field": "LATITUDE"},
+            "shape": {
+              "type": "nominal",
+              "field": "HOME_STATE$$shape",
+              "scale": null
+            },
+            "color": {
+              "type": "nominal",
+              "field": "VALUE",
+              "title": "Filter by",
+              "scale": {
+                "domain": [
+                  "Male",
+                  "Female",
+                  "Prescription",
+                  "Illicit",
+                  "True",
+                  "False",
+                  "Neither",
+                  "0 - 9",
+                  "10 - 19",
+                  "20 - 29",
+                  "30 - 39",
+                  "40 - 49",
+                  "50 - 59",
+                  "60 - 69",
+                  "70 >"
+                ],
+                "range": [
+                  "#586CBB",
+                  "#DA5E8C",
+                  "#900DA4",
+                  "#26C6DA",
+                  "#2962FF",
+                  "#FFC400",
+                  "#9e9e9e",
+                  "#F0F921",
+                  "#FCCE25",
+                  "#F1844B",
+                  "#E16462",
+                  "#B12A90",
+                  "#900DA4",
+                  "#42049E",
+                  "#0D0887"
+                ]
+              },
+              "legend": {
+                "orient": "left",
+                "titlePadding": 10
+              }
+            },
+            "opacity": {
+              "condition": {
+                "selection": "filter_selection",
+                "value": 1
+              },
+              "value": 0
+            },
+            "size": {"value": 100}
+          }
+        }
+      ]
+    },
+    {
+      "width": 703,
+      "height": 150,
+      "view": {"strokeOpacity": 1},
+      "layer": [
+        {
+          "transform": [
+            {"filter": "datum.DATA_VARIABLE == 'AGE'"},
+            {"filter": {"selection": "out_of_state_filter"}},
+            {"filter": {"selection": "gender_select"}}
+          ],
+          "mark": {"type": "line"},
+          "selection": {
+            "period": {
+              "type": "interval",
+              "encodings": ["x"],
+              "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}"
+            },
+            "out_of_state_filter": {
+              "type": "single",
+              "fields": ["HOME_STATE$$shape"],
+              "bind": {
+                "HOME_STATE$$shape": {
+                  "input": "select",
+                  "options": [null, "circle", "triangle"],
+                  "labels": ["Any", "Indiana", "Not Indiana"],
+                  "name": "Home State"
+                }
+              }
+            },
+            "gender_select": {
+              "type": "single",
+              "fields": ["SEX"],
+              "bind": {
+                "SEX": {
+                  "input": "select",
+                  "options": [null, "M", "F"],
+                  "labels": ["Both", "Male", "Female"],
+                  "name": "Gender"
+                }
+              }
+            },
+            "data_variable": {
+              "type": "single",
+              "fields": ["LABEL"],
+              "bind": {
+                "input": "select",
+                "name": "Data Variable",
+                "options": [
+                  "Gender",
+                  "Age",
+                  "Opioid Prescriptions within last year before death",
+                  "Any Opioid Prescriptions before death",
+                  "Prescription vs. Illicit Drugs"
+                ]
+              },
+              "init": {"LABEL": "Gender"}
+            }
+          },
+          "encoding": {
+            "x": {"type": "temporal", "field": "PERIOD", "title": "Period"},
+            "y": {
+              "aggregate": "count",
+              "type": "quantitative",
+              "field": "N_OPIOID_PRESCRIPTIONS",
+              "title": "# Deaths by Quarter"
+            },
+            "color": {"value": "#6EA7EF"}
+          }
+        }
+      ]
+    }
+  ]
+}
