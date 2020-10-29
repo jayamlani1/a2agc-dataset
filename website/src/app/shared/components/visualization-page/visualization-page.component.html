@@ -1,4 +1,11 @@
-<ngx-vega [spec]="spec"></ngx-vega>
+<ngx-vega *ngIf="spec" [spec]="spec"></ngx-vega>
 
-<markdown [src]="content"></markdown>
-<markdown lineNumbers [src]="sql"></markdown>
+<mat-expansion-panel hideToggle>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      DATA &amp; GRAPHIC VARIABLE EXTRACTION INFORMATION
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <markdown *ngIf="content" [src]="content"></markdown>
+  <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
+</mat-expansion-panel>
