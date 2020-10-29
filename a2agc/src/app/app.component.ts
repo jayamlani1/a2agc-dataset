@@ -2,6 +2,7 @@ import { AfterViewInit, Component, HostBinding, NgZone, ViewChild } from '@angul
 import { MatSidenavContainer } from '@angular/material/sidenav';
 
 import { PageLink } from './core/components/page-menu/page-menu.component';
+import { RouterState } from './core/state/router/router';
 
 
 @Component({
@@ -28,7 +29,14 @@ export class AppComponent implements AfterViewInit {
   subBarVisible = true;
   menuOpen = false;
 
-  constructor(private readonly zone: NgZone) {}
+  constructor(
+    router: RouterState,
+    private readonly zone: NgZone
+  ) {
+    router.navigationComplete$.subscribe(() => {
+      this.menuOpen = false;
+    });
+  }
 
   ngAfterViewInit(): void {
     // NOTE: Scrollable is not available in ngOnInit even if @ViewChild has `static: true`
