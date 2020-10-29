@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { environment } from '../environment/environment';
+import { environment } from '../environments/environment';
 
 
 const routes: Routes = [
@@ -9,9 +9,9 @@ const routes: Routes = [
     path: 'geomap',
     loadChildren: () => import('./pages/geomap/geomap.module').then(m => m.GeomapModule)
   },
-  { 
-    path: 'vis2-age-and-gender', 
-    loadChildren: () => import('./pages/vis2-age-and-gender/vis2-age-and-gender.module').then(m => m.Vis2AgeAndGenderModule) 
+  {
+    path: 'vis2-age-and-gender',
+    loadChildren: () => import('./pages/vis2-age-and-gender/vis2-age-and-gender.module').then(m => m.Vis2AgeAndGenderModule)
   },
   {
     path: 'vis1-geomap-of-opioid-deaths',
