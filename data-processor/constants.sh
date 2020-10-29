@@ -13,7 +13,7 @@ source env.sh
 # Shorthands and configuration options
 VERSION="2020-04-17"
 
-SRC="$THIS/src")
+SRC="$THIS/src"
 ORIG="$THIS/raw-data/original"
 OUT="$THIS/raw-data/derived/$VERSION"
 
