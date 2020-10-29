@@ -1,11 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
-
-export interface PageLink {
-  path: string;
-  title: string;
-  description: string;
-}
+import { PageLink } from '../../models/pages.model';
 
 
 @Component({
@@ -19,4 +14,8 @@ export class PageMenuComponent {
 
   @Input() header = '';
   @Input() pages: PageLink[] = [];
+
+  linkId(_index: number, link: PageLink): string {
+    return link.path;
+  }
 }

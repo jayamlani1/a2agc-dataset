@@ -6,7 +6,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 
 import { environment } from '../../../environments/environment';
-import { RouterState } from './router/router';
+import { RouterState } from './router/router.state';
 
 
 const ROOT_STATES: Type<unknown>[] = [

@@ -4,6 +4,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
+import { SharedModule } from '../../../shared/shared.module';
 import { PageMenuComponent } from './page-menu.component';
 
 
@@ -11,6 +12,8 @@ import { PageMenuComponent } from './page-menu.component';
   imports: [
     CommonModule,
     RouterModule,
+
+    SharedModule,
 
     MatDividerModule,
     MatIconModule

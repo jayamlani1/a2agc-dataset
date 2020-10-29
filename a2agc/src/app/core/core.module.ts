@@ -23,11 +23,12 @@ import { StateModule } from './state/state.module';
     SubBarModule
   ],
   exports: [
+    // Module forwarding
     BannerModule,
     PageFooterModule,
     PageHeaderModule,
     PageMenuModule,
-    SubBarModule
+    SubBarModule,
   ]
 })
 export class CoreModule {

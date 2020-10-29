@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, HostBinding, NgZone, ViewChild } from '@angular/core';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 
-import { PageLink } from './core/components/page-menu/page-menu.component';
-import { RouterState } from './core/state/router/router';
+import { PageLink } from './core/models/pages.model';
+import { RouterState } from './core/state/router/router.state';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class AppComponent implements AfterViewInit {
   readonly menuHeader = 'Marion County Opioid Addiction Report';
   readonly pages: PageLink[] = [
     {
-      path: '/geomap',
+      path: 'geomap',
       title: 'Geomap',
       description: 'A geomap'
     }

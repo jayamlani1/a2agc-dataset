@@ -3,7 +3,8 @@
 </div>
 
 <nav class="pages">
-  <a *ngFor="let page of pages" class="link" [routerLink]="page.path" routerLinkActive="active">
+  <a *ngFor="let page of pages | orderBy:'order'; trackBy: linkId" class="link" [routerLink]="['/', page.path]"
+     routerLinkActive="active">
     <div class="title">{{ page.title }}</div>
     <div class="description">{{ page.description }}</div>
     <mat-divider></mat-divider>

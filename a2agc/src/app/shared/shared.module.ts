@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { MenuIconModule } from './components/menu-icon/menu-icon.module';
+import { OrderByPipe } from './pipes/order-by/order-by.pipe';
 
 
 @NgModule({
@@ -10,8 +11,13 @@ import { MenuIconModule } from './components/menu-icon/menu-icon.module';
 
     MenuIconModule
   ],
+  declarations: [
+    OrderByPipe
+  ],
   exports: [
-    MenuIconModule
+    MenuIconModule,
+
+    OrderByPipe
   ]
 })
 export class SharedModule { }
