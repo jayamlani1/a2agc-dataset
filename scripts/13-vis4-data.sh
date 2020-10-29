@@ -5,7 +5,7 @@ OUT_DIR=${OUT}/site-data/visualization4
 
 mkdir -p ${OUT_DIR}
 
-sqlite3 -header -csv ${DB} <  ./src/visualization4/data.sql > ${OUT_DIR}/data.csv
+sqlite3 -header -csv ${DB} <  ./a2agc/src/assets/pages/vis4-combined-visualization/data.sql > ${OUT_DIR}/data.csv
 
 mkdir -p docs/data
 rm -rf docs/data/visualization4
