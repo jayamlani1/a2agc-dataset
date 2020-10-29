@@ -98,6 +98,11 @@ function ensureAuth(req, res, next) {
 // Host the protected site directory, allowing only authorized users to view
 app.use('/', ensureAuth, express.static(abspath(PROTECTED_DIR)));
 
+// On 404, send the SPA index.html
+app.get('*', ensureAuth, function (request, response) {
+  response.sendFile(path.resolve(abspath(PROTECTED_DIR), 'index.html'));
+});
+
 // Start the server
 app.listen(PORT, LISTEN_ADDR, 511, function() {
   console.log(`🚀 Server ready at http://${LISTEN_ADDR}:${PORT}`);

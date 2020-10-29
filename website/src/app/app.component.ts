@@ -23,12 +23,12 @@ export class AppComponent {
     },
     {
       path: '/vis2-age-and-gender',
-      title: 'Age Group &amp; Gender of Accidental Drug Overdose',
+      title: 'Age Group & Gender of Accidental Drug Overdose',
       description: 'Marion County Deaths &amp; Population (2010-2018)'
     },
     {
       path: '/vis3-heatmap-of-accidental-overdoses',
-      title: 'Age Group &amp; Gender of Accidental Drug Overdose',
+      title: 'Age Group & Gender of Accidental Drug Overdose',
       description: 'Marion County Deaths &amp; Population (2010-2018)'
     },
     {
