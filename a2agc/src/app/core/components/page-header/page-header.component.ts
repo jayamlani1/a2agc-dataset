@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 
 
-export type MenuButtonState = 'opened' | 'closed';
-
 @Component({
   selector: 'agc-page-header',
   templateUrl: './page-header.component.html',
