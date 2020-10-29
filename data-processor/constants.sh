@@ -11,7 +11,7 @@ export THIS=$(cd $(dirname "${BASH_SOURCE[0]}"); pwd -P)
 source env.sh
 
 # Shorthands and configuration options
-VERSION="2020-04-17"
+VERSION="2020-10-30"
 
 SRC="$THIS/src"
 ORIG="$THIS/raw-data/original"
