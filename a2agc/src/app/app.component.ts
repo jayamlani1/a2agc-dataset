@@ -33,7 +33,7 @@ export class AppComponent implements AfterViewInit {
     router: RouterState,
     private readonly zone: NgZone
   ) {
-    router.navigationComplete$.subscribe(() => {
+    router.navigationStart$.subscribe(() => {
       this.menuOpen = false;
     });
   }
