@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "a2agc"
+  "defaultProject": "a2agc",
+  "cli": {
+    "analytics": "8b28c82a-f200-444d-ba3d-8a7bdbfbaf4a"
+  }
 }

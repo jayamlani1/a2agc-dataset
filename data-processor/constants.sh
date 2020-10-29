@@ -5,6 +5,7 @@ export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 export PYTHONPATH="./src"
 export GPG_TTY=$(tty)
+export THIS=$(cd $(dirname "${BASH_SOURCE[0]}"); pwd -P)
 
 # Load environment
 source env.sh
@@ -12,16 +13,16 @@ source env.sh
 # Shorthands and configuration options
 VERSION="2020-04-17"
 
-SRC="./src"
-ORIG="./raw-data/original"
-OUT="./raw-data/derived/$VERSION"
+SRC="$THIS/src")
+ORIG="$THIS/raw-data/original"
+OUT="$THIS/raw-data/derived/$VERSION"
 
 DB="$OUT/a2agc.db"
 EDB="$OUT/a2agc.db.e"
 
 DATA_SOURCES="$ORIG/box-health/[Box Health] Final Datasets"
 
-SCHEMA_DIR=./docs/schema
+SCHEMA_DIR="$THIS/docs/schema"
 SCHEMA_NAME=A2AGC
 SCHEMA="$SCHEMA_DIR/$SCHEMA_NAME.public.xml"
 
