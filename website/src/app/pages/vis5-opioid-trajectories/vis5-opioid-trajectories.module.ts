@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MarkdownModule } from 'ngx-markdown';
-import { NgxVegaModule } from 'ngx-vega';
 
+import { VisualizationPageModule } from '../../shared/components/visualization-page/visualization-page.module';
 import { Vis5OpioidTrajectoriesRoutingModule } from './vis5-opioid-trajectories-routing.module';
 import { Vis5OpioidTrajectoriesComponent } from './vis5-opioid-trajectories.component';
 
@@ -12,8 +11,7 @@ import { Vis5OpioidTrajectoriesComponent } from './vis5-opioid-trajectories.comp
   imports: [
     CommonModule,
     Vis5OpioidTrajectoriesRoutingModule,
-    MarkdownModule.forChild(),
-    NgxVegaModule
+    VisualizationPageModule
   ]
 })
 export class Vis5OpioidTrajectoriesModule { }

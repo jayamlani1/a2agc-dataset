@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MarkdownModule } from 'ngx-markdown';
-import { NgxVegaModule } from 'ngx-vega';
 
+import { VisualizationPageModule } from '../../shared/components/visualization-page/visualization-page.module';
 import { Vis1GeomapOfOpioidDeathsRoutingModule } from './vis1-geomap-of-opioid-deaths-routing.module';
 import { Vis1GeomapOfOpioidDeathsComponent } from './vis1-geomap-of-opioid-deaths.component';
 
@@ -12,8 +11,7 @@ import { Vis1GeomapOfOpioidDeathsComponent } from './vis1-geomap-of-opioid-death
   imports: [
     CommonModule,
     Vis1GeomapOfOpioidDeathsRoutingModule,
-    MarkdownModule.forChild(),
-    NgxVegaModule,
+    VisualizationPageModule
   ]
 })
 export class Vis1GeomapOfOpioidDeathsModule { }

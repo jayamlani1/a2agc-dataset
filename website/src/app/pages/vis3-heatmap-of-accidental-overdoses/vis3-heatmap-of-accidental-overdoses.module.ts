@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MarkdownModule } from 'ngx-markdown';
-import { NgxVegaModule } from 'ngx-vega';
 
+import { VisualizationPageModule } from '../../shared/components/visualization-page/visualization-page.module';
 import { Vis3HeatmapOfAccidentalOverdosesRoutingModule } from './vis3-heatmap-of-accidental-overdoses-routing.module';
 import { Vis3HeatmapOfAccidentalOverdosesComponent } from './vis3-heatmap-of-accidental-overdoses.component';
 
@@ -12,8 +11,7 @@ import { Vis3HeatmapOfAccidentalOverdosesComponent } from './vis3-heatmap-of-acc
   imports: [
     CommonModule,
     Vis3HeatmapOfAccidentalOverdosesRoutingModule,
-    MarkdownModule.forChild(),
-    NgxVegaModule
+    VisualizationPageModule
   ]
 })
 export class Vis3HeatmapOfAccidentalOverdosesModule { }
