@@ -1,10 +1,8 @@
-# Advanced Analytics for IU’s Addictions Grand Challenge (A2AGC) Dataset
-
-Scripts for compiling, validating, and documenting the A2AGC Dataset.
+# A2AGC Dataset Data Processor
 
 ## Change Log
 
-See [CHANGELOG](CHANGELOG.md)
+See [CHANGELOG](../CHANGELOG.md)
 
 ## Base Requirements
 

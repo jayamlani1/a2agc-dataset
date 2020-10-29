@@ -1,0 +1,34 @@
+<div class="header">
+  {{ header }}
+</div>
+
+<nav class="pages">
+  <a *ngFor="let page of pages | orderBy:'order'; trackBy: linkId" class="link" [routerLink]="['/', page.path]"
+     routerLinkActive="active">
+    <div class="title">{{ page.title }}</div>
+    <div class="description">{{ page.description }}</div>
+    <mat-divider></mat-divider>
+  </a>
+</nav>
+
+<div class="info">
+  <div class="about">
+    <span>About</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="schema">
+    <a class="link" [routerLink]="['/data-schema-browser']" routerLinkActive="active">Data Schema Browser</a>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="er-diagram">
+    <a class="link" [routerLink]="['/data-er-diagram']" routerLinkActive="active">Data ER Diagram</a>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="changelog">
+    <a class="link" [routerLink]="['/change-log']" routerLinkActive="active">Changelog</a>
+  </div>
+  <mat-divider></mat-divider>
+</div>

@@ -1,0 +1,11 @@
+<ngx-vega *ngIf="spec" [spec]="spec" [options]="{renderer: 'canvas', actions: true}"></ngx-vega>
+
+<mat-expansion-panel hideToggle>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      DATA &amp; GRAPHIC VARIABLE EXTRACTION INFORMATION
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <markdown *ngIf="content" [src]="content"></markdown>
+  <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
+</mat-expansion-panel>
