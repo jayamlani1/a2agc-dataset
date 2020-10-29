@@ -2,6 +2,7 @@ import { ScrollDispatcher } from '@angular/cdk/overlay';
 import { Component, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { buildInfo } from './build-info';
 import { PageLink } from './core/components/page-menu/page-menu.component';
 
 
@@ -44,6 +45,7 @@ export class AppComponent {
   ];
 
   menuOpen = false;
+  buildDate = buildInfo.buildDate;
 
   constructor(foo: ScrollDispatcher, router: Router) {
     router.events.subscribe(event => {

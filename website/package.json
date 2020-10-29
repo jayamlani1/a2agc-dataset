@@ -1,9 +1,10 @@
 {
   "name": "a2agc",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "compile-build-data": "node compile-build-data.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
