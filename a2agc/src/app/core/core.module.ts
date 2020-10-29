@@ -4,25 +4,30 @@ import { BannerModule } from './components/banner/banner.module';
 import { PageFooterModule } from './components/page-footer/page-footer.module';
 import { PageHeaderModule } from './components/page-header/page-header.module';
 import { PageMenuModule } from './components/page-menu/page-menu.module';
+import { SubBarModule } from './components/sub-bar/sub-bar.module';
 import { ThemeModule } from './services/theme/theme.module';
 import { StateModule } from './state/state.module';
 
 
 @NgModule({
   imports: [
-    StateModule,
+    // Services
     ThemeModule.forRoot(),
+    StateModule,
 
+    // Components
     BannerModule,
     PageFooterModule,
     PageHeaderModule,
-    PageMenuModule
+    PageMenuModule,
+    SubBarModule
   ],
   exports: [
     BannerModule,
     PageFooterModule,
     PageHeaderModule,
-    PageMenuModule
+    PageMenuModule,
+    SubBarModule
   ]
 })
 export class CoreModule {
