@@ -2,13 +2,6 @@
 source constants.sh
 set -ev
 
-sqlite3 $DB << EOF
-PRAGMA foreign_keys = ON;
-.headers on
-.mode csv
-.output ${OUT}/site-data/vis-geomap-opioid-deaths.csv
-.read src/create-vis-geomap-opioid-deaths-data.sql
-.quit
-EOF
+OUT_DIR=${OUT}/site-data
 
-# npm run ts-node src/create-vis-geomap-opioid-deaths-project.ts ${OUT}/site-data/vis-geomap-opioid-deaths.csv ${OUT}/site-data/ ${BASE_URL}/data/
+sqlite3 -header -csv ${DB} < ../website/src/assets/pages/vis1-geomap-of-opioid-deaths/data.sql > ${OUT_DIR}/vis-geomap-opioid-deaths.csv
