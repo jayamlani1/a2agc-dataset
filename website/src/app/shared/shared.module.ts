@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { MarkdownModalModule } from './components/markdown-modal/markdown-modal.module';
 import { MenuIconModule } from './components/menu-icon/menu-icon.module';
 import { VisualizationPageModule } from './components/visualization-page/visualization-page.module';
 import { OrderByPipe } from './pipes/order-by/order-by.pipe';
@@ -10,13 +11,15 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe';
   imports: [
     CommonModule,
 
+    MarkdownModalModule,
     MenuIconModule,
-    VisualizationPageModule
+    VisualizationPageModule,
   ],
   declarations: [
     OrderByPipe
   ],
   exports: [
+    MarkdownModalModule,
     MenuIconModule,
     VisualizationPageModule,
 
