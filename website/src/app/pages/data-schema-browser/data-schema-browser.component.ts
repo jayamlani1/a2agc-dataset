@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 
 @Component({
   selector: 'agc-data-schema-browser',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./data-schema-browser.component.scss']
 })
 export class DataSchemaBrowserComponent implements OnInit {
+  @HostBinding('class') readonly clsName = 'data-schema-browser';
 
   constructor() { }
 
