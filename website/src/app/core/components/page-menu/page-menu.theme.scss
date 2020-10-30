@@ -8,6 +8,14 @@
   .agc-page-menu {
     background-color: mat-color($accent, 50);
 
+    mat-divider {
+      color: mat-color($accent, 300);
+    }
+
+    mat-icon {
+      color: mat-color($accent, 500);
+    }
+
     .header {
       background-color: mat-color($primary, 700);
       color: mat-color($primary, "700-contrast");
@@ -29,18 +37,16 @@
       }
     }
 
-    .info {
-      div:hover {
+    .info .link {
+      color: mat-color($accent, default-contrast);
+
+      &:hover {
         color: mat-color($primary);
+
+        mat-icon {
+          color: mat-color($primary);
+        }
       }
-    }
-
-    mat-divider {
-      color: mat-color($accent, 300);
-    }
-
-    mat-icon {
-      color: mat-color($accent, 500);
     }
   }
 }
@@ -64,7 +70,7 @@
       }
     }
 
-    .info div {
+    .info .link {
       @include mat-typography-level-to-styles($config, subheading-2);
     }
   }

@@ -1,9 +1,9 @@
-import { ScrollDispatcher } from '@angular/cdk/overlay';
-import { Component, HostBinding } from '@angular/core';
-import { Router } from '@angular/router';
+import { AfterViewInit, Component, HostBinding, NgZone, ViewChild } from '@angular/core';
+import { MatSidenavContainer } from '@angular/material/sidenav';
 
 import { buildInfo } from './build-info';
-import { PageLink } from './core/components/page-menu/page-menu.component';
+import { PageLink } from './core/models/pages.model';
+import { RouterState } from './core/state/router/router.state';
 
 
 @Component({
@@ -11,45 +11,67 @@ import { PageLink } from './core/components/page-menu/page-menu.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   @HostBinding('class') readonly clsName = 'agc-root';
+
+  @ViewChild(MatSidenavContainer)
+  readonly sidenavContainer!: MatSidenavContainer;
 
   // TODO move these values to state
   readonly menuHeader = 'Marion County Opioid Addiction Report';
   readonly pages: PageLink[] = [
     {
-      path: '/vis1-geomap-of-opioid-deaths',
+      path: 'vis1-geomap-of-opioid-deaths',
       title: 'Accidental Drug Overdose Deaths',
       description: 'Marion County by Place of Injury (2010-2018)'
     },
     {
-      path: '/vis2-age-and-gender',
+      path: 'vis2-age-and-gender',
       title: 'Age Group & Gender of Accidental Drug Overdose',
       description: 'Marion County Deaths &amp; Population (2010-2018)'
     },
     {
-      path: '/vis3-heatmap-of-accidental-overdoses',
+      path: 'vis3-heatmap-of-accidental-overdoses',
       title: 'Age Group & Gender of Accidental Drug Overdose',
       description: 'Marion County Deaths &amp; Population (2010-2018)'
     },
     {
-      path: '/vis4-combined-visualization',
+      path: 'vis4-combined-visualization',
       title: 'Accidental Drug Overdose Deaths',
       description: 'Marion County by Substance, Sex, &amp; Age (2010-2018)'
     },
     {
-      path: '/vis5-opioid-trajectories',
+      path: 'vis5-opioid-trajectories',
       title: 'Opioid Death Datasets',
       description: 'Marion County by History of Opioid Prescription, Previous Overdose, Incarceration, Health Data (2010-2018)'
     }
   ];
 
+  subBarVisible = true;
   menuOpen = false;
   buildDate = buildInfo.buildDate;
 
-  constructor(foo: ScrollDispatcher, router: Router) {
-    router.events.subscribe(event => {
+  constructor(
+    router: RouterState,
+    private readonly zone: NgZone
+  ) {
+    router.navigationStart$.subscribe(() => {
       this.menuOpen = false;
+    });
+  }
+
+  ngAfterViewInit(): void {
+    // NOTE: Scrollable is not available in ngOnInit even if @ViewChild has `static: true`
+    this.sidenavContainer.scrollable.elementScrolled().subscribe(() => {
+      // NOTE: This runs outside angular's zone
+      // ALL modifications must be wrapped in calls to `this.zone.run` or related methods
+      const offset = this.sidenavContainer.scrollable.measureScrollOffset('top');
+      const visible = offset === 0;
+      if (this.subBarVisible !== visible) {
+        this.zone.run(() => {
+          this.subBarVisible = visible;
+        });
+      }
     });
   }
 }

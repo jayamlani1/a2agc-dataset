@@ -2,6 +2,7 @@
 @use "./components/page-footer/page-footer.theme";
 @use "./components/page-header/page-header.theme";
 @use "./components/page-menu/page-menu.theme";
+@use "./components/sub-bar/sub-bar.theme";
 
 
 @mixin theme($theme-or-config) {
@@ -9,4 +10,5 @@
   @include page-footer.theme($theme-or-config);
   @include page-header.theme($theme-or-config);
   @include page-menu.theme($theme-or-config);
+  @include sub-bar.theme($theme-or-config);
 }

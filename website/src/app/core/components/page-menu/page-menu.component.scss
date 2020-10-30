@@ -1,11 +1,11 @@
 :host {
   display: block;
   width: 30rem;
-  height: 100%;
+  padding-bottom: 2rem;
 
   .header,
-  .pages .link div,
-  .info div {
+  .pages .link :not(mat-divider),
+  .info .link {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -33,12 +33,17 @@
     }
   }
 
-  .info div {
+  .info .link {
+    display: flex;
+    height: 2.25rem;
+    align-items: center;
     cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
 
-    .link {
-      outline: none;
-      text-decoration: none;
+    mat-icon {
+      margin-right: 0.5rem;
     }
   }
 }

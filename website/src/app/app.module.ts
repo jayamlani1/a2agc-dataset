@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -19,11 +20,18 @@ import { CoreModule } from './core/core.module';
     MatSidenavModule,
 
     MarkdownModule.forRoot({
-      loader: HttpClient
+      loader: HttpClient,
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true
+        }
+      }
     }),
 
     AppRoutingModule,
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   declarations: [AppComponent],
   providers: [],

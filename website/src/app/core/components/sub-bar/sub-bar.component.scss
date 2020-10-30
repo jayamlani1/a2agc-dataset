@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  height: 2.625rem;
+  transition: height 0.3s ease-in-out;
+
+  &:not(.visible) {
+    height: 0;
+  }
+}
