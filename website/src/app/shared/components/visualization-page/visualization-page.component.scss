@@ -1,0 +1,47 @@
+:host {
+  display: block;
+
+  markdown {
+    display: block;
+  }
+
+  .header {
+    display: flex;
+    height: 4rem;
+    margin-bottom: 4.5rem;
+    padding: 0 1rem;
+    align-items: center;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  .description {
+    font-size: 1.25rem;
+  }
+
+  .content {
+    padding-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    .info {
+      margin-top: 2rem;
+    }
+
+    mat-expansion-panel {
+      mat-expansion-panel-header {
+        font-weight: bold;
+        mat-icon {
+          margin-right: 0.5rem;
+        }
+      }
+
+      markdown {
+        padding: 1rem 0.5rem 0;
+      }
+    }
+  }
+}
+

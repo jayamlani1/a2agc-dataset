@@ -1,11 +1,18 @@
-<ngx-vega *ngIf="spec" [spec]="spec" [options]="{renderer: 'canvas', actions: true}"></ngx-vega>
+<div *ngIf="headline" class="header">{{ headline }}</div>
 
-<mat-expansion-panel hideToggle>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      DATA &amp; GRAPHIC VARIABLE EXTRACTION INFORMATION
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <markdown *ngIf="content" [src]="content"></markdown>
-  <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
-</mat-expansion-panel>
+<div *ngIf="title" class="title">{{ title }}</div>
+<div *ngIf="description" class="description">{{ description }}</div>
+
+<div class="content">
+  <ngx-vega *ngIf="spec" [spec]="spec" [options]="{renderer: 'canvas', actions: true}"></ngx-vega>
+
+  <mat-expansion-panel ngClass="info">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon ngClass="storage-icon" svgIcon="menu:data-storage"></mat-icon> DATA &amp; GRAPHIC VARIABLE EXTRACTION INFORMATION
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <markdown *ngIf="content" [src]="content"></markdown>
+    <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
+  </mat-expansion-panel>
+</div>
