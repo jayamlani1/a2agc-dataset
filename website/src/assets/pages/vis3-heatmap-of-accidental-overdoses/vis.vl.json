@@ -20,6 +20,7 @@
       }
     }
   },
+  "background": "#fafafa",
   "transform": [
     {
       "filter": {

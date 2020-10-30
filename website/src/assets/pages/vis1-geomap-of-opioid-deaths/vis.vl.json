@@ -6,6 +6,7 @@
     "anchor": "middle",
     "fontSize": 24
   },
+  "background": "#fafafa",
   "config": {"view": {"stroke": "transparent"}},
   "padding": {"left": 65, "right": 10, "bottom": 10, "top": 10},
   "autosize": {"type": "pad", "resize": true},
