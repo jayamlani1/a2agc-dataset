@@ -19,7 +19,7 @@
       </router-outlet>
     </div>
 
-    <agc-page-footer [buildDate]="buildDate">
+    <agc-page-footer [buildDate]="buildDate" (contactClick)="openContactUs()" (privacyClick)="openPrivacyPolicy()">
     </agc-page-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
