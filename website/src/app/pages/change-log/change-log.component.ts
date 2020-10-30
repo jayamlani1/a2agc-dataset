@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 
 @Component({
   selector: 'agc-change-log',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./change-log.component.scss']
 })
 export class ChangeLogComponent implements OnInit {
+  @HostBinding('class') readonly clsName = 'change-log';
 
   constructor() { }
 

@@ -1,7 +1,14 @@
 # Changelog
 -----------
 
-Changelog for A2AGC.
+Changelog for A2AGC
+
+## 0.4.0 - 2020-11-02
+
+### Added in 0.4.0
+
+- A completely revamped website
+- Updates to all 5 visualizations
 
 ## 0.3.0 - 2020-04-17
 

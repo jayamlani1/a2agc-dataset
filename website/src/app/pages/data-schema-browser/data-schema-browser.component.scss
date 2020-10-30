@@ -1,9 +1,25 @@
 :host {
   display: block;
 
+  .header {
+    display: flex;
+    height: 4rem;
+    margin-bottom: 4.5rem;
+    padding: 0 1rem;
+    align-items: center;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  .description {
+    font-size: 1.25rem;
+  }
+
   .schema-frame {
-    margin: 2rem;
-    width: calc(100% - 4rem);
+    margin-top: 2rem;
+    width: 100%;
     height: calc(100vh);
   }
 }
