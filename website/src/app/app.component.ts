@@ -21,27 +21,27 @@ export class AppComponent implements AfterViewInit {
   readonly menuHeader = 'Marion County Opioid Addiction Report';
   readonly pages: PageLink[] = [
     {
-      path: '/vis1-geomap-of-opioid-deaths',
+      path: 'vis1-geomap-of-opioid-deaths',
       title: 'Accidental Drug Overdose Deaths',
       description: 'Marion County by Place of Injury (2010-2018)'
     },
     {
-      path: '/vis2-age-and-gender',
+      path: 'vis2-age-and-gender',
       title: 'Age Group & Gender of Accidental Drug Overdose',
       description: 'Marion County Deaths &amp; Population (2010-2018)'
     },
     {
-      path: '/vis3-heatmap-of-accidental-overdoses',
+      path: 'vis3-heatmap-of-accidental-overdoses',
       title: 'Age Group & Gender of Accidental Drug Overdose',
       description: 'Marion County Deaths &amp; Population (2010-2018)'
     },
     {
-      path: '/vis4-combined-visualization',
+      path: 'vis4-combined-visualization',
       title: 'Accidental Drug Overdose Deaths',
       description: 'Marion County by Substance, Sex, &amp; Age (2010-2018)'
     },
     {
-      path: '/vis5-opioid-trajectories',
+      path: 'vis5-opioid-trajectories',
       title: 'Opioid Death Datasets',
       description: 'Marion County by History of Opioid Prescription, Previous Overdose, Incarceration, Health Data (2010-2018)'
     }

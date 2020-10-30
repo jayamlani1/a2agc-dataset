@@ -21,6 +21,10 @@ body {
   background-color: white;
 }
 
+a {
+  color: #6ea7ef;
+}
+
 // Added to root elements when ThemeService is switching between different themes
 .color-transitions-disabled {
   transition: color 0s !important;
@@ -37,4 +41,14 @@ body {
 // Further investigation of issue is needed but for now just disable the sensor.
 ngx-vega .resize-sensor {
   display: none;
+}
+
+// Markdown table styling
+markdown table {
+  margin-bottom: 0.75rem;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 1rem;
+  }
 }

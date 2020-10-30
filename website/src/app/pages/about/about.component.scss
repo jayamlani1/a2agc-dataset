@@ -9,6 +9,7 @@
     display: flex;
     height: 4rem;
     margin-bottom: 4.5rem;
+    padding: 0 1rem;
     align-items: center;
   }
 
@@ -20,8 +21,14 @@
       padding-bottom: 2rem;
     }
 
-    mat-expansion-panel markdown {
-      padding: 0 0.5rem;
+    mat-expansion-panel {
+      mat-expansion-panel-header {
+        font-weight: bold;
+      }
+
+      markdown {
+        padding: 1rem 0.5rem 0;
+      }
     }
   }
 }
