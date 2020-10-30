@@ -49,3 +49,5 @@ Thumbs.db
 */assets/generated
 */assets/schema
 
+# Proxy Configuration
+proxy.config.json
