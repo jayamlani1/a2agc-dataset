@@ -30,7 +30,7 @@
     "@ngxs/store": "^3.7.0",
     "css-element-queries": "^1.2.3",
     "ngx-markdown": "^10.1.1",
-    "ngx-vega": "^0.50.1",
+    "ngx-vega": "^0.50.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "vega": "^5.17.0",
