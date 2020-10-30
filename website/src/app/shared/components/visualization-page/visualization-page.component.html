@@ -4,7 +4,7 @@
 <div *ngIf="description" class="description">{{ description }}</div>
 
 <div class="content">
-  <ngx-vega *ngIf="spec" [spec]="spec" [options]="{renderer: 'canvas', actions: true}"></ngx-vega>
+  <ngx-vega *ngIf="spec" [spec]="spec" [options]="{renderer: 'svg', actions: true}"></ngx-vega>
 
   <mat-expansion-panel ngClass="info">
     <mat-expansion-panel-header>
