@@ -28,17 +28,17 @@ export class AppComponent implements AfterViewInit {
     {
       path: 'vis2-age-and-gender',
       title: 'Age Group & Gender of Accidental Drug Overdose',
-      description: 'Marion County Deaths &amp; Population (2010-2018)'
+      description: 'Marion County Deaths & Population (2010-2018)'
     },
     {
       path: 'vis3-heatmap-of-accidental-overdoses',
       title: 'Age Group & Gender of Accidental Drug Overdose',
-      description: 'Marion County Deaths &amp; Population (2010-2018)'
+      description: 'Marion County by Deaths & Population (2010-2018)'
     },
     {
       path: 'vis4-combined-visualization',
       title: 'Accidental Drug Overdose Deaths',
-      description: 'Marion County by Substance, Sex, &amp; Age (2010-2018)'
+      description: 'Marion County by Substance, Sex, & Age (2010-2018)'
     },
     {
       path: 'vis5-opioid-trajectories',
