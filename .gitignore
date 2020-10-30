@@ -1,3 +1,4 @@
+.env
 /.vscode
 /raw-data
 container.sif

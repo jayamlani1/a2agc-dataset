@@ -1,6 +1,5 @@
 @import "~@angular/material/theming";
 
-
 @mixin color($config-or-theme) {
   $config: mat-get-color-config($config-or-theme);
   $primary: map-get($config, primary);
@@ -10,8 +9,9 @@
     .resources {
       background-color: mat-color($primary, 800);
 
-      .contact, .privacy {
-        color: mat-color($primary, '800-contrast');
+      .contact,
+      .privacy {
+        color: mat-color($primary, "800-contrast");
 
         &:hover {
           color: mat-color($primary);
@@ -34,20 +34,18 @@
   $config: mat-get-typography-config($config-or-theme);
 
   .agc-page-footer {
-    .resources .build-date {
-      font: {
-        family: mat-font-family($config, 'body-2');
-        size: mat-font-size($config, 'body-2');
-        weight: mat-font-weight($config, 'body-2');
+    .resources {
+      button {
+        @include mat-typography-level-to-styles($config, subheading-2);
+      }
+
+      .build-date {
+        @include mat-typography-level-to-styles($config, body-2);
       }
     }
 
     .copyright {
-      font: {
-        family: mat-font-family($config, caption);
-        size: mat-font-size($config, caption);
-        weight: mat-font-weight($config, caption);
-      }
+      @include mat-typography-level-to-styles($config, caption);
     }
   }
 }

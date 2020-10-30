@@ -23,6 +23,7 @@
     "type": "pad",
     "resize": true
   },
+  "background": "#fafafa",
 
   "data": {
     "url": "assets/generated/vis2-data/death-counts.csv",

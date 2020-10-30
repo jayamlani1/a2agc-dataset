@@ -8,6 +8,7 @@
       		"stroke": "transparent"
     	}
 	},
+	"background": "#fafafa",
 
 	"data": {
 		"url": "assets/generated/visualization4/data.csv"
