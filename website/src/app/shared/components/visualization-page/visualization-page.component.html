@@ -15,14 +15,25 @@
 
     <markdown *ngIf="content" [src]="content"></markdown>
 
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Data Extraction (SQL)
-        </mat-panel-title>
-      </mat-expansion-panel-header>
+    <mat-accordion>
+      <mat-expansion-panel *ngIf="sql">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Data Extraction Source Code (SQL)
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-      <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
-    </mat-expansion-panel>
+        <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="spec">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Visualization Source Code (Vega Lite Spec)
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <markdown *ngIf="spec" lineNumbers [src]="specString"></markdown>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-expansion-panel>
 </div>

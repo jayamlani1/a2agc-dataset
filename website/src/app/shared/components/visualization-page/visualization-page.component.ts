@@ -16,6 +16,10 @@ export class VisualizationPageComponent implements OnInit {
   @Input() content?: string;
   @Input() sql?: string;
 
+  get specString(): string | undefined {
+    return this.spec as string;
+  }
+
   constructor() { }
 
   ngOnInit(): void {
