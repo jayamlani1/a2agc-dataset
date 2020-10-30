@@ -29,10 +29,6 @@ RUN npm install -g http-server
 # Install python requirements
 RUN pip3 install mypy geocoder xlrd
 
-# Install man pages for mkdocs
-RUN LC_ALL=C.UTF-8 LANG=C.UTF-8 \
-  click-man --target /usr/local/man/man1 mkdocs
-
 # Build GraphViz
 RUN mkdir -p /opt/graphviz && \
   cd /opt/graphviz && \
