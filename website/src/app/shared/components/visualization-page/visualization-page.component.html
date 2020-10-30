@@ -12,7 +12,17 @@
         <mat-icon ngClass="storage-icon" svgIcon="menu:data-storage"></mat-icon> DATA &amp; GRAPHIC VARIABLE EXTRACTION INFORMATION
       </mat-panel-title>
     </mat-expansion-panel-header>
+
     <markdown *ngIf="content" [src]="content"></markdown>
-    <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Data Extraction (SQL)
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
+    </mat-expansion-panel>
   </mat-expansion-panel>
 </div>
