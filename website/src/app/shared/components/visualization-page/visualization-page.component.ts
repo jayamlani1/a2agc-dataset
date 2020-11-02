@@ -1,5 +1,8 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Options, Spec } from 'ngx-vega';
+
+import { HelpModalComponent } from '../help-modal/help-modal.component';
 
 
 @Component({
@@ -7,7 +10,7 @@ import { Options, Spec } from 'ngx-vega';
   templateUrl: './visualization-page.component.html',
   styleUrls: ['./visualization-page.component.scss']
 })
-export class VisualizationPageComponent implements OnInit {
+export class VisualizationPageComponent {
   @HostBinding('class') readonly clsName = 'agc-visualization-page';
 
   @Input() headline = 'Marion County Opioid Addiction Report';
@@ -22,9 +25,13 @@ export class VisualizationPageComponent implements OnInit {
     return this.spec as string;
   }
 
-  constructor() { }
+  constructor(private readonly dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  launchHelpDialog(): void {
+    this.dialog.open(HelpModalComponent, {
+      width: '60rem',
+      data: {}
+    });
   }
 
 }

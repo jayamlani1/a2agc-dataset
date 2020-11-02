@@ -4,7 +4,10 @@
 <div *ngIf="description" class="description">{{ description }}</div>
 
 <div class="content">
-  <ngx-vega *ngIf="spec" [spec]="spec" [options]="options"></ngx-vega>
+  <div class="visualization">
+    <ngx-vega *ngIf="spec" [spec]="spec" [options]="options"></ngx-vega>
+    <span class="help-button" (click)="launchHelpDialog()">?</span>
+  </div>
 
   <mat-expansion-panel ngClass="info">
     <mat-expansion-panel-header>

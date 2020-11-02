@@ -26,6 +26,26 @@
     padding-left: 1rem;
     padding-right: 1rem;
 
+    .visualization {
+      display: flex;
+
+      .help-button {
+        height: 1.5rem;
+        width: 1.5rem;
+        font-size: 1rem;
+        background-color: white;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 50%;
+        box-shadow: 0 3px 4px rgba(0,0,0,0.4);
+        color: gray;
+        font-weight: bold;
+        padding-top: .2rem;
+        margin-left: 1rem;
+        cursor: pointer;
+      }
+    }
+
     .info {
       margin-top: 2rem;
     }
@@ -33,7 +53,7 @@
     mat-expansion-panel {
       mat-expansion-panel-header {
         font-weight: bold;
-        font-size: .875rem;
+        font-size: 0.875rem;
         line-height: 1.5rem;
 
         mat-icon {
@@ -47,4 +67,3 @@
     }
   }
 }
-

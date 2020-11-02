@@ -6,6 +6,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { NgxVegaModule } from 'ngx-vega';
 
 import { VisualizationPageComponent } from './visualization-page.component';
+import { HelpModalModule } from '../help-modal/help-modal.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { VisualizationPageComponent } from './visualization-page.component';
     MarkdownModule.forChild(),
     MatExpansionModule,
     MatIconModule,
-    NgxVegaModule
+    NgxVegaModule,
+    HelpModalModule
   ]
 })
 export class VisualizationPageModule { }
