@@ -1,8 +1,9 @@
-import { Component, HostBinding, Input } from '@angular/core';
-import { Spec } from 'ngx-vega';
+import { Component, Component, HostBinding, HostBinding, Input, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Options, Spec } from 'ngx-vega';
 
 import { HelpModalComponent } from '../help-modal/help-modal.component';
+
 
 @Component({
   selector: 'agc-visualization-page',
@@ -16,6 +17,7 @@ export class VisualizationPageComponent {
   @Input() title?: string;
   @Input() description?: string;
   @Input() spec?: Spec;
+  @Input() options: Options = { renderer: 'canvas', actions: true };
   @Input() content?: string;
   @Input() sql?: string;
 

@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, HostBinding, NgZone, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 
 import { buildInfo } from './build-info';
 import { PageLink } from './core/models/pages.model';
 import { RouterState } from './core/state/router/router.state';
+import { MarkdownModalComponent, MarkdownModalData } from './shared/components/markdown-modal/markdown-modal.component';
 
 
 @Component({
@@ -32,12 +34,12 @@ export class AppComponent implements AfterViewInit {
     },
     {
       path: 'vis3-heatmap-of-accidental-overdoses',
-      title: 'Age Group & Gender of Accidental Drug Overdose',
-      description: 'Marion County by Deaths & Population (2010-2018)'
+      title: 'Accidental Drug Overdose Deaths',
+      description: 'Marion County by Substance, Sex, & Age (2010-2018)'
     },
     {
       path: 'vis4-combined-visualization',
-      title: 'Accidental Drug Overdose Deaths',
+      title: 'Accidental Drug Overdose Deaths (interactive)',
       description: 'Marion County by Substance, Sex, & Age (2010-2018)'
     },
     {
@@ -53,6 +55,7 @@ export class AppComponent implements AfterViewInit {
 
   constructor(
     router: RouterState,
+    private readonly dialog: MatDialog,
     private readonly zone: NgZone
   ) {
     router.navigationStart$.subscribe(() => {
@@ -71,6 +74,28 @@ export class AppComponent implements AfterViewInit {
         this.zone.run(() => {
           this.subBarVisible = visible;
         });
+      }
+    });
+  }
+
+  openContactUs(): void {
+    this.dialog.open<MarkdownModalComponent, MarkdownModalData>(MarkdownModalComponent, {
+      width: '800px',
+      height: '600px',
+      data: {
+        title: 'Contact us',
+        src: 'assets/footer/contact-us.md'
+      }
+    });
+  }
+
+  openPrivacyPolicy(): void {
+    this.dialog.open<MarkdownModalComponent, MarkdownModalData>(MarkdownModalComponent, {
+      width: '800px',
+      height: '600px',
+      data: {
+        title: 'Privacy Policy',
+        src: 'assets/footer/privacy-policy.md'
       }
     });
   }

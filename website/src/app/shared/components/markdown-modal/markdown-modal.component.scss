@@ -3,9 +3,10 @@
 
   .header {
     display: flex;
-    height: 4rem;
-    margin-bottom: 4.5rem;
-    padding: 0 1rem;
     align-items: center;
+
+    .filler {
+      flex-grow: 1;
+    }
   }
 }

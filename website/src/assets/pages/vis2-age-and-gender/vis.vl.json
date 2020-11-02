@@ -23,6 +23,7 @@
     "type": "pad",
     "resize": true
   },
+  "background": "#fafafa",
 
   "data": {
     "url": "assets/generated/vis2-data/death-counts.csv",
@@ -400,7 +401,7 @@
     },
     {
       "data": {
-        "url": "assets/generated/vis1-data/death-counts.csv",
+        "url": "assets/generated/vis2-data/death-counts.csv",
         "format": {
           "type": "csv",
           "parse": {
@@ -427,7 +428,7 @@
             "key": "key",
             "fields": ["count"],
             "data": {
-              "url": "assets/generated/vis1-data/census-counts.csv"
+              "url": "assets/generated/vis2-data/census-counts.csv"
             }
           },
           "as": ["census_count"],
