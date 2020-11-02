@@ -11,6 +11,18 @@
       background-color: mat-color($primary, 600);
       color: mat-color($primary, '600-contrast');
     }
+
+    .visualization {
+      // Colors selected to match vega-embed action button
+      .help {
+        background-color: #fff;
+        border-color: #aaa;
+
+        .qmark {
+          color:#1b1e23;
+        }
+      }
+    }
   }
 }
 

@@ -19,7 +19,7 @@ export class VisualizationPageComponent implements OnInit {
   @Input() title?: string;
   @Input() description?: string;
   @Input() spec?: Spec;
-  @Input() options: Options = { renderer: 'canvas', actions: true };
+  @Input() options: Options = { renderer: 'canvas', actions: true, width: 1268 };
   @Input() content?: string;
   @Input() sql?: string;
   @Input() csv?: string;
