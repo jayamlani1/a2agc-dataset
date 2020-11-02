@@ -2,7 +2,13 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
   "name": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
   "background": "#fafafa",
-  "config": {"view": {"stroke": "transparent"}},
+  "config": {
+    "view": {"stroke": "transparent"},
+    "legend": {
+      "titleFont": "Lato", "titleFontSize": 14, "titleFontWeight": "bolder", "titleColor": "#9e9e9e", "titlePadding": 10,
+      "labelFont": "Lato", "labelFontSize": 14, "labelFontWeight": "normal", "labelColor": "black"
+    }
+  },
   "padding": {"left": 10, "right": 10, "bottom": 10, "top": 10},
   "autosize": {"type": "pad", "contains": "padding", "resize": false},
   "data": {
@@ -41,7 +47,7 @@
       "as": "SEX_LABEL"
     },
     {
-      "calculate": "datum.HOME_STATE$$shape === 'circle' ? 'Home State: Indiana' : 'Home State: Not Indiana'",
+      "calculate": "datum.HOME_STATE$$shape === 'circle' ? 'Indiana' : 'Not Indiana'",
       "as": "HOME_STATE_LABEL"
     },
     {
@@ -55,7 +61,7 @@
       "resolve": {"scale": {"opacity": "independent"}},
       "vconcat": [
         {
-          "mark": {"type": "text", "fontSize": 0},
+          "mark": {"type": "text"},
           "data": {"values": []},
           "selection": {
             "data_variable_selection": {
@@ -75,8 +81,6 @@
                 "orient": "none",
                 "legendX": -250,
                 "legendY": 0,
-                "titlePadding": 10,
-                "titleColor": "#9e9e9e",
                 "values": [
                   "Gender",
                   "Age",
@@ -90,7 +94,7 @@
           }
         },
         {
-          "mark": {"type": "text", "fontSize": 0},
+          "mark": {"type": "text"},
           "data": {"values": []},
           "encoding": {
             "opacity": {
@@ -101,8 +105,6 @@
                 "orient": "none",
                 "legendX": -250,
                 "legendY": 20,
-                "titlePadding": 10,
-                "titleColor": "#9e9e9e",
                 "values": [],
                 "symbolSize": 0
               }
@@ -110,7 +112,7 @@
           }
         },
         {
-          "mark": {"type": "text", "fontSize": 0},
+          "mark": {"type": "text"},
           "data": {"values": []},
           "selection": {
             "sex_selection": {
@@ -128,8 +130,6 @@
                 "orient": "none",
                 "legendX": -240,
                 "legendY": 10,
-                "titlePadding": 10,
-                "titleColor": "#9e9e9e",
                 "values": [
                   "Male",
                   "Female"
@@ -140,7 +140,7 @@
           }
         },
         {
-          "mark": {"type": "text", "fontSize": 0},
+          "mark": {"type": "text"},
           "data": {"values": []},
           "selection": {
             "drug_type_seleciton": {
@@ -158,8 +158,6 @@
                 "orient": "none",
                 "legendX": -240,
                 "legendY": 10,
-                "titlePadding": 10,
-                "titleColor": "#9e9e9e",
                 "values": [
                   "Illicit",
                   "Prescription",
@@ -171,7 +169,7 @@
           }
         },
         {
-          "mark": {"type": "text", "fontSize": 0},
+          "mark": {"type": "text"},
           "data": {"values": []},
           "selection": {
             "1_year_selection": {
@@ -189,8 +187,6 @@
                 "orient": "none",
                 "legendX": -240,
                 "legendY": 10,
-                "titlePadding": 10,
-                "titleColor": "#9e9e9e",
                 "values": [
                   "True",
                   "False"
@@ -201,7 +197,7 @@
           }
         },
         {
-          "mark": {"type": "text", "fontSize": 0},
+          "mark": {"type": "text"},
           "data": {"values": []},
           "selection": {
             "opioid_rx_selection": {
@@ -219,8 +215,6 @@
                 "orient": "none",
                 "legendX": -240,
                 "legendY": 10,
-                "titlePadding": 10,
-                "titleColor": "#9e9e9e",
                 "values": [
                   "True",
                   "False"
@@ -262,12 +256,12 @@
               "mark": {"type": "point", "cursor": "pointer", "clip": true},
               "selection": {
                 "data_variable_subselection": {
-                  "type": "single",
+                  "type": "multi",
                   "fields": ["VALUE"],
                   "bind": {"legend": "click"}
                 },
                 "home_state_selection": {
-                  "type": "single",
+                  "type": "multi",
                   "fields": ["HOME_STATE_LABEL"],
                   "bind": {"legend": "click"}
                 }
@@ -278,16 +272,16 @@
                 "shape": {
                   "type": "nominal",
                   "field": "HOME_STATE_LABEL",
-                  "title": "Shape",
+                  "title": "Shape (Home State)",
                   "scale": {"range": {"field": "HOME_STATE$$shape"}},
-                  "legend": {"orient": "right", "titlePadding": 10, "titleColor": "#9e9e9e"}
+                  "legend": {"orient": "right", "symbolOffset": 10, "offset": -125}
                 },
                 "color": {
                   "type": "nominal",
                   "field": "VALUE",
-                  "title": "Color",
+                  "title": "Color (Data Variable Value)",
                   "scale": {"range": {"field": "COLOR"}},
-                  "legend": {"orient": "right", "titlePadding": 10, "titleColor": "#9e9e9e"}
+                  "legend": {"orient": "right", "symbolOffset": 10, "offset": -125}
                 },
                 "opacity": {
                   "condition": {"selection": "home_state_selection", "value": 1},
@@ -337,18 +331,45 @@
               "selection": {
                 "period": {
                   "type": "interval",
-                  "encodings": ["x"],
-                  "on": "[mousedown!, window:mouseup] > window:mousemove",
-                  "clear": "dblclick"
+                  "mark": {"fill": "#6ea7ef", "fillOpacity": 0.15},
+                  "encodings": ["x"]
                 }
               },
               "encoding": {
-                "x": {"type": "temporal", "field": "PERIOD", "title": "Period"},
+                "x": {
+                  "type": "temporal", "field": "PERIOD", "title": "Period",
+                  "axis": {
+                    "tickColor": "#757575",
+                    "domainColor": "#757575",
+                    "labelFlush": false,
+                    "labelAngle": 0,
+                    "labelExpr": "quarter(datum.value) === 1 ? year(datum.value) : ''",
+                    "gridDash": {
+                      "condition": {
+                        "test": "quarter(datum.value) === 1",
+                        "value": []
+                      },
+                      "value": [2,2]
+                    },
+                    "gridColor": {
+                      "condition": {
+                        "test": "quarter(datum.value) === 1",
+                        "value": "#BDBDBD"
+                      },
+                      "value": "#e0e0e0"
+                    }
+                  }
+                },
                 "y": {
                   "aggregate": "count",
                   "type": "quantitative",
                   "field": "N_OPIOID_PRESCRIPTIONS",
-                  "title": "# Deaths by Quarter"
+                  "title": "# Deaths by Quarter",
+                  "axis": {
+                    "gridColor": "#e0e0e0",
+                    "tickColor": "#757575",
+                    "domainColor": "#757575"
+                  }
                 },
                 "color": {"value": "#6EA7EF"}
               }
