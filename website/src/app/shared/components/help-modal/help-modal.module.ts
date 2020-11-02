@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HelpModalComponent } from './help-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -11,7 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule
   ],
   exports: [HelpModalComponent]
 })
