@@ -1,4 +1,4 @@
-import { Component, Component, HostBinding, HostBinding, Input, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Options, Spec } from 'ngx-vega';
 
