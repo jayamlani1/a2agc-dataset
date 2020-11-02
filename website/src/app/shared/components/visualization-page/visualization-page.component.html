@@ -18,24 +18,42 @@
 
     <markdown *ngIf="content" [src]="content"></markdown>
 
-    <mat-accordion>
-      <mat-expansion-panel *ngIf="sql">
+    <mat-accordion multi>
+      <mat-expansion-panel *ngIf="sql" #sqlPanel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             Data Extraction Source Code (SQL)
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <markdown *ngIf="sql" lineNumbers [src]="sql"></markdown>
+        <div class="file-download-area">
+          <a [href]="sql" class="file-download" target="_blank" rel="noreferrer noopener"><mat-icon>cloud_download</mat-icon></a>
+        </div>
+        <markdown *ngIf="sql && sqlPanel.expanded" lineNumbers [src]="sql"></markdown>
       </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="spec">
+      <mat-expansion-panel *ngIf="csv" #csvPanel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Extracted Data (CSV)
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="file-download-area">
+          <a [href]="csv" class="file-download" target="_blank" rel="noreferrer noopener"><mat-icon>cloud_download</mat-icon></a>
+        </div>
+        <markdown *ngIf="csv && csvPanel.expanded" lineNumbers [src]="csv"></markdown>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="spec" #specPanel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             Visualization Source Code (Vega Lite Spec)
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <markdown *ngIf="spec" lineNumbers [src]="specString"></markdown>
+        <div class="file-download-area">
+          <a class="file-download" [href]="specString" target="_blank" rel="noreferrer noopener"><mat-icon>cloud_download</mat-icon></a>
+        </div>
+        <markdown *ngIf="spec && specPanel.expanded" lineNumbers [src]="specString"></markdown>
       </mat-expansion-panel>
     </mat-accordion>
   </mat-expansion-panel>
