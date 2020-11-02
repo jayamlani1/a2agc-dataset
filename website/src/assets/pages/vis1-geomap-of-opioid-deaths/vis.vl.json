@@ -4,7 +4,7 @@
   "background": "#fafafa",
   "config": {"view": {"stroke": "transparent"}},
   "padding": {"left": 10, "right": 10, "bottom": 10, "top": 10},
-  "autosize": {"type": "pad", "resize": true},
+  "autosize": {"type": "pad", "contains": "padding", "resize": false},
   "data": {
     "url": "assets/generated/vis-geomap-opioid-deaths.csv",
     "format": {
@@ -59,7 +59,7 @@
             "data_variable_selection": {
               "type": "single",
               "fields": ["LABEL"],
-              "bind": {"legend": "click"},
+              "bind": {"legend": "dblclick"},
               "init": {"LABEL": "Age"},
               "empty": "none"
             }
@@ -118,7 +118,7 @@
             "sex_selection": {
               "type": "single",
               "fields": ["SEX_LABEL"],
-              "bind": {"legend": "click"}
+              "bind": {"legend": "dblclick"}
             }
           },
           "encoding": {
@@ -152,7 +152,7 @@
             "drug_type_seleciton": {
               "type": "single",
               "fields": ["ILLICIT_V_PRESCRIPTION"],
-              "bind": {"legend": "click"}
+              "bind": {"legend": "dblclick"}
             }
           },
           "encoding": {
@@ -187,7 +187,7 @@
             "home_state_selection": {
               "type": "single",
               "fields": ["HOME_STATE_LABEL"],
-              "bind": {"legend": "click"}
+              "bind": {"legend": "dblclick"}
             }
           },
           "encoding": {
@@ -221,7 +221,7 @@
             "1_year_selection": {
               "type": "single",
               "fields": ["OPIOID_PRESCRIPTIONS_1YEAR"],
-              "bind": {"legend": "click"}
+              "bind": {"legend": "dblclick"}
             }
           },
           "encoding": {
@@ -255,7 +255,7 @@
             "opioid_rx_selection": {
               "type": "single",
               "fields": ["ANY_PRESCRIPTIONS_LABEL"],
-              "bind": {"legend": "click"}
+              "bind": {"legend": "dblclick"}
             }
           },
           "encoding": {
@@ -289,19 +289,17 @@
         {
           "layer": [
             {
-              "width": 550,
-              "height": 600,
+              "width": 700,
+              "height": 640,
               "data": {
                 "name": "counties",
                 "url": "assets/pages/vis1-geomap-of-opioid-deaths/indiana.topojson",
                 "format": {"type": "topojson", "feature": "counties"}
               },
               "projection": {"type": "mercator"},
-              "mark": {"type": "geoshape", "fill": "white", "stroke": "darkgray"}
+              "mark": {"type": "geoshape", "fill": "white", "stroke": "darkgray", "clip": true}
             },
             {
-              "width": 550,
-              "height": 600,
               "transform": [
                 {"filter": {"selection": "period"}},
                 {"filter": {"selection": "data_variable_selection"}},
@@ -314,7 +312,7 @@
                 ]}}
               ],
               "projection": {"type": "mercator"},
-              "mark": {"type": "point"},
+              "mark": {"type": "point", "clip": true},
               "encoding": {
                 "longitude": {"type": "quantitative", "field": "LONGITUDE"},
                 "latitude": {"type": "quantitative", "field": "LATITUDE"},

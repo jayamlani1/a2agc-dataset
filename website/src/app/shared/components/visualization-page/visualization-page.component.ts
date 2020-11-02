@@ -1,5 +1,6 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { Spec } from 'ngx-vega';
+import { Options, Spec } from 'ngx-vega';
+
 
 @Component({
   selector: 'agc-visualization-page',
@@ -13,6 +14,7 @@ export class VisualizationPageComponent implements OnInit {
   @Input() title?: string;
   @Input() description?: string;
   @Input() spec?: Spec;
+  @Input() options: Options = { renderer: 'canvas', actions: true };
   @Input() content?: string;
   @Input() sql?: string;
 
