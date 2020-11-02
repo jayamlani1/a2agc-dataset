@@ -27,6 +27,7 @@
       }
     },
     {"filter": "isValid(datum.VALUE) && datum.VALUE.length > 0"},
+    {"filter": "!(datum.LATITUDE === 38.7127 && datum.LONGITUDE === -87.68944)"},
     {
       "lookup": "VALUE",
       "from": {
