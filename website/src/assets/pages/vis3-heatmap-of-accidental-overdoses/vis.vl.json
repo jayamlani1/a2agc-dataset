@@ -71,7 +71,7 @@
                 "SUBSTANCE_NAME"
               ],
               "bind": {
-                "legend": "dblclick"
+                "legend": "click"
               },
               "init": [
                 {
