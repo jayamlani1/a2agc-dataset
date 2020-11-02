@@ -20,6 +20,7 @@ export class VisualizationPageComponent {
   @Input() options: Options = { renderer: 'canvas', actions: true };
   @Input() content?: string;
   @Input() sql?: string;
+  @Input() csv?: string;
 
   get specString(): string | undefined {
     return this.spec as string;
