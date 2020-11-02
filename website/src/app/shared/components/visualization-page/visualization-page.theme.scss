@@ -21,6 +21,15 @@
     .header {
       @include mat-typography-level-to-styles($config, title);
     }
+
+    .title {
+      @include mat-typography-level-to-styles($config, title);
+    }
+
+    .description {
+      @include mat-typography-level-to-styles($config, title);
+      font-size: initial;
+    }
   }
 }
 
