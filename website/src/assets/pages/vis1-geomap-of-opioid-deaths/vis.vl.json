@@ -26,6 +26,7 @@
         "data": {"url": "assets/pages/vis1-geomap-of-opioid-deaths/vis-data-variables.csv"}
       }
     },
+    {"filter": "isValid(datum.VALUE) && datum.VALUE.length > 0"},
     {
       "lookup": "VALUE",
       "from": {
@@ -39,7 +40,7 @@
       "as": "SEX_LABEL"
     },
     {
-      "calculate": "datum.HOME_STATE$$shape === 'circle' ? 'Indiana' : 'Not Indiana'",
+      "calculate": "datum.HOME_STATE$$shape === 'circle' ? 'Home State: Indiana' : 'Home State: Not Indiana'",
       "as": "HOME_STATE_LABEL"
     },
     {
@@ -50,7 +51,7 @@
   "hconcat": [
     {
       "spacing": 0,
-      "resolve": {"scale": {"fill": "independent"}},
+      "resolve": {"scale": {"opacity": "independent"}},
       "vconcat": [
         {
           "mark": {"type": "text", "fontSize": 0},
@@ -59,13 +60,13 @@
             "data_variable_selection": {
               "type": "single",
               "fields": ["LABEL"],
-              "bind": {"legend": "dblclick"},
+              "bind": {"legend": "click"},
               "init": {"LABEL": "Age"},
               "empty": "none"
             }
           },
           "encoding": {
-            "fill": {
+            "opacity": {
               "field": "LABEL",
               "title": "Select Data Variable",
               "type": "ordinal",
@@ -84,10 +85,6 @@
                 ],
                 "symbolSize": 0
               }
-            },
-            "opacity": {
-              "condition": {"selection": "data_variable_selection", "value": 1},
-              "value": 0.75
             }
           }
         },
@@ -95,7 +92,7 @@
           "mark": {"type": "text", "fontSize": 0},
           "data": {"values": []},
           "encoding": {
-            "fill": {
+            "opacity": {
               "field": "LABEL",
               "title": "Filter by",
               "type": "ordinal",
@@ -118,11 +115,11 @@
             "sex_selection": {
               "type": "single",
               "fields": ["SEX_LABEL"],
-              "bind": {"legend": "dblclick"}
+              "bind": {"legend": "click"}
             }
           },
           "encoding": {
-            "fill": {
+            "opacity": {
               "field": "SEX_LABEL",
               "title": "Sex",
               "type": "ordinal",
@@ -138,10 +135,6 @@
                 ],
                 "symbolSize": 0
               }
-            },
-            "opacity": {
-              "condition": {"selection": "sex_selection", "value": 1},
-              "value": 0.75
             }
           }
         },
@@ -152,11 +145,11 @@
             "drug_type_seleciton": {
               "type": "single",
               "fields": ["ILLICIT_V_PRESCRIPTION"],
-              "bind": {"legend": "dblclick"}
+              "bind": {"legend": "click"}
             }
           },
           "encoding": {
-            "fill": {
+            "opacity": {
               "field": "ILLICIT_V_PRESCRIPTION",
               "title": "Drug Type",
               "type": "ordinal",
@@ -173,44 +166,6 @@
                 ],
                 "symbolSize": 0
               }
-            },
-            "opacity": {
-              "condition": {"selection": "sex_selection", "value": 1},
-              "value": 0.75
-            }
-          }
-        },
-        {
-          "mark": {"type": "text", "fontSize": 0},
-          "data": {"values": []},
-          "selection": {
-            "home_state_selection": {
-              "type": "single",
-              "fields": ["HOME_STATE_LABEL"],
-              "bind": {"legend": "dblclick"}
-            }
-          },
-          "encoding": {
-            "fill": {
-              "field": "HOME_STATE_LABEL",
-              "title": "Home State",
-              "type": "ordinal",
-              "legend": {
-                "orient": "none",
-                "legendX": -240,
-                "legendY": 10,
-                "titlePadding": 10,
-                "titleColor": "#9e9e9e",
-                "values": [
-                  "Indiana",
-                  "Not Indiana"
-                ],
-                "symbolSize": 0
-              }
-            },
-            "opacity": {
-              "condition": {"selection": "home_state_selection", "value": 1},
-              "value": 0.75
             }
           }
         },
@@ -221,11 +176,11 @@
             "1_year_selection": {
               "type": "single",
               "fields": ["OPIOID_PRESCRIPTIONS_1YEAR"],
-              "bind": {"legend": "dblclick"}
+              "bind": {"legend": "click"}
             }
           },
           "encoding": {
-            "fill": {
+            "opacity": {
               "field": "OPIOID_PRESCRIPTIONS_1YEAR",
               "title": "Opioid Prescription 1 Year",
               "type": "ordinal",
@@ -241,10 +196,6 @@
                 ],
                 "symbolSize": 0
               }
-            },
-            "opacity": {
-              "condition": {"selection": "1_year_selection", "value": 1},
-              "value": 0.75
             }
           }
         },
@@ -255,11 +206,11 @@
             "opioid_rx_selection": {
               "type": "single",
               "fields": ["ANY_PRESCRIPTIONS_LABEL"],
-              "bind": {"legend": "dblclick"}
+              "bind": {"legend": "click"}
             }
           },
           "encoding": {
-            "fill": {
+            "opacity": {
               "field": "ANY_PRESCRIPTIONS_LABEL",
               "title": "Opioid Prescriptions",
               "type": "ordinal",
@@ -275,10 +226,6 @@
                 ],
                 "symbolSize": 0
               }
-            },
-            "opacity": {
-              "condition": {"selection": "opioid_rx_selection", "value": 1},
-              "value": 0.75
             }
           }
         }
@@ -306,20 +253,31 @@
                 {"filter": {"and": [
                   {"selection": "sex_selection"},
                   {"selection": "drug_type_seleciton"},
-                  {"selection": "home_state_selection"},
                   {"selection": "1_year_selection"},
                   {"selection": "opioid_rx_selection"}
                 ]}}
               ],
               "projection": {"type": "mercator"},
-              "mark": {"type": "point", "clip": true},
+              "mark": {"type": "point", "cursor": "pointer", "clip": true},
+              "selection": {
+                "data_variable_subselection": {
+                  "type": "single",
+                  "fields": ["VALUE"],
+                  "bind": {"legend": "click"}
+                },
+                "home_state_selection": {
+                  "type": "single",
+                  "fields": ["HOME_STATE_LABEL"],
+                  "bind": {"legend": "click"}
+                }
+              },
               "encoding": {
                 "longitude": {"type": "quantitative", "field": "LONGITUDE"},
                 "latitude": {"type": "quantitative", "field": "LATITUDE"},
                 "shape": {
                   "type": "nominal",
                   "field": "HOME_STATE_LABEL",
-                  "title": "Home State",
+                  "title": "Shape",
                   "scale": {"range": {"field": "HOME_STATE$$shape"}},
                   "legend": {"orient": "right", "titlePadding": 10, "titleColor": "#9e9e9e"}
                 },
@@ -330,7 +288,29 @@
                   "scale": {"range": {"field": "COLOR"}},
                   "legend": {"orient": "right", "titlePadding": 10, "titleColor": "#9e9e9e"}
                 },
-                "size": {"value": 100}
+                "opacity": {
+                  "condition": {"selection": "home_state_selection", "value": 1},
+                  "value": 0
+                },
+                "size": {
+                  "condition": {"selection": "data_variable_subselection", "value": 100},
+                  "value": 0
+                },
+                "tooltip": [
+                  {
+                    "title": "Sex",
+                    "field": "SEX_LABEL"
+                  },
+                  {
+                    "title": "Home State",
+                    "field": "HOME_STATE_LABEL"
+                  },
+                  {
+                    "title": "# Opioid Rx",
+                    "type": "quantitative",
+                    "field": "N_OPIOID_PRESCRIPTIONS"
+                  }
+                ]
               }
             }
           ]
@@ -343,6 +323,7 @@
             {
               "transform": [
                 {"filter": {"field": "DATA_VARIABLE", "equal": "AGE"}},
+                {"filter": {"selection": "data_variable_subselection"}},
                 {"filter": {"and": [
                   {"selection": "sex_selection"},
                   {"selection": "drug_type_seleciton"},
@@ -356,7 +337,7 @@
                 "period": {
                   "type": "interval",
                   "encodings": ["x"],
-                  "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}",
+                  "on": "[mousedown!, window:mouseup] > window:mousemove",
                   "clear": "dblclick"
                 }
               },

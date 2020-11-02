@@ -48,7 +48,7 @@ export function addGeoZoom(spec: Spec, opts: GeoZoomOptions): void {
       name: 'scale',
       value: opts.initialZoom != null ? opts.initialZoom : opts.zoomLevels[0],
       on: [{
-        events: { type: 'wheel', consume: true },
+        events: { type: 'wheel', consume: true, filter: 'event.shiftKey' },
         update: [
           'clamp(scale * pow(1.0015, -event.deltaY * pow(48, event.deltaMode)), ',
           opts.zoomLevels[0],
@@ -86,7 +86,7 @@ export function addGeoZoom(spec: Spec, opts: GeoZoomOptions): void {
       name: 'drag',
       value: null,
       on: [{
-        events: '[mousedown, window:mouseup] > window:mousemove',
+        events: '[mousedown[event.shiftKey], window:mouseup] > window:mousemove',
         update: 'invert(cloned, xy())'
       }]
     },

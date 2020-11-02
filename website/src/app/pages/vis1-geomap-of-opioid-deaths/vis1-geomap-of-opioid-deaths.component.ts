@@ -12,7 +12,7 @@ import { createGeoZoomPatch } from '../../shared/components/visualization-page/s
 export class Vis1GeomapOfOpioidDeathsComponent implements OnInit {
 
   vegaOptions: Options = {
-    renderer: 'canvas', actions: true,
+    renderer: 'svg', actions: true,
     patch: (spec) => {
       spec = createGeoZoomPatch({
         center: [87.44305475, 38.76622477],
