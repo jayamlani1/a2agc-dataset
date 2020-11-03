@@ -17,22 +17,22 @@ export class HelpTourModalComponent {
     {
       title: 'Select year range...',
       text: 'Set year ranges by clicking with your mouse cursor then dragging and releasing. Click again to reset.',
-      img: '../../../../assets/images/help-year-range-selector.gif'
+      img: 'assets/images/help-year-range-selector.gif'
     },
     {
       title: 'Select variables and filters...',
       text: 'Click on Variables and Filter By items.  SHIFT + CLICK to add more items.',
-      img: '../../../../assets/images/help-variables-filterby3.gif'
+      img: 'assets/images/help-variables-filterby3.gif'
     },
     {
       title: 'Use controls to filter...',
       text: 'Click on controls to update visualizations.  Use SHIFT + CLICK to add more items.',
-      img: '../../../../assets/images/help-filter-controls.gif'
+      img: 'assets/images/help-filter-controls.gif'
     },
     {
       title: 'Pan and zoom...',
       text: 'Hold down SHIFT key then use the scroll-wheel to zoom.  SHIFT + CLICK (Hold) to pan.',
-      img: '../../../../assets/images/help-pan-zoom.gif'
+      img: 'assets/images/help-pan-zoom.gif'
     }
   ];
 
