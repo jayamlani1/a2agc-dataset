@@ -20,8 +20,6 @@
 
     .center-box {
       display: block;
-      max-width: 83rem;
-      width: 100%;
     }
 
     .title {
@@ -64,9 +62,8 @@
       }
 
       .help {
-        position: absolute;
         top: 0.25rem;
-        right: 0;
+        right: -0.25rem;
         width: 1.75rem;
         height: 1.75rem;
         line-height: 1.75rem;
