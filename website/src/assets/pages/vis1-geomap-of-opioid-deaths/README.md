@@ -1,6 +1,6 @@
 ## Visualization Creation
 
-A MaV [project.yml](../data/vis-geomap-opioid-deaths.yml) file was created from the [csv file](assets/generated/vis-geomap-opioid-deaths.csv) using [this script](https://github.com/cns-iu/a2agc-dataset/blob/develop/src/create-vis-geomap-opioid-deaths-project.ts). The script creates a `Project` from the imported CSV file and sets up a geomap visualization (see below). This process was automated, but it can also be generated manually with [Make-a-Vis](https://cns-iu.github.io/make-a-vis/) by loading the generated [csv file](assets/generated/vis-geomap-opioid-deaths.csv) and creating a visualization via the GUI.
+A Vega Lite file was created from the [csv file](assets/generated/vis-geomap-opioid-deaths.csv) using [this script](https://github.com/cns-iu/a2agc-dataset/blob/develop/src/create-vis-geomap-opioid-deaths-project.ts). The script creates a `Project` from the imported CSV file and sets up a geomap visualization (see below). This process was automated, but it can also be generated manually with [Make-a-Vis](https://cns-iu.github.io/make-a-vis/) by loading the generated [csv file](assets/generated/vis-geomap-opioid-deaths.csv) and creating a visualization via the GUI.
 
 You can download the [project.yml](../data/vis-geomap-opioid-deaths.yml) and load it into [Make-a-Vis](https://cns-iu.github.io/make-a-vis/) to explore the visualization and potentially derive new ones from there.
 
