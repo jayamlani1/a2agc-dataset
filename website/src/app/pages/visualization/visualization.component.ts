@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Visualization } from 'src/app/core/state/visualizations/visualizations.state';
+import { Visualization } from 'src/app/core/state/visualizations/visualizations';
 
 @Component({
   selector: 'agc-visualization',

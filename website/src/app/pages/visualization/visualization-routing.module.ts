@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { VisualizationDataResolver } from './visualization-data-resolver';
+import { RouterModule, Routes } from '@angular/router';
 
+import { VisualizationDataResolver } from './visualization-data-resolver';
 import { VisualizationComponent } from './visualization.component';
 
 const routes: Routes = [{
