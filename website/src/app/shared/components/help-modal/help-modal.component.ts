@@ -7,7 +7,6 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./help-modal.component.scss']
 })
 export class HelpModalComponent {
-
   constructor(public dialogRef: MatDialogRef<HelpModalComponent>) { }
 
   // Workaround for angular component issue #13870
@@ -20,5 +19,4 @@ export class HelpModalComponent {
   close(): void {
     this.dialogRef.close();
   }
-
 }

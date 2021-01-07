@@ -21,7 +21,7 @@ export class HelpTourModalComponent {
     },
     {
       title: 'Select variables and filters...',
-      text: 'Click on Variables and Filter By items.  SHIFT + CLICK to add more items.',
+      text: 'Click on Variables and filter by items.  SHIFT + CLICK to add more items.',
       img: 'assets/images/help-variables-filterby3.gif'
     },
     {
