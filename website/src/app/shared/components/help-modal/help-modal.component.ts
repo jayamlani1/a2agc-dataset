@@ -10,6 +10,13 @@ export class HelpModalComponent {
 
   constructor(public dialogRef: MatDialogRef<HelpModalComponent>) { }
 
+  // Workaround for angular component issue #13870
+  disableAnimation = true;
+  ngAfterViewInit(): void {
+    // timeout required to avoid 'ExpressionChangedAfterItHasBeenCheckedError'
+    setTimeout(() => this.disableAnimation = false);
+  }
+
   close(): void {
     this.dialogRef.close();
   }
