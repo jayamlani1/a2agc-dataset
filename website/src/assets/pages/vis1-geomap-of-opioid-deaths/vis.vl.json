@@ -1,5 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "padding": {"top": 50},
   "name": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
   "background": "#ffffff",
   "config": {

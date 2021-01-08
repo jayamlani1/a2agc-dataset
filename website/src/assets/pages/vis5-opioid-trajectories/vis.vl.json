@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-  "padding": 0,
+  "padding": {"top": 50},
   "config": {
     "view": {"strokeOpacity": 0}
   },
