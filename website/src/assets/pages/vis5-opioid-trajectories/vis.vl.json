@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-  "padding": {"top": 50},
+  "padding": 0,
   "config": {
     "view": {"strokeOpacity": 0}
   },
@@ -15,49 +15,42 @@
     }
   },
 
-  "transform": [
-    {
-      "calculate": "datum.Set === '∅' ? '1' : ''",
-      "as": "none"
-    }
-  ],
-
   "hconcat": [
     {
       "title": {
         "text": "Filter By",
-        "color": "#9e9e9e",
-        "dy": 20
+        "color": "#9e9e9e"
       },
       "spacing": 0,
       "vconcat": [
         {
-          "title": {
-            "text": "Rx",
-            "dx": -20,
-            "dy": 45
+          "data": {
+            "values": [
+              {"idx": 0, "x": "Rx = Opioid Prescription", "Rx": 1}
+            ]
           },
-          "mark": {"type": "text", "dy": 45},
-          "data": {"values": [
-            {"idx": 0, "label": "True", "P": "1", "True": "1"},
-            {"idx": 1, "label": "False", "P": "", "True": "1"}
-          ]},
+          "mark": {
+            "type": "text"
+          },
           "selection": {
-            "prescription_selection": {
+            "label": {
               "type": "single",
               "fields": [
-                "P", "True"
-              ],
-              "bind": {"legend": "click"}
+                "x"
+              ]
+            },
+            "Rx": {
+              "type": "single",
+              "fields": [
+                "Rx"
+              ]
             }
           },
           "encoding": {
-            "opacity": {
-              "condition": {"selection": "prescription_selection", "value": 1}, "value": 0.3
-            },
+            "opacity": {"condition": {"selection": "label", "value": 1}, "value": 0.3},
             "text": {
               "type": "nominal",
-              "field": "label"
+              "field": "x"
             },
             "y": {
               "field": "idx", 
@@ -67,29 +60,34 @@
           }
         },
         {
-          "title": {
-            "text": "OD",
-            "dx": -20,
-            "dy": 35
+          "data": {
+            "values": [
+              {"idx": 0, "x": "OD = Overdose", "OD": 1}
+            ]
           },
-          "mark": {"type": "text", "dy": 35},
-          "data": {"values": [
-            {"idx": 0, "label": "True", "O": "1", "True": "1"},
-            {"idx": 1, "label": "False", "O": "", "True": "1"}
-          ]},
+          "mark": {
+            "type": "text",
+            "xOffset": -22
+          },
           "selection": {
-            "overdose_selection": {
+            "label": {
+              "type": "multi",
+              "fields": [
+                "x"
+              ]
+            },
+            "OD": {
               "type": "single",
               "fields": [
-                "O", "True"
+                "OD"
               ]
             }
           },
           "encoding": {
-            "opacity": {"condition": {"selection": "overdose_selection", "value": 1}, "value": 0.3},
+            "opacity": {"condition": {"selection": "label", "value": 1}, "value": 0.3},
             "text": {
               "type": "nominal",
-              "field": "label"
+              "field": "x"
             },
             "y": {
               "field": "idx", 
@@ -99,29 +97,34 @@
           }
         },
         {
-          "title": {
-            "text": "Jail",
-            "dx": -20,
-            "dy": 35
+          "data": {
+            "values": [
+              {"idx": 0, "x": "Jail = Incarceration", "Jail": 1}
+            ]
           },
-          "mark": {"type": "text", "dy": 35},
-          "data": {"values": [
-            {"idx": 0, "label": "True", "J": "1", "True": "1"},
-            {"idx": 1, "label": "False", "J": "", "True": "1"}
-          ]},
+          "mark": {
+            "type": "text",
+            "xOffset": -13
+          },
           "selection": {
-            "jail_selection": {
+            "label": {
+              "type": "multi",
+              "fields": [
+                "x"
+              ]
+            },
+            "Jail": {
               "type": "single",
               "fields": [
-                "J", "True"
+                "Jail"
               ]
             }
           },
           "encoding": {
-            "opacity": {"condition": {"selection": "jail_selection", "value": 1}, "value": 0.3},
+            "opacity": {"condition": {"selection": "label", "value": 1}, "value": 0.3},
             "text": {
               "type": "nominal",
-              "field": "label"
+              "field": "x"
             },
             "y": {
               "field": "idx", 
@@ -131,29 +134,34 @@
           }
         },
         {
-          "title": {
-            "text": "Health",
-            "dx": -20,
-            "dy": 35
+          "data": {
+            "values": [
+              {"idx": 0, "x": "Health = Health Data", "Health": 1}
+            ]
           },
-          "mark": {"type": "text", "dy": 35},
-          "data": {"values": [
-            {"idx": 0, "label": "True", "H": "1", "True": "1"},
-            {"idx": 1, "label": "False", "H": "", "True": "1"}
-          ]},
+          "mark": {
+            "type": "text",
+            "xOffset": -8
+          },
           "selection": {
-            "health_selection": {
+            "label": {
+              "type": "multi",
+              "fields": [
+                "x"
+              ]
+            },
+            "Health": {
               "type": "single",
               "fields": [
-                "H", "True"
+                "Health"
               ]
             }
           },
           "encoding": {
-            "opacity": {"condition": {"selection": "health_selection", "value": 1}, "value": 0.3},
+            "opacity": {"condition": {"selection": "label", "value": 1}, "value": 0.3},
             "text": {
               "type": "nominal",
-              "field": "label"
+              "field": "x"
             },
             "y": {
               "field": "idx", 
@@ -163,29 +171,34 @@
           }
         },
         {
-          "title": {
-            "text": "∅",
-            "dx": -20,
-            "dy": 35
+          "data": {
+            "values": [
+              {"idx": 0, "x": "∅ = No Touchpoints", "∅": 1}
+            ]
           },
-          "mark": {"type": "text", "dy": 35},
-          "data": {"values": [
-            {"idx": 0, "label": "True", "none": "1", "True": "1"},
-            {"idx": 1, "label": "False", "none": "", "True": "1"}
-          ]},
+          "mark": {
+            "type": "text",
+            "xOffset": -12
+          },
           "selection": {
-            "none_selection": {
+            "label": {
+              "type": "multi",
+              "fields": [
+                "x"
+              ]
+            },
+            "∅": {
               "type": "single",
               "fields": [
-                "none", "True"
+                "∅"
               ]
             }
           },
           "encoding": {
-            "opacity": {"condition": {"selection": "none_selection", "value": 1}, "value": 0.3},
+            "opacity": {"condition": {"selection": "label", "value": 1}, "value": 0.3},
             "text": {
               "type": "nominal",
-              "field": "label"
+              "field": "x"
             },
             "y": {
               "field": "idx", 
@@ -199,16 +212,46 @@
     {
       "vconcat": [
         {
+
           "height": 600,
           "transform": [
             {"filter": { "selection": "period" }},
-            {"filter": {"and": [
-              {"selection": "prescription_selection"},
-              {"selection": "overdose_selection"},
-              {"selection": "jail_selection"},
-              {"selection": "health_selection"},
-              {"selection": "none_selection"}
-            ]}}
+            {
+              "calculate": "if(datum['Touchpoint A'] == 1 || datum['Touchpoint A'] == 2, 1, 0)",
+              "as": "OD"
+            },
+            {
+              "calculate": "if(datum['Touchpoint A'] == 3 || datum['Touchpoint A'] == 2, 1, 0)",
+              "as": "Rx"
+            },
+            {
+              "calculate": "if(datum['Touchpoint B'] == 3 || datum['Touchpoint B'] == 2, 1, 0)",
+              "as": "Health"
+            },
+            {
+              "calculate": "if(datum['Touchpoint B'] == 1 || datum['Touchpoint B'] == 2, 1, 0)",
+              "as": "Jail"
+            },
+            {
+              "calculate": "if(datum['Touchpoint A'] == 0 && datum['Touchpoint B'] == 0, 1, 0)",
+              "as": "∅"
+            },
+
+            {
+              "filter": { "selection": "OD"}
+            },
+            {
+              "filter": { "selection": "Rx"}
+            },
+            {
+              "filter": { "selection": "Health"}
+            },
+            {
+              "filter": { "selection": "Jail"}
+            },
+            {
+              "filter": { "selection": "∅"}
+            }
           ],
           "encoding": {
             "y": {
@@ -305,8 +348,8 @@
                   "legend": {
                     "labelOverlap": false,
                     "orient": "none",
-                    "legendX": -30,
-                    "legendY": 400,
+                    "legendX": -50,
+                    "legendY": 130,
                     "titleAlign": "center",
                     "titlePadding": 10,
                     "gradientLength": 150,
@@ -357,7 +400,7 @@
                 "period": {
                   "type": "interval", 
                   "encodings": ["x"],
-
+                  "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}",
                   "mark": {"fill": "#6ea7ef", "fillOpacity": 0.15}
                 }
               },
