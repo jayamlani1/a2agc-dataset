@@ -54,7 +54,7 @@
       "as": "HAD_PREVIOUS_OVERDOSE"
     }
   ],
-  "spacing": 150,
+  "spacing": 120,
   "hconcat": [
     {
       "spacing": 40,
@@ -385,8 +385,8 @@
               }
             ],
             "title": "All",
-            "width": 300,
-            "height": 200,
+            "width": 240,
+            "height": 160,
             "mark": "rect",
             "encoding": {
               "color": {
@@ -509,8 +509,8 @@
               }
             ],
             "title": "Male",
-            "width": 300,
-            "height": 200,
+            "width": 240,
+            "height": 160,
             "mark": "rect",
             "encoding": {
               "color": {
@@ -633,8 +633,8 @@
               }
             ],
             "title": "Female",
-            "width": 300,
-            "height": 200,
+            "width": 240,
+            "height": 160,
             "mark": "rect",
             "encoding": {
               "color": {

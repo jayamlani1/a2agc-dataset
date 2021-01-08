@@ -24,13 +24,16 @@
   .content {
     padding-top: 2rem;
     padding-left: 1rem;
-    padding-right: 1rem;
 
     .visualization {
       display: flex;
       max-width: 83rem;
       overflow-x: auto;
       overflow-y: hidden;
+
+      .vega-embed {
+        width: unset;
+      }
 
       .help-button {
         height: 1.5rem;
