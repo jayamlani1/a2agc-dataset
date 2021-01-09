@@ -532,6 +532,7 @@
             "width": 1,
             "height": 1,
             "mark": {
+              "dx": 85,
               "type": "text",
               "style": "label",
               "fontSize": 14
@@ -544,7 +545,7 @@
           },
           {
             "height": 150,
-            "width": 120,
+            "width": 100,
             "transform": [
               {
                 "filter": {
@@ -585,7 +586,7 @@
                     "sort": "descending",
                     "axis": {
                       "title": "Percent",
-                      "titleX": 120,
+                      "titleX": 100,
                       "titleY": 30,
                       "format": "1%",
                       "grid": false,
@@ -681,7 +682,7 @@
           },
           {
             "height": 150,
-            "width": 120,
+            "width": 100,
             "transform": [
               {
                 "filter": {

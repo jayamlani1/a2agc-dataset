@@ -385,7 +385,7 @@
               }
             ],
             "title": "All",
-            "width": 240,
+            "width": 220,
             "height": 160,
             "mark": "rect",
             "encoding": {
@@ -425,7 +425,8 @@
                 "title": "Year",
                 "type": "ordinal",
                 "axis": {
-                  "labelAngle": 0
+                  "labelAngle": 0,
+                  "labelFontSize": 9
                 },
                 "scale": {
                   "domain": [
@@ -509,7 +510,7 @@
               }
             ],
             "title": "Male",
-            "width": 240,
+            "width": 220,
             "height": 160,
             "mark": "rect",
             "encoding": {
@@ -549,7 +550,8 @@
                 "title": "Year",
                 "type": "ordinal",
                 "axis": {
-                  "labelAngle": 0
+                  "labelAngle": 0,
+                  "labelFontSize": 9
                 },
                 "scale": {
                   "domain": [
@@ -633,7 +635,7 @@
               }
             ],
             "title": "Female",
-            "width": 240,
+            "width": 220,
             "height": 160,
             "mark": "rect",
             "encoding": {
@@ -673,7 +675,8 @@
                 "title": "Year",
                 "type": "ordinal",
                 "axis": {
-                  "labelAngle": 0
+                  "labelAngle": 0,
+                  "labelFontSize": 9
                 },
                 "scale": {
                   "domain": [
