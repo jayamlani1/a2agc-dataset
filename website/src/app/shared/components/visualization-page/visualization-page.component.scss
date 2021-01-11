@@ -33,6 +33,13 @@
       font-size: 1.25rem;
     }
 
+    .loading-message {
+      position: fixed;
+      z-index: 2;
+      left: 50%;
+      top: 50%;
+    }
+
     .visualization {
       position: relative;
       padding-right: 1.75rem;
@@ -91,6 +98,7 @@
     }
 
     .info {
+      opacity: 0;
       margin-top: 2rem;
     }
 
@@ -119,5 +127,15 @@
         padding: 1rem 0.5rem 0;
       }
     }
+  }
+
+  .smooth-show {
+    opacity: 1 !important;
+    transition: opacity .75s;
+  }
+
+  .smooth-hide {
+    opacity: 0 !important;
+    transition: opacity .5s;
   }
 }
