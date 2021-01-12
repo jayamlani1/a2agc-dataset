@@ -6,13 +6,15 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 
 import { environment } from '../../../environments/environment';
-import { RouterState } from './router/router.state';
 import { PageState } from './page/page.state';
+import { RouterState } from './router/router.state';
+import { VisualizationsState } from './visualizations/visualizations.state';
 
 
 const ROOT_STATES: Type<unknown>[] = [
   RouterState,
-  PageState
+  PageState,
+  VisualizationsState
 ];
 
 @NgModule({

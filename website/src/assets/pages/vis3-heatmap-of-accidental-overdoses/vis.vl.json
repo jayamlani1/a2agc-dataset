@@ -138,7 +138,7 @@
           "encoding": {
             "fill": {
               "field": "HAD_PREVIOUS_OVERDOSE",
-              "title": "Filter",
+              "title": "Filter by",
               "type": "ordinal",
               "legend": {
                 "orient": "top-left",

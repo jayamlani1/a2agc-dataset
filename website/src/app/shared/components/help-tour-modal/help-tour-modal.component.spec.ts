@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Vis2AgeAndGenderComponent } from './vis2-age-and-gender.component';
+import { HelpTourModalComponent } from './help-tour-modal.component';
 
-describe('Vis2AgeAndGenderComponent', () => {
-  let component: Vis2AgeAndGenderComponent;
-  let fixture: ComponentFixture<Vis2AgeAndGenderComponent>;
+describe('HelpTourModalComponent', () => {
+  let component: HelpTourModalComponent;
+  let fixture: ComponentFixture<HelpTourModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Vis2AgeAndGenderComponent ]
+      declarations: [ HelpTourModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Vis2AgeAndGenderComponent);
+    fixture = TestBed.createComponent(HelpTourModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,4 +5,4 @@ To combat the opioid epidemic, Indiana University (IU) launched an initiative, *
 
 The initiative’s goals are to reduce the number of Hoosiers with addictions, the number of deaths from drug overdoses, and the number of babies born exposed to substances. There are 32 teams working on projects ranging from lab-based neurobiological research to school-based educational programs; from analyses of policy and law to data gathering, analysis, and visualization; and from economic analysis to training and education of the addictions treatment workforce across the state.
 
-Learn more at [addictions.iu.edu](https://addictions.iu.edu).
+Learn more at <a href="https://addictions.iu.edu" target="_blank">addictions.iu.edu</a>.

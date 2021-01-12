@@ -4,13 +4,26 @@
   "name": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
   "background": "#ffffff",
   "config": {
-    "view": {"stroke": "transparent"},
+    "view": {
+      "stroke": "transparent"
+    },
     "legend": {
-      "titleFont": "Lato", "titleFontSize": 14, "titleFontWeight": "bolder", "titleColor": "#9e9e9e", "titlePadding": 10,
-      "labelFont": "Lato", "labelFontSize": 14, "labelFontWeight": "normal", "labelColor": "black"
+      "titleFont": "Lato",
+      "titleFontSize": 14,
+      "titleFontWeight": "bolder",
+      "titleColor": "#9e9e9e",
+      "titlePadding": 10,
+      "labelFont": "Lato",
+      "labelFontSize": 14,
+      "labelFontWeight": "normal",
+      "labelColor": "black"
     }
   },
-  "autosize": {"type": "pad", "contains": "padding", "resize": true},
+  "autosize": {
+    "type": "pad",
+    "contains": "padding",
+    "resize": true
+  },
   "data": {
     "url": "assets/generated/vis-geomap-opioid-deaths.csv",
     "format": {
@@ -28,18 +41,92 @@
       "lookup": "DATA_VARIABLE",
       "from": {
         "key": "DATA_VARIABLE",
-        "fields": ["LEGEND_ORDER", "LABEL"],
-        "data": {"url": "assets/pages/vis1-geomap-of-opioid-deaths/vis-data-variables.csv"}
+        "fields": [
+          "LEGEND_ORDER",
+          "LABEL"
+        ],
+        "data": {
+          "url": "assets/pages/vis1-geomap-of-opioid-deaths/vis-data-variables.csv"
+        }
       }
     },
-    {"filter": "isValid(datum.VALUE) && datum.VALUE.length > 0"},
-    {"filter": "!(datum.LATITUDE === 38.7127 && datum.LONGITUDE === -87.68944)"},
+    {
+      "filter": "isValid(datum.VALUE) && datum.VALUE.length > 0"
+    },
+    {
+      "filter": "!(datum.LATITUDE === 38.7127 && datum.LONGITUDE === -87.68944)"
+    },
     {
       "lookup": "VALUE",
       "from": {
         "key": "VALUE",
-        "fields": ["COLOR"],
-        "data": {"values": [{"VALUE":"Male","COLOR":"#586CBB"},{"VALUE":"Female","COLOR":"#DA5E8C"},{"VALUE":"Prescription","COLOR":"#900DA4"},{"VALUE":"Illicit","COLOR":"#26C6DA"},{"VALUE":"True","COLOR":"#2962FF"},{"VALUE":"False","COLOR":"#FFC400"},{"VALUE":"Neither","COLOR":"#9e9e9e"},{"VALUE":"0 - 9","COLOR":"#F0F921"},{"VALUE":"10 - 19","COLOR":"#FCCE25"},{"VALUE":"20 - 29","COLOR":"#F1844B"},{"VALUE":"30 - 39","COLOR":"#E16462"},{"VALUE":"40 - 49","COLOR":"#B12A90"},{"VALUE":"50 - 59","COLOR":"#900DA4"},{"VALUE":"60 - 69","COLOR":"#42049E"},{"VALUE":"70 >","COLOR":"#0D0887"}]}
+        "fields": [
+          "COLOR"
+        ],
+        "data": {
+          "values": [
+            {
+              "VALUE": "Male",
+              "COLOR": "#586CBB"
+            },
+            {
+              "VALUE": "Female",
+              "COLOR": "#DA5E8C"
+            },
+            {
+              "VALUE": "Prescription",
+              "COLOR": "#900DA4"
+            },
+            {
+              "VALUE": "Illicit",
+              "COLOR": "#26C6DA"
+            },
+            {
+              "VALUE": "True",
+              "COLOR": "#2962FF"
+            },
+            {
+              "VALUE": "False",
+              "COLOR": "#FFC400"
+            },
+            {
+              "VALUE": "Neither",
+              "COLOR": "#9e9e9e"
+            },
+            {
+              "VALUE": "0 - 9",
+              "COLOR": "#F0F921"
+            },
+            {
+              "VALUE": "10 - 19",
+              "COLOR": "#FCCE25"
+            },
+            {
+              "VALUE": "20 - 29",
+              "COLOR": "#F1844B"
+            },
+            {
+              "VALUE": "30 - 39",
+              "COLOR": "#E16462"
+            },
+            {
+              "VALUE": "40 - 49",
+              "COLOR": "#B12A90"
+            },
+            {
+              "VALUE": "50 - 59",
+              "COLOR": "#900DA4"
+            },
+            {
+              "VALUE": "60 - 69",
+              "COLOR": "#42049E"
+            },
+            {
+              "VALUE": "70 >",
+              "COLOR": "#0D0887"
+            }
+          ]
+        }
       }
     },
     {
@@ -58,17 +145,31 @@
   "hconcat": [
     {
       "spacing": 0,
-      "resolve": {"scale": {"opacity": "independent"}},
+      "resolve": {
+        "scale": {
+          "opacity": "independent"
+        }
+      },
       "vconcat": [
         {
-          "mark": {"type": "text"},
-          "data": {"values": []},
+          "mark": {
+            "type": "text"
+          },
+          "data": {
+            "values": []
+          },
           "selection": {
             "data_variable_selection": {
               "type": "single",
-              "fields": ["LABEL"],
-              "bind": {"legend": "click"},
-              "init": {"LABEL": "Age"},
+              "fields": [
+                "LABEL"
+              ],
+              "bind": {
+                "legend": "click"
+              },
+              "init": {
+                "LABEL": "Age"
+              },
               "empty": "none"
             }
           },
@@ -94,8 +195,12 @@
           }
         },
         {
-          "mark": {"type": "text"},
-          "data": {"values": []},
+          "mark": {
+            "type": "text"
+          },
+          "data": {
+            "values": []
+          },
           "encoding": {
             "opacity": {
               "field": "LABEL",
@@ -112,13 +217,21 @@
           }
         },
         {
-          "mark": {"type": "text"},
-          "data": {"values": []},
+          "mark": {
+            "type": "text"
+          },
+          "data": {
+            "values": []
+          },
           "selection": {
             "sex_selection": {
               "type": "single",
-              "fields": ["SEX_LABEL"],
-              "bind": {"legend": "click"}
+              "fields": [
+                "SEX_LABEL"
+              ],
+              "bind": {
+                "legend": "click"
+              }
             }
           },
           "encoding": {
@@ -140,13 +253,21 @@
           }
         },
         {
-          "mark": {"type": "text"},
-          "data": {"values": []},
+          "mark": {
+            "type": "text"
+          },
+          "data": {
+            "values": []
+          },
           "selection": {
             "drug_type_seleciton": {
               "type": "single",
-              "fields": ["ILLICIT_V_PRESCRIPTION"],
-              "bind": {"legend": "click"}
+              "fields": [
+                "ILLICIT_V_PRESCRIPTION"
+              ],
+              "bind": {
+                "legend": "click"
+              }
             }
           },
           "encoding": {
@@ -169,13 +290,21 @@
           }
         },
         {
-          "mark": {"type": "text"},
-          "data": {"values": []},
+          "mark": {
+            "type": "text"
+          },
+          "data": {
+            "values": []
+          },
           "selection": {
             "1_year_selection": {
               "type": "single",
-              "fields": ["OPIOID_PRESCRIPTIONS_1YEAR"],
-              "bind": {"legend": "click"}
+              "fields": [
+                "OPIOID_PRESCRIPTIONS_1YEAR"
+              ],
+              "bind": {
+                "legend": "click"
+              }
             }
           },
           "encoding": {
@@ -197,13 +326,21 @@
           }
         },
         {
-          "mark": {"type": "text"},
-          "data": {"values": []},
+          "mark": {
+            "type": "text"
+          },
+          "data": {
+            "values": []
+          },
           "selection": {
             "opioid_rx_selection": {
               "type": "single",
-              "fields": ["ANY_PRESCRIPTIONS_LABEL"],
-              "bind": {"legend": "click"}
+              "fields": [
+                "ANY_PRESCRIPTIONS_LABEL"
+              ],
+              "bind": {
+                "legend": "click"
+              }
             }
           },
           "encoding": {
@@ -236,59 +373,131 @@
               "data": {
                 "name": "counties",
                 "url": "assets/pages/vis1-geomap-of-opioid-deaths/indiana.topojson",
-                "format": {"type": "topojson", "feature": "counties"}
+                "format": {
+                  "type": "topojson",
+                  "feature": "counties"
+                }
               },
-              "projection": {"type": "mercator"},
-              "mark": {"type": "geoshape", "fill": "white", "stroke": "darkgray", "clip": true}
+              "projection": {
+                "type": "mercator"
+              },
+              "mark": {
+                "type": "geoshape",
+                "fill": "white",
+                "stroke": "darkgray",
+                "clip": true
+              }
             },
             {
               "transform": [
-                {"filter": {"selection": "period"}},
-                {"filter": {"selection": "data_variable_selection"}},
-                {"filter": {"and": [
-                  {"selection": "sex_selection"},
-                  {"selection": "drug_type_seleciton"},
-                  {"selection": "1_year_selection"},
-                  {"selection": "opioid_rx_selection"}
-                ]}}
+                {
+                  "filter": {
+                    "selection": "period"
+                  }
+                },
+                {
+                  "filter": {
+                    "selection": "data_variable_selection"
+                  }
+                },
+                {
+                  "filter": {
+                    "and": [
+                      {
+                        "selection": "sex_selection"
+                      },
+                      {
+                        "selection": "drug_type_seleciton"
+                      },
+                      {
+                        "selection": "1_year_selection"
+                      },
+                      {
+                        "selection": "opioid_rx_selection"
+                      }
+                    ]
+                  }
+                }
               ],
-              "projection": {"type": "mercator"},
-              "mark": {"type": "point", "cursor": "pointer", "clip": true},
+              "projection": {
+                "type": "mercator"
+              },
+              "mark": {
+                "type": "point",
+                "cursor": "pointer",
+                "clip": true
+              },
               "selection": {
                 "data_variable_subselection": {
                   "type": "multi",
-                  "fields": ["VALUE"],
-                  "bind": {"legend": "click"}
+                  "fields": [
+                    "VALUE"
+                  ],
+                  "bind": {
+                    "legend": "click"
+                  }
                 },
                 "home_state_selection": {
                   "type": "multi",
-                  "fields": ["HOME_STATE_LABEL"],
-                  "bind": {"legend": "click"}
+                  "fields": [
+                    "HOME_STATE_LABEL"
+                  ],
+                  "bind": {
+                    "legend": "click"
+                  }
                 }
               },
               "encoding": {
-                "longitude": {"type": "quantitative", "field": "LONGITUDE"},
-                "latitude": {"type": "quantitative", "field": "LATITUDE"},
+                "longitude": {
+                  "type": "quantitative",
+                  "field": "LONGITUDE"
+                },
+                "latitude": {
+                  "type": "quantitative",
+                  "field": "LATITUDE"
+                },
                 "shape": {
                   "type": "nominal",
                   "field": "HOME_STATE_LABEL",
                   "title": "Shape (Home State)",
-                  "scale": {"range": {"field": "HOME_STATE$$shape"}},
-                  "legend": {"orient": "right", "symbolOffset": 10, "offset": -125}
+                  "scale": {
+                    "range": {
+                      "field": "HOME_STATE$$shape"
+                    }
+                  },
+                  "legend": {
+                    "orient": "right",
+                    "symbolOffset": 10,
+                    "offset": -125
+                  }
                 },
                 "color": {
                   "type": "nominal",
                   "field": "VALUE",
                   "title": "Color (Data Variable Value)",
-                  "scale": {"range": {"field": "COLOR"}},
-                  "legend": {"orient": "right", "symbolOffset": 10, "offset": -125}
+                  "scale": {
+                    "range": {
+                      "field": "COLOR"
+                    }
+                  },
+                  "legend": {
+                    "orient": "right",
+                    "symbolOffset": 10,
+                    "offset": -125
+                  }
                 },
                 "opacity": {
-                  "condition": {"selection": "home_state_selection", "value": 1},
+                  "condition": {
+                    "selection": "home_state_selection",
+                    "value": 1
+                  },
                   "value": 0
                 },
                 "size": {
-                  "condition": {"selection": "data_variable_subselection", "value": 100},
+                  "condition": {
+                    "selection": "data_variable_subselection",
+                    "value": 100
+                  },
                   "value": 0
                 },
                 "tooltip": [
@@ -313,31 +522,65 @@
         {
           "width": 703,
           "height": 150,
-          "view": {"strokeOpacity": 1},
+          "view": {
+            "strokeOpacity": 1
+          },
           "layer": [
             {
               "transform": [
-                {"filter": {"field": "DATA_VARIABLE", "equal": "AGE"}},
-                {"filter": {"selection": "data_variable_subselection"}},
-                {"filter": {"and": [
-                  {"selection": "sex_selection"},
-                  {"selection": "drug_type_seleciton"},
-                  {"selection": "home_state_selection"},
-                  {"selection": "1_year_selection"},
-                  {"selection": "opioid_rx_selection"}
-                ]}}
+                {
+                  "filter": {
+                    "field": "DATA_VARIABLE",
+                    "equal": "AGE"
+                  }
+                },
+                {
+                  "filter": {
+                    "selection": "data_variable_subselection"
+                  }
+                },
+                {
+                  "filter": {
+                    "and": [
+                      {
+                        "selection": "sex_selection"
+                      },
+                      {
+                        "selection": "drug_type_seleciton"
+                      },
+                      {
+                        "selection": "home_state_selection"
+                      },
+                      {
+                        "selection": "1_year_selection"
+                      },
+                      {
+                        "selection": "opioid_rx_selection"
+                      }
+                    ]
+                  }
+                }
               ],
-              "mark": {"type": "line"},
+              "mark": {
+                "type": "line"
+              },
               "selection": {
                 "period": {
                   "type": "interval",
-                  "mark": {"fill": "#6ea7ef", "fillOpacity": 0.15},
-                  "encodings": ["x"]
+                  "mark": {
+                    "fill": "#6ea7ef",
+                    "fillOpacity": 0.15
+                  },
+                  "encodings": [
+                    "x"
+                  ]
                 }
               },
               "encoding": {
                 "x": {
-                  "type": "temporal", "field": "PERIOD", "title": "Period",
+                  "type": "temporal",
+                  "field": "PERIOD",
+                  "title": "Period",
                   "axis": {
                     "tickColor": "#757575",
                     "domainColor": "#757575",
@@ -349,7 +592,10 @@
                         "test": "quarter(datum.value) === 1",
                         "value": []
                       },
-                      "value": [2,2]
+                      "value": [
+                        2,
+                        2
+                      ]
                     },
                     "gridColor": {
                       "condition": {
@@ -371,7 +617,9 @@
                     "domainColor": "#757575"
                   }
                 },
-                "color": {"value": "#6EA7EF"}
+                "color": {
+                  "value": "#6EA7EF"
+                }
               }
             }
           ]
