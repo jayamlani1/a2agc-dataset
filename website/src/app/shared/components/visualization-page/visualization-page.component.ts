@@ -1,10 +1,12 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Options, Spec } from 'ngx-vega';
-import { map } from 'rxjs/operators';
+import { timeout } from 'rxjs/operators';
 import { PageState } from 'src/app/core/state/page/page.state';
+import { View } from 'vega';
 
 import { HelpModalComponent } from '../help-modal/help-modal.component';
+import { HelpTourModalComponent } from '../help-tour-modal/help-tour-modal.component';
 
 
 @Component({
@@ -19,14 +21,19 @@ export class VisualizationPageComponent implements OnInit {
   @Input() title?: string;
   @Input() description?: string;
   @Input() spec?: Spec;
-  @Input() options: Options = { renderer: 'canvas', actions: true };
+  @Input() options: Options = { renderer: 'canvas', actions: true, width: 1268 };
   @Input() content?: string;
   @Input() sql?: string;
   @Input() csv?: string;
 
+  loadingVegaVisualization = true;
+
   ngOnInit(): void {
     if (!this.page.snapshot.hasShownHelpModal) {
-      this.launchHelpDialog();
+      this.dialog.open(HelpTourModalComponent, {
+        width: '50rem',
+        data: {}
+      });
       this.page.setHasShownHelpModal(true);
     }
   }
@@ -40,11 +47,16 @@ export class VisualizationPageComponent implements OnInit {
     readonly page: PageState
   ) { }
 
+  async trackVegaLoading(view: View): Promise<void> {
+    this.loadingVegaVisualization = true;
+    await view.runAsync();
+    this.loadingVegaVisualization = false;
+ }
+
   launchHelpDialog(): void {
     this.dialog.open(HelpModalComponent, {
       width: '60rem',
       data: {}
     });
   }
-
 }

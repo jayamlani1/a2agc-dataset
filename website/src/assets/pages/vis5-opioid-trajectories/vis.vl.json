@@ -14,12 +14,11 @@
       }
     }
   },
-  "background": "#ffffff",
 
   "hconcat": [
     {
       "title": {
-        "text": "Legend",
+        "text": "Filter by",
         "color": "#9e9e9e"
       },
       "spacing": 0,
@@ -342,11 +341,12 @@
               "mark": {"type": "text", "fontSize": 0},
               "encoding": {
                 "color": {
-                  "title": "# Deaths",
+                  "title": "Legend",
                   "aggregate": "sum",
                   "field": "True",
                   "type": "quantitative",
                   "legend": {
+                    "labelOverlap": false,
                     "orient": "none",
                     "legendX": -50,
                     "legendY": 130,
