@@ -6,7 +6,6 @@ import { PageState } from 'src/app/core/state/page/page.state';
 import { HelpModalComponent } from '../help-modal/help-modal.component';
 import { HelpTourModalComponent } from '../help-tour-modal/help-tour-modal.component';
 
-
 @Component({
   selector: 'agc-visualization-page',
   templateUrl: './visualization-page.component.html',
@@ -24,6 +23,13 @@ export class VisualizationPageComponent implements OnInit {
   @Input() sql?: string;
   @Input() csv?: string;
 
+  csvSpinnerActive = true;
+  spinners = {
+    sql: true,
+    csv: true,
+    spec: true
+  };
+
   ngOnInit(): void {
     if (!this.page.snapshot.hasShownHelpModal) {
       this.dialog.open(HelpTourModalComponent, {
@@ -32,6 +38,20 @@ export class VisualizationPageComponent implements OnInit {
       });
       this.page.setHasShownHelpModal(true);
     }
+  }
+
+  disableSpinner(key: string): void {
+    this.spinners = {
+      ...this.spinners,
+      [key]: false
+    };
+  }
+
+  enableSpinner(key: string): void {
+    this.spinners = {
+      ...this.spinners,
+      [key]: true
+    };
   }
 
   get specString(): string | undefined {
