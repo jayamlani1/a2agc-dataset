@@ -40,7 +40,7 @@
               <mat-icon>cloud_download</mat-icon>
             </a>
           </div>
-          <mat-spinner class="spinner" [class.fade-out]="!spinners.sql"></mat-spinner>
+          <mat-spinner class="spinner" [class.smooth-hide]="!spinners.sql"></mat-spinner>
           <markdown (load)="disableSpinner('sql')" *ngIf="sql && sqlPanel.expanded" lineNumbers [src]="sql"></markdown>
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="csv" #csvPanel (closed)="enableSpinner('csv')">
@@ -55,7 +55,7 @@
               <mat-icon>cloud_download</mat-icon>
             </a>
           </div>
-          <mat-spinner class="spinner" [class.fade-out]="!spinners.csv"></mat-spinner>
+          <mat-spinner class="spinner" [class.smooth-hide]="!spinners.csv"></mat-spinner>
           <markdown (load)="disableSpinner('csv')" class="csvContent" *ngIf="csv && csvPanel.expanded" lineNumbers
             [src]="csv"></markdown>
         </mat-expansion-panel>
@@ -71,7 +71,7 @@
               <mat-icon>cloud_download</mat-icon>
             </a>
           </div>
-          <mat-spinner class="spinner" [class.fade-out]="!spinners.spec"></mat-spinner>
+          <mat-spinner class="spinner" [class.smooth-hide]="!spinners.spec"></mat-spinner>
           <markdown (load)="disableSpinner('spec')" *ngIf="spec && specPanel.expanded" lineNumbers [src]="specString"></markdown>
         </mat-expansion-panel>
       </mat-accordion>
