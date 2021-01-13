@@ -1,5 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "padding": {"top": 50},
   "name": "Accidental drug overdose deaths in Marion County by place of injury 2010-2018",
   "background": "#ffffff",
   "config": {
@@ -179,7 +180,7 @@
               "type": "ordinal",
               "legend": {
                 "orient": "none",
-                "legendX": -250,
+                "legendX": 0,
                 "legendY": 0,
                 "values": [
                   "Gender",
@@ -207,7 +208,7 @@
               "type": "ordinal",
               "legend": {
                 "orient": "none",
-                "legendX": -250,
+                "legendX": 0,
                 "legendY": 20,
                 "values": [],
                 "symbolSize": 0
@@ -240,7 +241,7 @@
               "type": "ordinal",
               "legend": {
                 "orient": "none",
-                "legendX": -240,
+                "legendX": 10,
                 "legendY": 10,
                 "values": [
                   "Male",
@@ -276,7 +277,7 @@
               "type": "ordinal",
               "legend": {
                 "orient": "none",
-                "legendX": -240,
+                "legendX": 10,
                 "legendY": 10,
                 "values": [
                   "Illicit",
@@ -313,7 +314,7 @@
               "type": "ordinal",
               "legend": {
                 "orient": "none",
-                "legendX": -240,
+                "legendX": 10,
                 "legendY": 10,
                 "values": [
                   "True",
@@ -349,7 +350,7 @@
               "type": "ordinal",
               "legend": {
                 "orient": "none",
-                "legendX": -240,
+                "legendX": 10,
                 "legendY": 10,
                 "values": [
                   "True",
@@ -459,31 +460,15 @@
                   "type": "nominal",
                   "field": "HOME_STATE_LABEL",
                   "title": "Shape (Home State)",
-                  "scale": {
-                    "range": {
-                      "field": "HOME_STATE$$shape"
-                    }
-                  },
-                  "legend": {
-                    "orient": "right",
-                    "symbolOffset": 10,
-                    "offset": -125
-                  }
+                  "scale": {"range": {"field": "HOME_STATE$$shape"}},
+                  "legend": {"orient": "right", "symbolOffset": 10, "offset": -50}
                 },
                 "color": {
                   "type": "nominal",
                   "field": "VALUE",
                   "title": "Color (Data Variable Value)",
-                  "scale": {
-                    "range": {
-                      "field": "COLOR"
-                    }
-                  },
-                  "legend": {
-                    "orient": "right",
-                    "symbolOffset": 10,
-                    "offset": -125
-                  }
+                  "scale": {"range": {"field": "COLOR"}},
+                  "legend": {"orient": "right", "symbolOffset": 10, "offset": -50}
                 },
                 "opacity": {
                   "condition": {

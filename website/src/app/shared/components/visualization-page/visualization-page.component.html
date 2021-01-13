@@ -5,14 +5,18 @@
     <div *ngIf="title" class="title">{{ title }}</div>
     <div *ngIf="description" class="description">{{ description }}</div>
 
+    <div class="loading-message" [class.smooth-hide]="!loadingVegaVisualization">
+      <mat-spinner></mat-spinner>
+    </div>
+
     <div class="visualization">
-      <ngx-vega *ngIf="spec" [spec]="spec" [options]="options"></ngx-vega>
+      <ngx-vega *ngIf="spec" [spec]="spec" [options]="options" (viewChange)="trackVegaLoading($event)"></ngx-vega>
       <button mat-icon-button class="help" color="accent" disableRipple (click)="launchHelpDialog()">
         <span class="qmark" title="Help">?</span>
       </button>
     </div>
 
-    <mat-expansion-panel ngClass="info">
+    <mat-expansion-panel ngClass="info" [class.smooth-show]="!loadingVegaVisualization">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon ngClass="storage-icon" svgIcon="menu:data-storage"></mat-icon> DATA &amp; GRAPHIC VARIABLE

@@ -1,7 +1,9 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Options, Spec } from 'ngx-vega';
+import { timeout } from 'rxjs/operators';
 import { PageState } from 'src/app/core/state/page/page.state';
+import { View } from 'vega';
 
 import { HelpModalComponent } from '../help-modal/help-modal.component';
 import { HelpTourModalComponent } from '../help-tour-modal/help-tour-modal.component';
@@ -29,6 +31,7 @@ export class VisualizationPageComponent implements OnInit {
     csv: true,
     spec: true
   };
+  loadingVegaVisualization = true;
 
   ngOnInit(): void {
     if (!this.page.snapshot.hasShownHelpModal) {
@@ -63,11 +66,16 @@ export class VisualizationPageComponent implements OnInit {
     readonly page: PageState
   ) { }
 
+  async trackVegaLoading(view: View): Promise<void> {
+    this.loadingVegaVisualization = true;
+    await view.runAsync();
+    this.loadingVegaVisualization = false;
+ }
+
   launchHelpDialog(): void {
     this.dialog.open(HelpModalComponent, {
       width: '60rem',
       data: {}
     });
   }
-
 }

@@ -1,5 +1,6 @@
 {
 	"$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+	"padding": {"top": 50},
 	"config": {
 		"mark": {
 			"tooltip": null
@@ -67,7 +68,7 @@
 						"offset": 20,
 						"fontSize": 14
 					},
-					"width": 470,
+					"width": 450,
 					"height": 175,
 					"mark": "rect",
 					"encoding": {
@@ -186,7 +187,7 @@
 							"calculate": "if(toString(10 * datum.AGE_GROUP) < 70, toString(10 * datum.AGE_GROUP) + \"-\" + toString(10 * datum.AGE_GROUP + 9), '70>')"
 						}
 					],
-					"width": 470,
+					"width": 450,
 					"height": 175,
 					"title": {
 						"text": "All Substances",
@@ -319,7 +320,7 @@
 			"hconcat": [
 				{
 					"mark": "line",
-					"width": 600,
+					"width": 580,
 					"height": 175,
 					"title": {
 						"text": "Update Graphs Using Filters Below",

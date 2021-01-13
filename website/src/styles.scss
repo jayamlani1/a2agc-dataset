@@ -43,6 +43,15 @@ ngx-vega .resize-sensor {
   display: none;
 }
 
+ngx-vega {
+  width: 100%;
+}
+
+ngx-vega .chart-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 ngx-vega .vega-embed {
   width: auto !important;
 }
