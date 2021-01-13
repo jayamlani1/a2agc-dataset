@@ -512,6 +512,10 @@
                     "title": "# Opioid Rx",
                     "type": "quantitative",
                     "field": "N_OPIOID_PRESCRIPTIONS"
+                  },
+                  {
+                    "title": "Year",
+                    "field": "YEAR"
                   }
                 ]
               }
