@@ -388,13 +388,30 @@
           {
             "width": 1,
             "height": 1,
-            "mark": {"type": "text", "style": "label", "fontSize": 14},
-            "encoding": {"text": {"field": "year"}}
+            "mark": {
+              "dx": 85,
+              "type": "text",
+              "style": "label",
+              "fontSize": 14
+            },
+            "encoding": {
+              "text": {
+                "field": "year"
+              }
+            }
           },
           {
             "height": 150,
-            "width": 120,
-            "transform": [{"filter": {"field": "gender", "equal": "Male"}}],
+            "width": 100,
+            "transform": [
+              {
+                "filter": {
+                  "field": "gender",
+                  "equal": "Male"
+                }
+              }
+            ],
+
             "layer": [
               {
                 "selection": {
@@ -418,7 +435,7 @@
                     "sort": "descending",
                     "axis": {
                       "title": "Percent",
-                      "titleX": 120,
+                      "titleX": 100,
                       "titleY": 30,
                       "format": "1%",
                       "grid": false,
@@ -509,8 +526,16 @@
           },
           {
             "height": 150,
-            "width": 120,
-            "transform": [{"filter": {"field": "gender", "equal": "Female"}}],
+            "width": 100,
+            "transform": [
+              {
+                "filter": {
+                  "field": "gender",
+                  "equal": "Female"
+                }
+              }
+            ],
+
             "layer": [
               {
                 "mark": "bar",
