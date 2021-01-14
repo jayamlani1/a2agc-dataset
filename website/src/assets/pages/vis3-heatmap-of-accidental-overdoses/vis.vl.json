@@ -4,8 +4,8 @@
     "url": "assets/generated/visualization4/data.csv"
   },
   "autosize": {
-    "type": "pad",
-    "resize": true
+    "type": "fit-x",
+    "contains": "padding"
   },
   "config": {
     "mark": {

@@ -9,7 +9,10 @@
       "labelFont": "Lato", "labelFontSize": 14, "labelFontWeight": "normal", "labelColor": "black"
     }
   },
-  "autosize": {"type": "pad", "contains": "padding", "resize": true},
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
   "data": {
     "url": "assets/generated/vis-geomap-opioid-deaths.csv",
     "format": {

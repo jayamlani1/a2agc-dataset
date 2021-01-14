@@ -20,8 +20,8 @@
   },
   "center": true,
   "autosize": {
-    "type": "pad",
-    "resize": true
+    "type": "fit-x",
+    "contains": "padding"
   },
   "background": "#ffffff",
 
