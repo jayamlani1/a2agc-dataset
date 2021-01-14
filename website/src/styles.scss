@@ -37,16 +37,6 @@ a {
   transition: text-emphasis-color 0s !important;
 }
 
-// NgxVega's resize sensor is not working correctly. It keeps growing the element.
-// Further investigation of issue is needed but for now just disable the sensor.
-ngx-vega .resize-sensor {
-  display: none;
-}
-
-ngx-vega .vega-embed {
-  width: auto !important;
-}
-
 // Markdown table styling
 markdown table {
   margin-bottom: 0.75rem;
