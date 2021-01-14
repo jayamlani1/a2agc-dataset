@@ -95,7 +95,7 @@
 							},
 							{
 								"field": "YEAR",
-								"title": "YEAR",
+								"title": "Year",
 								"type": "ordinal"
 							}
 						],
@@ -200,7 +200,7 @@
 								"aggregate": "distinct",
 								"field": "CASE_NUMBER",
 								"type": "quantitative",
-								"title": "Total"
+								"title": "Total Deaths"
 							},
 							{
 								"field": "group",
@@ -424,13 +424,13 @@
 
 							"selection": {
 								"deaths_binned": {
-									"type": "single",
+									"type": "multi",
 									"fields": [
 										"deaths_binned"
 									]
 								},
 								"label": {
-									"type": "single",
+									"type": "multi",
 									"empty": "none",
 									"fields": [
 										"label"
@@ -438,6 +438,9 @@
 								}
 							},
 							"encoding": {
+                "tooltip": {
+                  "value": "Shift-Click to add more than one item"
+                },
 								"x": {
 									"type": "nominal",
 									"field": "YEAR",
