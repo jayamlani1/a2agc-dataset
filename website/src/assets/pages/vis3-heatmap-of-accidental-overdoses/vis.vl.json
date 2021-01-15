@@ -4,7 +4,6 @@
   "data": {
     "url": "assets/generated/visualization4/data.csv"
   },
-  "padding": {"top": 50},
   "autosize": {
     "type": "pad",
     "resize": true
