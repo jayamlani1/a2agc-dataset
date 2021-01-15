@@ -10,7 +10,6 @@ import { NgxVegaModule } from 'ngx-vega';
 import { HelpModalModule } from '../help-modal/help-modal.module';
 import { HelpTourModalModule } from '../help-tour-modal/help-tour-modal.module';
 import { VisualizationPageComponent } from './visualization-page.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
