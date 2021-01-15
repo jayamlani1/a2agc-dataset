@@ -4,10 +4,9 @@
   "data": {
     "url": "assets/generated/visualization4/data.csv"
   },
-  "padding": {"top": 50},
   "autosize": {
-    "type": "pad",
-    "resize": true
+    "type": "fit-x",
+    "contains": "padding"
   },
   "config": {
     "mark": {
@@ -95,6 +94,9 @@
             }
           },
           "encoding": {
+            "tooltip": {
+              "value": "Shift-Click to add more than one item"
+            },
             "text": {
               "type": "nominal",
               "field": "SUBSTANCE_NAME"
@@ -133,6 +135,9 @@
             }
           },
           "encoding": {
+            "tooltip": {
+              "value": "Shift-Click to add more than one item"
+            },
             "text": {
               "type": "nominal",
               "field": "HAD_PREVIOUS_OVERDOSE"
@@ -194,6 +199,9 @@
                     }
                   },
                   "encoding": {
+                    "tooltip": {
+                      "value": "Shift-Click to add more than one item"
+                    },
                     "x": {
                       "type": "nominal",
                       "field": "YEAR",
@@ -411,7 +419,7 @@
                 },
                 {
                   "field": "YEAR",
-                  "title": "YEAR",
+                  "title": "Year",
                   "type": "ordinal"
                 }
               ],

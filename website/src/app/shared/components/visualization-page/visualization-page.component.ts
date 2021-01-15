@@ -66,12 +66,6 @@ export class VisualizationPageComponent implements OnInit {
     readonly page: PageState
   ) { }
 
-  async trackVegaLoading(view: View): Promise<void> {
-    this.loadingVegaVisualization = true;
-    await view.runAsync();
-    this.loadingVegaVisualization = false;
- }
-
   launchHelpDialog(): void {
     this.dialog.open(HelpModalComponent, {
       width: '60rem',
