@@ -24,6 +24,8 @@ export class VisualizationPageComponent implements OnInit {
   @Input() sql?: string;
   @Input() csv?: string;
 
+  loadingVegaVisualization = true;
+
   ngOnInit(): void {
     if (!this.page.snapshot.hasShownHelpModal) {
       this.dialog.open(HelpTourModalComponent, {
@@ -49,5 +51,4 @@ export class VisualizationPageComponent implements OnInit {
       data: {}
     });
   }
-
 }
