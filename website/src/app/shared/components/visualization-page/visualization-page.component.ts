@@ -1,9 +1,7 @@
-import { Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Options, Spec } from 'ngx-vega';
-import { timeout } from 'rxjs/operators';
 import { PageState } from 'src/app/core/state/page/page.state';
-import { View } from 'vega';
 
 import { HelpModalComponent } from '../help-modal/help-modal.component';
 import { HelpTourModalComponent } from '../help-tour-modal/help-tour-modal.component';
