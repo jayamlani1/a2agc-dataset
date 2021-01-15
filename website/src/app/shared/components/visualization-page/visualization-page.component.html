@@ -29,7 +29,7 @@
       <markdown *ngIf="content" [src]="content"></markdown>
 
       <mat-accordion multi>
-        <mat-expansion-panel *ngIf="sql" #sqlPanel>
+        <mat-expansion-panel *ngIf="sql" #sqlPanel (closed)="enableSpinner('sql')">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Data Extraction Source Code (SQL)
@@ -41,9 +41,10 @@
               <mat-icon>cloud_download</mat-icon>
             </a>
           </div>
-          <markdown *ngIf="sql && sqlPanel.expanded" lineNumbers [src]="sql"></markdown>
+          <mat-spinner class="spinner" [class.smooth-hide]="!spinners.sql"></mat-spinner>
+          <markdown (load)="disableSpinner('sql')" *ngIf="sql && sqlPanel.expanded" lineNumbers [src]="sql"></markdown>
         </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="csv" #csvPanel>
+        <mat-expansion-panel *ngIf="csv" #csvPanel (closed)="enableSpinner('csv')">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Extracted Data (CSV)
@@ -55,9 +56,11 @@
               <mat-icon>cloud_download</mat-icon>
             </a>
           </div>
-          <markdown *ngIf="csv && csvPanel.expanded" lineNumbers [src]="csv"></markdown>
+          <mat-spinner class="spinner" [class.smooth-hide]="!spinners.csv"></mat-spinner>
+          <markdown (load)="disableSpinner('csv')" class="csvContent" *ngIf="csv && csvPanel.expanded" lineNumbers
+            [src]="csv"></markdown>
         </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="spec" #specPanel>
+        <mat-expansion-panel *ngIf="spec" #specPanel (closed)="enableSpinner('spec')">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Visualization Source Code (Vega Lite Spec)
@@ -69,7 +72,8 @@
               <mat-icon>cloud_download</mat-icon>
             </a>
           </div>
-          <markdown *ngIf="spec && specPanel.expanded" lineNumbers [src]="specString"></markdown>
+          <mat-spinner class="spinner" [class.smooth-hide]="!spinners.spec"></mat-spinner>
+          <markdown (load)="disableSpinner('spec')" *ngIf="spec && specPanel.expanded" lineNumbers [src]="specString"></markdown>
         </mat-expansion-panel>
       </mat-accordion>
     </mat-expansion-panel>
