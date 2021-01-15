@@ -11,7 +11,7 @@
 
     <div class="visualization">
       <ngx-vega *ngIf="spec" [spec]="spec" [options]="options" [autosize]="{ width: true, height: false }"
-                (viewChange)="trackVegaLoading($event)"></ngx-vega>
+                (viewLoading)="loadingVegaVisualization = $event"></ngx-vega>
       <button mat-icon-button class="help" color="accent" disableRipple (click)="launchHelpDialog()">
         <span class="qmark" title="Help">?</span>
       </button>
