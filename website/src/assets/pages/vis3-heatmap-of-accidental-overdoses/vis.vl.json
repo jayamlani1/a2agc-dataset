@@ -1,8 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "padding": {"top": 50},
   "data": {
     "url": "assets/generated/visualization4/data.csv"
   },
+  "padding": {"top": 50},
   "autosize": {
     "type": "fit-x",
     "contains": "padding"
@@ -22,11 +24,6 @@
   },
   "background": "#ffffff",
   "transform": [
-    {
-      "filter": {
-        "selection": "filter_selection"
-      }
-    },
     {
       "filter": {
         "selection": "substance_selection"
@@ -54,15 +51,29 @@
       "as": "HAD_PREVIOUS_OVERDOSE"
     }
   ],
-  "spacing": 150,
+  "spacing": 120,
   "hconcat": [
     {
       "spacing": 40,
       "vconcat": [
         {
+          "title": {
+            "text": "Data Variable",
+            "dx": 15
+          },
+          "data": {"values": [
+            {"idx": 0, "SUBSTANCE_NAME": "All Substances"},
+            {"idx": 1, "SUBSTANCE_NAME": "Heroin"},
+            {"idx": 2, "SUBSTANCE_NAME": "Cocaine"},
+            {"idx": 3, "SUBSTANCE_NAME": "Fentanyl"},
+            {"idx": 4, "SUBSTANCE_NAME": "Prescription Opioid"},
+            {"idx": 5, "SUBSTANCE_NAME": "Any Opioid"},
+            {"idx": 6, "SUBSTANCE_NAME": "Methamphetamine"},
+            {"idx": 7, "SUBSTANCE_NAME": "Benzodiazepine"}
+          ]},
           "mark": {
-            "type": "text",
-            "fontSize": 0
+            "align": "left",
+            "type": "text"
           },
           "selection": {
             "substance_selection": {
@@ -70,9 +81,6 @@
               "fields": [
                 "SUBSTANCE_NAME"
               ],
-              "bind": {
-                "legend": "click"
-              },
               "init": [
                 {
                   "SUBSTANCE_NAME": "All Substances"
@@ -87,76 +95,58 @@
             }
           },
           "encoding": {
-            "fill": {
-              "field": "SUBSTANCE_NAME",
-              "title": "Data Variable",
-              "type": "ordinal",
-              "legend": {
-                "orient": "left",
-                "titlePadding": 10,
-                "titleColor": "black",
-                "values": [
-                  "All Substances",
-                  "Heroin",
-                  "Cocaine",
-                  "Fentanyl",
-                  "Prescription Opioid",
-                  "Any Opioid",
-                  "Methamphetamine",
-                  "Benzodiazepine"
-                ],
-                "symbolSize": 0,
-                "offset": -100
-              }
+            "text": {
+              "type": "nominal",
+              "field": "SUBSTANCE_NAME"
+            },
+            "y": {
+              "field": "idx",
+              "axis": null
             },
             "opacity": {
               "condition": {
                 "selection": "substance_selection",
                 "value": 1
               },
-              "value": 0.75
+              "value": 0.3
             }
           }
         },
         {
+          "title": {
+            "text": "Filter by"
+          },
+          "data": {"values": [
+            {"idx": 0, "HAD_PREVIOUS_OVERDOSE": "Had Previous Overdose"},
+            {"idx": 1, "HAD_PREVIOUS_OVERDOSE": "No Previous Overdose"}
+          ]},
           "mark": {
-            "type": "text",
-            "fontSize": 0
+            "align": "left",
+            "type": "text"
           },
           "selection": {
             "filter_selection": {
               "type": "multi",
               "fields": [
                 "HAD_PREVIOUS_OVERDOSE"
-              ],
-              "bind": {
-                "legend": "click"
-              }
+              ]
             }
           },
           "encoding": {
-            "fill": {
-              "field": "HAD_PREVIOUS_OVERDOSE",
-              "title": "Filter",
-              "type": "ordinal",
-              "legend": {
-                "orient": "top-left",
-                "titlePadding": 10,
-                "titleColor": "black",
-                "values": [
-                  "Had Previous Overdose",
-                  "No Previous Overdose"
-                ],
-                "symbolSize": 0,
-                "offset": -10
-              }
+            "text": {
+              "type": "nominal",
+              "field": "HAD_PREVIOUS_OVERDOSE"
+            },
+            "y": {
+              "field": "idx",
+              "axis": null
             },
             "opacity": {
               "condition": {
                 "selection": "filter_selection",
                 "value": 1
               },
-              "value": 0.75
+              "value": 0.3
             }
           }
         },
@@ -190,13 +180,13 @@
                   "width": 50,
                   "selection": {
                     "deaths_binned": {
-                      "type": "single",
+                      "type": "multi",
                       "fields": [
                         "deaths_binned"
                       ]
                     },
                     "label": {
-                      "type": "single",
+                      "type": "multi",
                       "empty": "none",
                       "fields": [
                         "label"
@@ -346,6 +336,11 @@
           {
             "transform": [
               {
+                "filter": {
+                  "selection": "filter_selection"
+                }
+              },
+              {
                 "joinaggregate": [
                   {
                     "as": "TOTAL_DEATHS",
@@ -385,8 +380,8 @@
               }
             ],
             "title": "All",
-            "width": 300,
-            "height": 200,
+            "width": 220,
+            "height": 160,
             "mark": "rect",
             "encoding": {
               "color": {
@@ -425,7 +420,8 @@
                 "title": "Year",
                 "type": "ordinal",
                 "axis": {
-                  "labelAngle": 0
+                  "labelAngle": 0,
+                  "labelFontSize": 9
                 },
                 "scale": {
                   "domain": [
@@ -470,6 +466,11 @@
                 "filter": "datum.SEX == 'M'"
               },
               {
+                "filter": {
+                  "selection": "filter_selection"
+                }
+              },
+              {
                 "joinaggregate": [
                   {
                     "as": "TOTAL_DEATHS",
@@ -509,8 +510,8 @@
               }
             ],
             "title": "Male",
-            "width": 300,
-            "height": 200,
+            "width": 220,
+            "height": 160,
             "mark": "rect",
             "encoding": {
               "color": {
@@ -549,7 +550,8 @@
                 "title": "Year",
                 "type": "ordinal",
                 "axis": {
-                  "labelAngle": 0
+                  "labelAngle": 0,
+                  "labelFontSize": 9
                 },
                 "scale": {
                   "domain": [
@@ -594,6 +596,11 @@
                 "filter": "datum.SEX == 'F'"
               },
               {
+                "filter": {
+                  "selection": "filter_selection"
+                }
+              },
+              {
                 "joinaggregate": [
                   {
                     "as": "TOTAL_DEATHS",
@@ -633,8 +640,8 @@
               }
             ],
             "title": "Female",
-            "width": 300,
-            "height": 200,
+            "width": 220,
+            "height": 160,
             "mark": "rect",
             "encoding": {
               "color": {
@@ -673,7 +680,8 @@
                 "title": "Year",
                 "type": "ordinal",
                 "axis": {
-                  "labelAngle": 0
+                  "labelAngle": 0,
+                  "labelFontSize": 9
                 },
                 "scale": {
                   "domain": [
