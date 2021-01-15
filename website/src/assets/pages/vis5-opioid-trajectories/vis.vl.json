@@ -4,6 +4,10 @@
   "config": {
     "view": {"strokeOpacity": 0}
   },
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
 
   "data": {
     "url": "assets/generated/visualization5/data.csv",
@@ -53,7 +57,7 @@
               "field": "x"
             },
             "y": {
-              "field": "idx", 
+              "field": "idx",
               "type": "ordinal",
               "axis": null
             }
@@ -90,7 +94,7 @@
               "field": "x"
             },
             "y": {
-              "field": "idx", 
+              "field": "idx",
               "type": "ordinal",
               "axis": null
             }
@@ -127,7 +131,7 @@
               "field": "x"
             },
             "y": {
-              "field": "idx", 
+              "field": "idx",
               "type": "ordinal",
               "axis": null
             }
@@ -164,7 +168,7 @@
               "field": "x"
             },
             "y": {
-              "field": "idx", 
+              "field": "idx",
               "type": "ordinal",
               "axis": null
             }
@@ -201,7 +205,7 @@
               "field": "x"
             },
             "y": {
-              "field": "idx", 
+              "field": "idx",
               "type": "ordinal",
               "axis": null
             }
@@ -255,9 +259,9 @@
           ],
           "encoding": {
             "y": {
-              "field": "Touchpoint A", 
+              "field": "Touchpoint A",
               "type": "quantitative",
-              "title": null, 
+              "title": null,
               "scale": {
                 "domain": [-0.5,3.5]
               },
@@ -315,7 +319,7 @@
                   "field": "sum",
                   "type": "quantitative",
                   "scale": {
-                    "type": "sqrt", 
+                    "type": "sqrt",
                     "scheme": "blues"
                   }
                 }
@@ -398,7 +402,7 @@
               },
               "selection": {
                 "period": {
-                  "type": "interval", 
+                  "type": "interval",
                   "encodings": ["x"],
                   "on": "[mousedown, window:mouseup] > window:mousemove{150, 300}",
                   "mark": {"fill": "#6ea7ef", "fillOpacity": 0.15}

@@ -20,9 +20,8 @@
     }
   },
   "autosize": {
-    "type": "pad",
-    "contains": "padding",
-    "resize": true
+    "type": "fit-x",
+    "contains": "padding"
   },
   "data": {
     "url": "assets/generated/vis-geomap-opioid-deaths.csv",

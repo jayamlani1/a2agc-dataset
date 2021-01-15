@@ -6,8 +6,8 @@
   },
   "padding": {"top": 50},
   "autosize": {
-    "type": "pad",
-    "resize": true
+    "type": "fit-x",
+    "contains": "padding"
   },
   "config": {
     "mark": {

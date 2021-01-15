@@ -9,6 +9,10 @@
       		"stroke": "transparent"
     	}
 	},
+	"autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
 	"background": "#ffffff",
 
 	"data": {

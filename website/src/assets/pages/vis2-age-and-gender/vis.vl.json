@@ -14,7 +14,10 @@
     "axis": {"labelColor": "#757575"}
   },
   "center": true,
-  "autosize": {"type": "pad", "resize": true},
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
   "background": "#ffffff",
   "data": {
     "url": "assets/generated/vis2-data/death-counts.csv",
