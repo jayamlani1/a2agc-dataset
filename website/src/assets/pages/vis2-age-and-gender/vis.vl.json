@@ -34,10 +34,7 @@
       "keyvals": {"stop": 7},
       "groupby": ["year", "gender"]
     },
-    {
-      "calculate": "datum.year + '-' + datum.gender + '-' + datum.age_group",
-      "as": "key"
-    },
+
     {
       "lookup": "key",
       "from": {
@@ -145,7 +142,7 @@
                     "labels": true,
                     "titleFontSize": 14
                   },
-                  "scale": {"domain": [0, 0.3]}
+                  "scale": {"domain": [0, 0.35]}
                 },
                 "y": {
                   "title": null,
@@ -242,7 +239,7 @@
                   "field": "percentage",
                   "sort": "ascending",
                   "axis": {"format": "1%", "grid": false, "labels": true},
-                  "scale": {"domain": [0, 0.3]}
+                  "scale": {"domain": [0, 0.35]}
                 },
                 "y": {
                   "title": null,
@@ -306,17 +303,17 @@
       },
       "transform": [
         {
+          "calculate": "datum.gender == 'M' ? 'Male' : 'Female'",
+          "as": "gender"
+        },
+        {
           "impute": "count",
           "key": "age_group",
           "keyvals": {"stop": 7},
           "groupby": ["year", "gender"]
         },
         {
-          "calculate": "if(datum.year == 2018, 2017, datum.year) + '-' + datum.gender + '-' + datum.age_group",
-          "as": "census_key"
-        },
-        {
-          "lookup": "census_key",
+          "lookup": "key",
           "from": {
             "key": "key",
             "fields": ["count"],
@@ -500,7 +497,7 @@
                     "field": "census_percentage",
                     "sort": "descending",
                     "axis": {"format": "1%", "grid": false, "labels": true},
-                    "scale": {"domain": [0, 0.3]}
+                    "scale": {"domain": [0, 0.35]}
                   },
                   "y": {"type": "ordinal", "field": "age_group"},
                   "stroke": {"value": "black"},
@@ -575,7 +572,7 @@
                       "labelFlush": false,
                       "labels": true
                     },
-                    "scale": {"domain": [0, 0.3]}
+                    "scale": {"domain": [0, 0.35]}
                   },
                   "y": {
                     "title": null,
