@@ -1,3 +1,9 @@
+::ng-deep {
+  .mat-expanded .mat-expanded .mat-expansion-panel-content {
+    min-height: 13rem;
+  }
+}
+
 :host {
   display: block;
   width: 100%;
@@ -106,6 +112,13 @@
           position: absolute;
           right: 2rem;
         }
+      }
+
+      .spinner {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        top: 8rem;
       }
 
       markdown {
