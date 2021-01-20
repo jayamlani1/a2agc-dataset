@@ -1,8 +1,6 @@
-## Visualization Creation
+## Detailed Technical Information
 
 This visualization was created from the [csv file](assets/generated/vis-geomap-opioid-deaths.csv) using <a href="https://github.com/cns-iu/a2agc-dataset/tree/main/data-processor/src/create-vis-geomap-opioid-deaths-project.ts" target="_blank">this script</a>. The script creates a `Project` from the imported CSV file and sets up a geomap visualization (see below).
-
-## Data and Graphic Variable Extraction
 
 In addition to extracting raw data, the query also creates columns for data-variable to graphic-variable mappings as follows:
 

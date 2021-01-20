@@ -1,9 +1,20 @@
-## Legend
+## Usage
 
-- Blue/red bars represent the percentage of opioid deaths in the corresponding age group.  
-- Outlined bars represent the percentage of the population in the corresponding age group according to the census data.
+Data can be filtered based on the following:
 
-## Data and Graphic Variable Extraction
+* Sex
+* Year
+
+The sex and year filters allow for multiple selections. Press **shift** for multiple selections. Click on an empty space in the visualization to clear selections.
+
+## Purpose and Details
+
+To provide information on the percentage of all opioid deaths according to age or gender groups, and allow filtering by year.
+
+Blue/red bars represent the percentage of opioid deaths in the corresponding age group.  
+Outlined bars represent the percentage of the population in the corresponding age group according to the census data.
+
+## Detailed Technical Information
 
 Opioid death data was aggregated from the database using the following query:
 

@@ -13,7 +13,7 @@ Analyzed touchpoints:
 3. Incarceration (Jail): Whether or not an individual had been in jail.
 4. Health Data (Health): Whether or not an individual had a recent encounter with healthcare services (excluding opioid prescriptions).
 
-## Data and Graphic Variable Extraction
+## Detailed Technical Information
 
 Following rules were used to determined each of the following attributes:
 
