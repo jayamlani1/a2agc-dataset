@@ -12,8 +12,7 @@ import { Visualization, visualizations } from './visualizations';
 @Injectable()
 export class VisualizationsState extends NgxsDataEntityCollectionsRepository<Visualization, string>{
 
-
-  ngxsOnInit() {
+  ngxsOnInit(): void {
     this.setAll(visualizations);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Visualization } from 'src/app/core/state/visualizations/visualizations';
@@ -8,7 +8,7 @@ import { Visualization } from 'src/app/core/state/visualizations/visualizations'
   templateUrl: './visualization.component.html',
   styleUrls: ['./visualization.component.scss']
 })
-export class VisualizationComponent {
+export class VisualizationComponent implements OnDestroy {
   visualization?: Visualization;
 
   private readonly subscriptions = new Subscription();
@@ -20,7 +20,7 @@ export class VisualizationComponent {
     this.subscriptions.add(sub);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 }
