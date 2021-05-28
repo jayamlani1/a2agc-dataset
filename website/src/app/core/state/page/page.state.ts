@@ -9,6 +9,8 @@ interface PageStateModel {
   hasShownHelpModal: boolean;
 }
 
+const LOCAL_STORAGE_HELP_MODAL_KEY = 'HELP_POPUP_SHOWN';
+
 @StateRepository()
 @State<PageStateModel>({
   name: 'page',
@@ -23,8 +25,15 @@ export class PageState extends NgxsImmutableDataRepository<PageStateModel> {
     return this.state$.pipe(pluck('hasShownHelpModal'));
   }
 
+  ngxsOnInit(): void {
+    super.ngxsOnInit();
+    const hasShownHelpModal = localStorage.getItem(LOCAL_STORAGE_HELP_MODAL_KEY)?.toLowerCase() === 'true';
+    this.patchState({ hasShownHelpModal });
+  }
+
   @DataAction()
   setHasShownHelpModal(hasShownHelpModal: boolean): void {
+    localStorage.setItem(LOCAL_STORAGE_HELP_MODAL_KEY, hasShownHelpModal.toString());
     this.ctx.patchState({ hasShownHelpModal });
   }
 }
