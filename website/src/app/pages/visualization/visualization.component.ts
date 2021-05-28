@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Visualization } from 'src/app/core/state/visualizations/visualizations';
 
+
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
   selector: 'agc-visualization',
   templateUrl: './visualization.component.html',
@@ -13,7 +15,7 @@ export class VisualizationComponent implements OnDestroy {
 
   private readonly subscriptions = new Subscription();
 
-  constructor(private route: ActivatedRoute) {
+  constructor(route: ActivatedRoute) {
     const sub = route.data.subscribe(data => {
       this.visualization = data.visualization;
     });
