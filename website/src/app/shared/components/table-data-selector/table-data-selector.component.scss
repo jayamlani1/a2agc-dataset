@@ -1,0 +1,13 @@
+:host {
+  .selections-container {
+    display: flex;
+
+    mat-form-field:first-of-type {
+      margin-right: 2rem;
+    }
+  }
+
+  .description {
+    margin-top: 3rem;
+  }
+}
