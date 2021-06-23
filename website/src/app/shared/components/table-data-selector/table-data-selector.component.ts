@@ -11,7 +11,7 @@ import { Dataset } from 'src/app/core/models/dataset.model';
 export class TableDataSelectorComponent {
   @HostBinding('class') readonly clsName = 'agc-table-data-selector';
 
-  @Input() datasets!: Dataset[];
+  @Input() datasets: Dataset[] | null = [];
   @Output() readonly datasetChange = new EventEmitter<Dataset>();
   @Output() readonly dataVariableChange = new EventEmitter<string>();
 
@@ -20,18 +20,10 @@ export class TableDataSelectorComponent {
 
   get selectedDataset(): Dataset {
     if (!this.currentDataset) {
-      return { dataset: '', dataVariables: [] };
+      return { dataset: '', dataVariables: [], specs: {} };
     }
 
     return this.currentDataset;
-  }
-
-  get subLabel(): string {
-    if (!this.selectedDataset.subLabel){
-      return '';
-    }
-
-    return this.selectedDataset.subLabel;
   }
 
   get subDataVariables(): string[] {
@@ -42,22 +34,17 @@ export class TableDataSelectorComponent {
     return this.selectedDataset.subDataVariables;
   }
 
+  get subLabel(): string {
+    if (!this.selectedDataset.subLabel){
+      return '';
+    }
+
+    return this.selectedDataset.subLabel;
+  }
+
   handleDatasetChange(event: MatSelectChange): void {
     const newIndex = event.value;
     this.setCurrentDatasetIndex(newIndex);
-  }
-
-  setDataVariable(dataVariable: string): void {
-    if (!this.selectedDataset) {
-      return;
-    }
-
-    if (!this.dataVariableIsValid(this.selectedDataset, dataVariable)) {
-      return;
-    }
-
-    this.selectedDataVariable = dataVariable;
-    this.dataVariableChange.emit(dataVariable);
   }
 
   dataVariableIsValid(dataset: Dataset, dataVariable: string): boolean {
@@ -74,7 +61,24 @@ export class TableDataSelectorComponent {
     return false;
   }
 
+  setDataVariable(dataVariable: string): void {
+    if (!this.selectedDataset) {
+      return;
+    }
+
+    if (!this.dataVariableIsValid(this.selectedDataset, dataVariable)) {
+      return;
+    }
+
+    this.selectedDataVariable = dataVariable;
+    this.dataVariableChange.emit(dataVariable);
+  }
+
   setCurrentDatasetIndex(index: number): void {
+    if (!this.datasets) {
+      return;
+    }
+
     if (!this.datasets[index]) {
       return;
     }
@@ -84,6 +88,10 @@ export class TableDataSelectorComponent {
   }
 
   setCurrentDataset(dataset: Dataset): void {
+    if (!this.datasets) {
+      return;
+    }
+
     if (this.datasets.indexOf(dataset) < 0) {
       return;
     }

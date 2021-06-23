@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { EMPTY_TABLE_DATA, TableData } from 'src/app/core/models/table-data.model';
+import { DataDistributionsState } from 'src/app/core/state/data-distribution/data-distribution.state';
 import { VisualizationSpec } from 'vega-embed';
 
+import { Dataset } from './../../core/models/dataset.model';
+import { EMPTY_TABLE_DATA_DIRECTORY, TableDataDirectory } from './../../core/models/table-data.model';
 import { createPieSpec, VariableData } from './data-distributions.vega';
 
 
@@ -11,7 +15,8 @@ import { createPieSpec, VariableData } from './data-distributions.vega';
   selector: 'agc-data-distributions',
   templateUrl: './data-distributions.component.html',
   styleUrls: ['./data-distributions.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DataDistributionsState]
 })
 export class DataDistributionsComponent {
   /**
@@ -24,13 +29,17 @@ export class DataDistributionsComponent {
    */
   readonly spec: VisualizationSpec;
 
+  tableData: TableData = EMPTY_TABLE_DATA;
+  tableDataDirectory: TableDataDirectory = EMPTY_TABLE_DATA_DIRECTORY;
+  datasets: Dataset[] = [];
+
   /**
    * Metadata for the selected variable
    */
   @Input() variable: VariableData = {
-    dataset: 'Deaths',
+    dataset: 'deaths',
     name: 'Cocaine',
-    variableName: 'COCAINE',
+    variableName: 'COCAINE_AMOUNT',
     type: 'Boolean',
     description: 'Tox lab flag',
     missingValues: 0.0
@@ -39,7 +48,9 @@ export class DataDistributionsComponent {
   /**
    * Creates a pie or bar visualization based on variable type
    */
-  constructor() {
+  constructor(
+    readonly data: DataDistributionsState
+  ) {
     this.spec = this.variable.type === 'Boolean' ? this.createPieSpec(this.variable) : this.createBarSpec(this.variable);
   }
 
