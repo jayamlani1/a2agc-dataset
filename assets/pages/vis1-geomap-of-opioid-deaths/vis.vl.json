@@ -160,10 +160,7 @@
             {
               "name": "data_variable_selection",
               "select": {
-                "type": "point",
-                "fields": [
-                  "LABEL"
-                ]
+                "type": "point"
               },
               "bind": "legend",
               "value": [
@@ -368,10 +365,40 @@
     {
       "vconcat": [
         {
+          "width": 700,
+          "height": 640,
+          "transform": [
+            {
+              "filter": {
+                "param": "data_variable_selection"
+              }
+            },
+            {
+              "filter": {
+                "param": "period"
+              }
+            },
+            {
+              "filter": {
+                "and": [
+                  {
+                    "param": "sex_selection"
+                  },
+                  {
+                    "param": "drug_type_selection"
+                  },
+                  {
+                    "param": "1_year_selection"
+                  },
+                  {
+                    "param": "opioid_rx_selection"
+                  }
+                ]
+              }
+            }
+          ],
           "layer": [
             {
-              "width": 700,
-              "height": 640,
               "data": {
                 "name": "counties",
                 "url": "assets/pages/vis1-geomap-of-opioid-deaths/indiana.topojson",
@@ -391,36 +418,6 @@
               }
             },
             {
-              "transform": [
-                {
-                  "filter": {
-                    "param": "period"
-                  }
-                },
-                {
-                  "filter": {
-                    "param": "data_variable_selection"
-                  }
-                },
-                {
-                  "filter": {
-                    "and": [
-                      {
-                        "param": "sex_selection"
-                      },
-                      {
-                        "param": "drug_type_selection"
-                      },
-                      {
-                        "param": "1_year_selection"
-                      },
-                      {
-                        "param": "opioid_rx_selection"
-                      }
-                    ]
-                  }
-                }
-              ],
               "projection": {
                 "type": "mercator"
               },
@@ -522,12 +519,6 @@
               "transform": [
                 {
                   "filter": {
-                    "field": "DATA_VARIABLE",
-                    "equal": "AGE"
-                  }
-                },
-                {
-                  "filter": {
                     "param": "data_variable_subselection"
                   }
                 },
@@ -541,9 +532,6 @@
                         "param": "drug_type_selection"
                       },
                       {
-                        "param": "home_state_selection"
-                      },
-                      {
                         "param": "1_year_selection"
                       },
                       {
@@ -551,6 +539,16 @@
                       }
                     ]
                   }
+                },
+                {
+                  "aggregate": [
+                    {
+                      "op": "distinct",
+                      "field": "CASE_NUMBER",
+                      "as": "num_deaths"
+                    }
+                  ],
+                  "groupby": ["PERIOD"]
                 }
               ],
               "mark": {
@@ -602,9 +600,8 @@
                   }
                 },
                 "y": {
-                  "aggregate": "count",
                   "type": "quantitative",
-                  "field": "N_OPIOID_PRESCRIPTIONS",
+                  "field": "num_deaths",
                   "title": "# Deaths by Quarter",
                   "axis": {
                     "gridColor": "#e0e0e0",
