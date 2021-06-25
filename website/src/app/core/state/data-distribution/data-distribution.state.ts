@@ -1,3 +1,4 @@
+import { SummaryDistData } from './../../models/table-data.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Computed, DataAction, StateRepository } from '@ngxs-labs/data/decorators';
@@ -9,7 +10,7 @@ import { VisualizationSpec } from 'vega-embed';
 
 
 import { EMPTY_TABLE_DATA_DIRECTORY, TableData, TableDataDirectory } from '../../models/table-data.model';
-import { Dataset, EMPTY_DATASET } from './../../models/dataset.model';
+import { Dataset, DatasetColumn, DatasetColumns, DatasetSummary, EMPTY_DATASET } from './../../models/dataset.model';
 
 interface DataDistributionsStateModel {
   datasets: Dataset[];
@@ -17,6 +18,8 @@ interface DataDistributionsStateModel {
   currentDataVariable: string;
   tableDataDirectory: TableDataDirectory;
   currentSpec?: VisualizationSpec;
+  currentColumn?: DatasetColumn;
+  currentColumnSummary?: DatasetSummary[];
 }
 
 const DISTRIBUTIONS_CONFIG_PATH = 'assets/generated/aggregate-table-data.json';
@@ -60,6 +63,16 @@ export class DataDistributionsState extends NgxsDataRepository<DataDistributions
     return this.state$.pipe(pluck('currentSpec'));
   }
 
+  @Computed()
+  get currentColumn$(): Observable<DatasetColumn | undefined> {
+    return this.state$.pipe(pluck('currentColumn'));
+  }
+
+  @Computed()
+  get currentColumnSummary$(): Observable<DatasetSummary[] | undefined> {
+    return this.state$.pipe(pluck('currentColumnSummary'));
+  }
+
   constructor(private readonly http: HttpClient) {
     super();
   }
@@ -88,6 +101,8 @@ export class DataDistributionsState extends NgxsDataRepository<DataDistributions
   @DataAction()
   setCurrentDataVariable(dataVariable: string): void {
     let spec = this.snapshot.currentDataset.specs[dataVariable];
+    const column = this.snapshot.currentDataset.columns[dataVariable];
+    const columnSummary = this.getColumnSummary(column);
 
     if (spec && typeof spec === 'string') {
       spec = JSON.parse(spec as string);
@@ -95,7 +110,9 @@ export class DataDistributionsState extends NgxsDataRepository<DataDistributions
 
     this.ctx.patchState({
       currentDataVariable: dataVariable,
-      currentSpec: spec
+      currentSpec: spec,
+      currentColumn: column,
+      currentColumnSummary: columnSummary
     });
   }
 
@@ -104,6 +121,27 @@ export class DataDistributionsState extends NgxsDataRepository<DataDistributions
     this.ctx.patchState({
       currentDataset: dataset
     });
+  }
+
+  public getColumnSummary(column: DatasetColumn): DatasetSummary[] {
+    const summary: DatasetSummary[] = [];
+
+    if (!column) {
+      return summary;
+    }
+
+    summary.push({ label: 'Type', value: column.type });
+    summary.push({ label: 'Description', value: column.remarks });
+    summary.push({ label: 'Missing values', value: `${column.percentMissing}%` });
+
+    if (column.distType === 'summary' && typeof(column.distData) !== 'string') {
+      const distData: SummaryDistData = column.distData as SummaryDistData;
+      summary.push({ label: 'Distinct entries', value: distData.distinct.toString() });
+      summary.push({ label: 'Minimum value/length', value: distData.min.toString() });
+      summary.push({ label: 'Maximum value/length', value: distData.max.toString() });
+    }
+
+    return summary;
   }
 
   private getTableDataDirectory(): Observable<TableDataDirectory> {
@@ -135,10 +173,11 @@ export class DataDistributionsState extends NgxsDataRepository<DataDistributions
     return {
       dataset: tableData.name,
       description: tableData.remarks ? tableData.remarks : '',
-      dataVariables: this.getColumnsFromTableData(tableData, SUB_LABEL_FLAG),
+      dataVariables: this.getDataVariables(tableData, SUB_LABEL_FLAG, false),
       subLabel: this.getSubLabel(),
-      subDataVariables: this.getSubDataVariablesFromTableData(tableData, SUB_LABEL_FLAG),
-      specs: this.getDataSpecs(tableData)
+      subDataVariables: this.getDataVariables(tableData, SUB_LABEL_FLAG, true),
+      specs: this.getDataSpecs(tableData),
+      columns: this.getDatasetColumns(tableData)
     }
   }
 
@@ -153,34 +192,44 @@ export class DataDistributionsState extends NgxsDataRepository<DataDistributions
     return specs;
   }
 
-  private getColumnsFromTableData(tableData: TableData, subLabelFlag: string): string[] {
-    const columns: string[] = [];
+  private getDatasetColumns(tableData: TableData): DatasetColumns {
+    const columns: DatasetColumns = {};
 
     for (const prop in tableData.columns) {
-      if (tableData.columns[prop].remarks !== subLabelFlag) {
-        const newColumn = prop;
-        columns.push(newColumn);
+      const tableDataColumn = tableData.columns[prop];
+      const newColumn: DatasetColumn = {
+        distData: tableDataColumn.dist_data ? tableDataColumn.dist_data : '',
+        distType: tableDataColumn.dist_type,
+        nonNullCount: tableDataColumn.n_non_null,
+        name: tableDataColumn.name,
+        percentMissing: tableDataColumn.pct_missing,
+        remarks: tableDataColumn.remarks,
+        type: tableDataColumn.type
       }
+      columns[prop] = newColumn;
     }
 
     return columns;
   }
 
-  private getSubDataVariablesFromTableData(tableData: TableData, subLabelFlag: string): string[] {
-    const subDataVariables: string[] = [];
+  private getDataVariables(tableData: TableData, subLabelFlag: string, sub: boolean): string[] {
+    const dv: string[] = [];
 
-    if (this.getSubLabel().length <= 0) {
-      return subDataVariables;
+    // If requesting subDV but there is no sub label, return.
+    if (sub && this.getSubLabel().length <= 0) {
+      return dv;
     }
 
     for (const prop in tableData.columns) {
-      if (tableData.columns[prop].remarks === subLabelFlag) {
-        const newVariable = tableData.columns[prop].name;
-        subDataVariables.push(newVariable);
+      const tableDataColumn = tableData.columns[prop];
+      // If getting subDV (sub = true) make sure remarks == subLabelFlag.
+      if ((tableDataColumn.remarks === subLabelFlag) === sub) {
+        const newDV = tableDataColumn.name;
+        dv.push(newDV);
       }
     }
 
-    return subDataVariables;
+    return dv;
   }
 
   private getSubLabel(): string {

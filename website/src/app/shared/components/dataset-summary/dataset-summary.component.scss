@@ -1,0 +1,26 @@
+:host {
+  .title {
+    font-weight: bold;
+    color: black;
+  }
+
+  .summary {
+    padding-top: .5em;
+    padding-left: 1rem;
+
+    .summary-item {
+      display: flex;
+      font-size: .8rem;
+
+      .label {
+        font-weight: bold;
+        color: black;
+        margin-right: .5rem;
+      }
+
+      .value {
+        font-weight: lighter;
+      }
+    }
+  }
+}
