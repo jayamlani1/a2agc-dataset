@@ -79,5 +79,15 @@ export const visualizations: Visualization[] = [
     content: 'assets/pages/vis5-opioid-trajectories/README.md',
     sql: 'assets/pages/vis5-opioid-trajectories/data.sql',
     csv: 'assets/generated/visualization5/data.csv'
+  },
+  {
+    id: 'vis6-maps-of-health',
+    title: 'Maps of Health (1)',
+    description: 'Maps of Health (1)',
+    spec: 'assets/pages/vis6-maps-of-health/vis.vl.json',
+    options: {},
+    content: 'assets/pages/vis6-maps-of-health/README.md',
+    sql: 'assets/pages/vis6-maps-of-health/data.sql',
+    csv: 'assets/generated/visualization6/data.csv'
   }
 ];
