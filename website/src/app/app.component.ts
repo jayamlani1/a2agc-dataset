@@ -5,6 +5,7 @@ import { MatSidenavContainer } from '@angular/material/sidenav';
 import { buildInfo } from './build-info';
 import { PageLink } from './core/models/pages.model';
 import { RouterState } from './core/state/router/router.state';
+import { visualizations } from './core/state/visualizations/visualizations';
 import { MarkdownModalComponent, MarkdownModalData } from './shared/components/markdown-modal/markdown-modal.component';
 
 
@@ -22,33 +23,9 @@ export class AppComponent implements AfterViewInit {
 
   // TODO move these values to state
   readonly menuHeader = 'Marion County Opioid Addiction Report';
-  readonly pages: PageLink[] = [
-    {
-      path: 'vis1-geomap-of-opioid-deaths',
-      title: 'Accidental Drug Overdose Deaths',
-      description: 'Marion County by Place of Injury (2010-2018)'
-    },
-    {
-      path: 'vis2-age-and-gender',
-      title: 'Age Group & Gender of Accidental Drug Overdose',
-      description: 'Marion County Deaths & Population (2010-2018)'
-    },
-    {
-      path: 'vis3-heatmap-of-accidental-overdoses',
-      title: 'Accidental Drug Overdose Deaths',
-      description: 'Marion County by Substance, Sex, & Age (2010-2018)'
-    },
-    {
-      path: 'vis4-combined-visualization',
-      title: 'Accidental Drug Overdose Deaths (interactive)',
-      description: 'Marion County by Substance, Sex, & Age (2010-2018)'
-    },
-    {
-      path: 'vis5-opioid-trajectories',
-      title: 'Opioid Death Datasets',
-      description: 'Marion County by History of Opioid Prescription, Previous Overdose, Incarceration, Health Data (2010-2018)'
-    }
-  ];
+  readonly pages: PageLink[] = visualizations.map(v => ({
+    path: v.id, title: v.title, description: v.description
+  }));
 
   subBarVisible = true;
   menuOpen = false;
