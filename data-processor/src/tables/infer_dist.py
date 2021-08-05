@@ -16,6 +16,7 @@ Override = t.Mapping[str, t.Mapping[str, str]]
 # Distribution types
 
 DISABLED = 'disabled'
+PIE_CHART = 'pie-chart'
 BAR_CHART = 'bar-chart'
 HORIZONTAL_BAR_CHART = 'horizontal-bar-chart'
 HISTOGRAM = 'histogram'
@@ -92,7 +93,10 @@ def infer(database: sqlite3.Connection, table: schema.Node, column: schema.Node)
         return UNKNOWN
     type_ = type_.lower()
 
-    if _is_boolean(type_) or _is_single_char(type_):
+    if _is_boolean(type_):
+        return PIE_CHART
+
+    if _is_single_char(type_):
         return BAR_CHART
 
     if _is_characters(type_):

@@ -12,6 +12,7 @@ from a2agc import schema
 import bar_chart
 import histogram
 import infer_dist
+import period_histogram
 import summary
 
 # Types
@@ -96,7 +97,7 @@ def _get_transform(type_: str) -> t.Any:
     return None
 
 def _generate_chart(
-    database: sqlite3.Connection, table: str, column: str,
+    database: sqlite3.Connection, table: str, column: str, date_column: str,
     type_: str, dist_type: str, data_dir: str, site_data_dir: str
 ) -> t.Any:
     type_ = type_.lower()
@@ -104,20 +105,11 @@ def _generate_chart(
     transform = _get_transform(type_)
     chart = None
 
-    if dist_type == infer_dist.BAR_CHART:
-        obj = bar_chart.create(database, table, column, name_map, transform)
-        chart = obj.to_json()
-    elif dist_type == infer_dist.HORIZONTAL_BAR_CHART:
-        obj = bar_chart.create(database, table, column, orientation='horizontal')
-        chart = obj.to_json()
-    elif dist_type == infer_dist.HISTOGRAM:
-        is_date = _is_likely_date_column(column, type_)
-        obj = histogram.create(database, table, column, data_dir, site_data_dir, is_date)
-        chart = obj.to_json()
-    elif dist_type == infer_dist.SUMMARY:
-        chart = summary.create(database, table, column)
+    is_date = _is_likely_date_column(column, type_)
+    data = summary.create(database, table, column)
+    data['url'] = period_histogram.create(database, table, column, date_column, data_dir, site_data_dir, is_date)['url']
 
-    return chart
+    return data
 
 
 # Generate column data
@@ -144,7 +136,7 @@ def _count_non_null_column_entries(
     return int(cursor.fetchone()[0])
 
 def _generate_column(
-    database: sqlite3.Connection, table: schema.Node, column: schema.Node,
+    database: sqlite3.Connection, table: schema.Node, column: schema.Node, date_column: str,
     data_dir: str, site_data_dir: str
 ) -> Column:
     table_name, row_count = schema.get_attributes(table, 'name', 'numRows')
@@ -153,7 +145,7 @@ def _generate_column(
 
     dist_type = infer_dist.infer(database, table, column)
     dist_data = _generate_chart(
-        database, table_name, name, type_, dist_type,
+        database, table_name, name, date_column, type_, dist_type,
         data_dir, site_data_dir
     )
 
@@ -180,9 +172,10 @@ def _generate_table(
     data_dir: str, site_data_dir: str
 ) -> Table:
     name, count, remarks = schema.get_attributes(table, 'name', 'numRows', 'remarks')
+    date_column = schema.get_date_column(name)
     columns: t.Dict[str, Column] = collections.OrderedDict()
     for node in schema.get_columns(table):
-        column = _generate_column(database, table, node, data_dir, site_data_dir)
+        column = _generate_column(database, table, node, date_column, data_dir, site_data_dir)
         columns[column['name']] = column
 
     return _create_table_obj(name, remarks, int(count), columns)
@@ -222,7 +215,7 @@ def _override_dist_types(database: sqlite3.Connection, overrides: infer_dist.Ove
             if type_:
                 column['dist_type'] = type_
                 column['dist_data'] = _generate_chart(
-                    database, table['name'], column['name'],
+                    database, table['name'], column['name'], schema.get_date_column(table['name']),
                     column['type'], type_, data_dir, site_data_dir
                 )
 

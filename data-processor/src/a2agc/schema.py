@@ -15,6 +15,13 @@ def loadf(file: t.TextIO) -> Schema:
 def load(xml: str) -> Schema:
     return ET.parse(xml)
 
+TABLE_DATE_COLUMNS = {
+    'deaths': 'DOD',
+    'medications': 'PHYS_TIME',
+    'ems_incidents': 'PCRDateTime',
+    'incarcerations': 'BOOKING_DATE',
+    'encounters': 'ADMIT_TIME'
+}
 
 # Node queries
 
@@ -44,6 +51,9 @@ def get_all_columns(schema: Schema) -> t.Mapping[str, t.List[Node]]:
     tables = get_tables(schema)
     columns = [(get_name(table), get_columns(table)) for table in tables]
     return dict(columns)
+
+def get_date_column(table: str) -> str:
+    return TABLE_DATE_COLUMNS.get(table, '')
 
 
 # Attribute queries
