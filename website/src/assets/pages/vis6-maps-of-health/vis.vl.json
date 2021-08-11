@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "",
+  "title": "Maps of Health",
+  "data": {"url": "http://localhost:33284/assets/generated/visualization6/data1.csv",
+  "format": {
+    "type":"csv",
+    "parse": {
+      "PERIOD":"date",
+      "DOD":"date",
+      "AGE":"number",
+      "ALL_TYPES": "number"
+    }
+  }
+  },
+  "transform": [
+    {
+      "calculate": "round(4 * (datum.DOD - datum.PERIOD) / 3.154e+10)",
+      "as": "TIME_BEFORE_DEATH"
+    },
+    {
+      "filter": "datum.TIME_BEFORE_DEATH >= 0"
+    }
+  ],
+  "spacing": {"row": 1},
+  "facet": {
+    "row": {
+      "field": "CASE_NUMBER",
+      "type": "nominal",
+      "bin": false,
+      "header": null
+    }
+  },
+  "spec": {
+    "title": " ",
+    "width": 700,
+    "height": 20,
+    "view": {"stroke": null},
+    "mark": "area",
+    "encoding": {
+      "x": {
+        "field": "TIME_BEFORE_DEATH",
+        "type": "quantitative",
+        "title": "Quarters Before Death",
+        "axis": { "orient": "top" },
+        "scale": {
+          "domainMin": 0,
+          "range": ["width", 0]
+        }
+      },
+      "y": {
+        "field": "ALL_TYPES",
+        "type": "quantitative",
+        "scale": {"zero": true},
+        "axis": {
+          "title": null,
+          "labels": false,
+          "ticks": false,
+          "grid": true
+        }
+      },
+      "tooltip": {
+        "field": "CASE_NUMBER",
+        "type": "nominal"
+      }
+    }
+  },
+  "config": {
+    "axis": {
+      "grid": false,
+      "domain": false
+    },
+    "view": {
+      "continuousHeight": 200
+    }
+  }
+}

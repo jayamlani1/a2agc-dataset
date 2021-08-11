@@ -85,7 +85,7 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health (1)',
     description: 'Maps of Health (1)',
     spec: 'assets/pages/vis6-maps-of-health/vis.vl.json',
-    options: {},
+    options: {renderer: 'svg', actions: true},
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
     csv: 'assets/generated/visualization6/data.csv'
