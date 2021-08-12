@@ -6,7 +6,6 @@
       "parse": {
         "PERIOD":"date",
         "DOD":"date",
-        "AGE":"number",
         "COUNT": "number",
         "RANK": "number",
         "Encounter_Type": "string"
@@ -17,6 +16,10 @@
     {
       "calculate": "round(12 * (datum.DOD - datum.PERIOD) / 3.154e+10)",
       "as": "TIME_BEFORE_DEATH"
+    },
+    {
+      "calculate": "toNumber(datum.TIME_BEFORE_DEATH) / 12",
+      "as": "MONTHS_BEFORE_DEATH"
     },
     {
       "filter": "datum.TIME_BEFORE_DEATH >= 0"
@@ -41,8 +44,14 @@
       "x": {
         "field": "TIME_BEFORE_DEATH",
         "type": "quantitative",
-        "title": "Months Before Death",
-        "axis": { "orient": "top" },
+        "title": "Years Before Death",
+        "axis": {
+          "orient": "top",
+          "labelExpr": "datum.value / 12",
+          "values": [
+            0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 168, 180
+          ]
+        },
         "scale": {
           "domainMin": 0,
           "range": ["width", 0]
@@ -66,17 +75,17 @@
         "scale": {
           "domain": [
             "All Types",
-            "Overdoses",
-            "Opiod Prescriptions",
             "Health Encounters",
-            "Incarcerations"
+            "Opiod Prescriptions",
+            "Incarcerations",
+            "Overdoses"
           ],
           "range": [
             "#e5dcc5ff",
-            "#a50104ff",
-            "#db7c26ff",
-            "#9FC893",
-            "#1a659eff"
+            "#9fc893ff",
+            "#fbdb39ff",
+            "#1a659eff",
+            "#bc1041ff"
           ]
         }
       },
@@ -88,7 +97,7 @@
   },
   "config": {
     "axis": {
-      "grid": false,
+      "grid": true,
       "domain": false
     },
     "view": {
