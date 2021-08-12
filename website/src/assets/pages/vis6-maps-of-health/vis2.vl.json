@@ -51,7 +51,7 @@
       "y": {
         "field": "COUNT",
         "type": "quantitative",
-        "scale": {"zero": true},
+        "scale": {"zero": true, "type": "symlog"},
         "stack": "zero",
         "axis": {
           "title": null,

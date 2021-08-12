@@ -82,9 +82,19 @@ export const visualizations: Visualization[] = [
   },
   {
     id: 'vis6-maps-of-health',
-    title: 'Maps of Health (1)',
-    description: 'Maps of Health (1)',
+    title: 'Maps of Health V1',
+    description: 'Marion County Encounters Over Time (2010 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis.vl.json',
+    options: {renderer: 'svg', actions: true},
+    content: 'assets/pages/vis6-maps-of-health/README.md',
+    sql: 'assets/pages/vis6-maps-of-health/data.sql',
+    csv: 'assets/generated/visualization6/data.csv'
+  },
+  {
+    id: 'vis6-maps-of-health-v2',
+    title: 'Maps of Health V2',
+    description: 'Marion County Encounters Over Time (2010 - 2018)',
+    spec: 'assets/pages/vis6-maps-of-health/vis2.vl.json',
     options: {renderer: 'svg', actions: true},
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
