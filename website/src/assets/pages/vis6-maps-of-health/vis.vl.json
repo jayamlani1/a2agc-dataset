@@ -1,0 +1,107 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "assets/generated/visualization6/data-row-wise.csv",
+    "format": {
+      "type":"csv",
+      "parse": {
+        "PERIOD":"date",
+        "DOD":"date",
+        "COUNT": "number",
+        "RANK": "number",
+        "ENCOUNTER_TYPE": "string"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "round(12 * (datum.DOD - datum.PERIOD) / 3.154e+10)",
+      "as": "TIME_BEFORE_DEATH"
+    },
+    {
+      "filter": "datum.TIME_BEFORE_DEATH >= 0"
+    }
+  ],
+  "spacing": {"row": -20},
+  "facet": {
+    "row": {
+      "field": "RANK",
+      "type": "nominal",
+      "bin": false,
+      "header": null
+    }
+  },
+  "spec": {
+    "title": " ",
+    "width": 700,
+    "height": 20,
+    "view": {"stroke": null},
+    "mark": { "type": "area", "line": {"size": 0.5} },
+    "encoding": {
+      "x": {
+        "field": "TIME_BEFORE_DEATH",
+        "type": "quantitative",
+        "title": "Years Before Death",
+        "axis": {
+          "orient": "top",
+          "labelExpr": "datum.value / 12",
+          "values": [
+            0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 168, 180
+          ]
+        },
+        "scale": {
+          "domainMin": 0,
+          "range": ["width", 0]
+        }
+      },
+      "y": {
+        "field": "COUNT",
+        "type": "quantitative",
+        "scale": {"zero": true},
+        "stack": "zero",
+        "axis": {
+          "title": null,
+          "labels": false,
+          "ticks": false,
+          "grid": false
+        }
+      },
+      "color": {
+        "field": "ENCOUNTER_TYPE",
+        "type": "nominal",
+        "title": "Encounter Type",
+        "scale": {
+          "domain": [
+            "All Types",
+            "Health Encounters",
+            "Opiod Prescriptions",
+            "Incarcerations",
+            "Overdoses"
+          ],
+          "range": [
+            "#e5dcc5ff",
+            "#9fc893ff",
+            "#fbdb39ff",
+            "#1a659eff",
+            "#bc1041ff"
+          ]
+        }
+      },
+      "tooltip": [
+        { "field": "CASE_NUMBER", "type": "nominal" },
+        { "field": "PERIOD", "type": "temporal", "timeUnit": "yearquarter", "title": "Quarter" },
+        { "field": "ENCOUNTER_TYPE", "type": "nominal", "title": "Encounter Type" },
+        { "field": "COUNT", "type": "quantitative", "title": "# Days encounter occurred" }
+      ]
+    }
+  },
+  "config": {
+    "axis": {
+      "grid": true,
+      "domain": false
+    },
+    "view": {
+      "continuousHeight": 200
+    }
+  }
+}
