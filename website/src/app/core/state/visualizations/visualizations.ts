@@ -85,19 +85,19 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health #1',
     description: 'Marion County Encounters Over Time (2010 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis.vl.json',
-    options: { renderer: 'svg', actions: true, width: 1268 },
+    options: { renderer: 'canvas', actions: true, width: 1268 },
     content: 'assets/pages/vis6-maps-of-health/README.md',
-    sql: 'assets/pages/vis6-maps-of-health/data-aggregate.sql',
-    csv: 'assets/generated/visualization6/data-aggregate.csv'
+    sql: 'assets/pages/vis6-maps-of-health/data.sql',
+    csv: 'assets/generated/visualization6/data.csv'
   },
   {
     id: 'vis6-maps-of-health-v2',
     title: 'Maps of Health #2',
     description: 'Marion County Encounters Over Time (2010 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis2.vl.json',
-    options: { renderer: 'svg', actions: true, width: 1268 },
+    options: { renderer: 'canvas', actions: true, width: 1268 },
     content: 'assets/pages/vis6-maps-of-health/README.md',
-    sql: 'assets/pages/vis6-maps-of-health/data-aggregate.sql',
-    csv: 'assets/generated/visualization6/data-aggregate.csv'
+    sql: 'assets/pages/vis6-maps-of-health/data.sql',
+    csv: 'assets/generated/visualization6/data.csv'
   }
 ];
