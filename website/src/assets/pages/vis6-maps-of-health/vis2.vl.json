@@ -33,7 +33,7 @@
   },
   "spec": {
     "title": " ",
-    "width": 700,
+    "width": 1100,
     "height": 20,
     "view": {"stroke": null},
     "mark": { "type": "area", "line": {"size": 0.5} },
