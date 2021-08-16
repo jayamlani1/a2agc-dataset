@@ -11,8 +11,7 @@ const dataVariableMapping: Record<string, string> = {
 };
 
 export class VisualizationOneDataHandler {
-  primaryKey = 'CASE_NUMBER';
-  data: Record<string, unknown>[] = [];
+  subsets: Record<string, Record<string, unknown>[]> = {};
 
   constructor(private view: View) {
     this.setData();
@@ -23,7 +22,7 @@ export class VisualizationOneDataHandler {
   }
 
   async setData(): Promise<void> {
-    this.data = await loader()
+    const data = await loader()
       .load('assets/generated/vis-geomap-opioid-deaths.csv')
       .then((csv_data: string) =>
         read(csv_data, {
@@ -36,19 +35,24 @@ export class VisualizationOneDataHandler {
           }
         }) as Record<string, unknown>[]
       );
+
+    Object.entries(dataVariableMapping)
+      .forEach(([label, dataVariable]) => {
+        this.subsets[label] = data.filter((row) => row.DATA_VARIABLE === dataVariable);
+      });
+
     this.updateDataVariable('Age');
   }
 
   async updateDataVariable(dataVariable?: string): Promise<void> {
     if (dataVariable) {
-      const label = dataVariableMapping[dataVariable];
       await this.view.runAsync();
-      this.view.data('source', this.data.filter((row) => row.DATA_VARIABLE === label));
+      this.view.data('source', this.subsets[dataVariable] || []);
     }
   }
 
   finalize(): void {
-    this.data = [];
+    this.subsets = {};
   }
 }
 
