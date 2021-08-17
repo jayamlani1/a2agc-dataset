@@ -9,7 +9,7 @@ Changelog for A2AGC
 
 - Improved speed/responsiveness of geomap
 - Fixed data filtering in visualization 5
-- Added two Maps of Health visualizations (POC)
+- Added three Maps of Health visualizations (POC)
 - Added an updated Data Distributions Page
 - Updated dependencies to Angular 12
 - Updated specs to vega-lite 5

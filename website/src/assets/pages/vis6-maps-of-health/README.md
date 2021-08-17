@@ -1,11 +1,3 @@
-## Usage
+## Proof of Concept Phase
 
-...
-
-## Purpose and Details
-
-...
-
-## Detailed Technical Information
-
-...
+Documentation Coming soon. Curently in prototyping phase.
