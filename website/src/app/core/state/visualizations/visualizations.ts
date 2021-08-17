@@ -1,4 +1,5 @@
 import { Options } from 'ngx-vega';
+import { VisualizationSixView } from 'src/app/shared/components/visualization-page/shared/visualization6-data-handler';
 import { Spec } from 'vega';
 
 import { createGeoZoomPatch } from '../../../shared/components/visualization-page/shared/geomap-zoom-patch';
@@ -87,7 +88,7 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health #1',
     description: 'Marion County Encounters Over Time (2010 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis.vl.json',
-    options: { renderer: 'canvas', actions: true, width: 1268 },
+    options: { renderer: 'svg', actions: true, width: 1268, height: 1268, viewClass: VisualizationSixView },
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
     csv: 'assets/generated/visualization6/data.csv'
@@ -97,7 +98,7 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health #2',
     description: 'Marion County Encounters Over Time (2010 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis2.vl.json',
-    options: { renderer: 'canvas', actions: true, width: 1268 },
+    options: { renderer: 'svg', actions: true, width: 1268 },
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
     csv: 'assets/generated/visualization6/data.csv'

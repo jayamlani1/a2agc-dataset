@@ -1,31 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {
-    "name": "source",
-    "url": "assets/generated/visualization6/data.csv",
-    "format": {
-      "type":"csv",
-      "parse": {
-        "PERIOD":"date",
-        "DOD":"date",
-        "RANK": "number"
-      }
-    }
-  },
-  "transform": [
-    {
-      "calculate": "round(12 * (datum.DOD - datum.PERIOD) / 3.154e+10)",
-      "as": "TIME_BEFORE_DEATH"
-    },
-    {
-      "filter": "datum.TIME_BEFORE_DEATH >= 0"
-    }
-  ],
   "hconcat": [
     {
       "title": " ",
-      "width": 900,
+      "width": 150,
       "height": 20,
+      "data": { "name": "source" },
       "transform": [
         {
           "fold": [
@@ -58,6 +38,7 @@
       "mark": { "type": "area", "line": {"size": 0.5} },
       "encoding": {
         "row": {"field": "RANK", "type": "nominal", "bin": false, "header": null, "spacing": -20},
+        "column": {"field": "Encounter Type", "type": "nominal", "bin": false, "spacing": 5},
         "x": {
           "field": "TIME_BEFORE_DEATH",
           "type": "quantitative",
@@ -66,7 +47,7 @@
             "orient": "top",
             "labelExpr": "datum.value / 12",
             "values": [
-              0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 168, 180
+              0, 60, 120
             ]
           },
           "scale": {
@@ -120,6 +101,17 @@
       "height": 400,
       "view": {"stroke": null},
       "mark": "bar",
+      "params": [
+        {
+          "name": "rank",
+          "select": {
+            "type": "interval",
+            "encodings": ["y"],
+            "mark": {"fill": "#6ea7ef", "fillOpacity": 0.15}
+          }
+        }
+      ],
+      "data": { "name": "rank_dist" },
       "transform": [
         {
           "aggregate": [{
@@ -159,5 +151,9 @@
     "view": {
       "continuousHeight": 200
     }
+  },
+  "datasets": {
+    "source": [],
+    "rank_dist": []
   }
 }
