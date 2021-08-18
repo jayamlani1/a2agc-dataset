@@ -1,10 +1,17 @@
 import { VisualizationSpec } from 'vega-embed';
-import { VariableData, DistributionData } from '../data-distributions.component';
 
-export function createPieSpec(variable: VariableData, distributionData: DistributionData[] = []): VisualizationSpec {
+import { DatasetVariable } from '../../core/models/dataset.model';
+import { DistributionDataEntry } from '../../core/models/distribution.model';
+
+
+export function createPieSpec(
+  variable: DatasetVariable,
+  distributionData: DistributionDataEntry[] = []
+): VisualizationSpec {
   return {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    height: 300,
+    width: 'container',
+    height: 350,
     data: {
       name: 'distribution'
     },
@@ -21,19 +28,14 @@ export function createPieSpec(variable: VariableData, distributionData: Distribu
         groupby: ['value']
       },
       {
-        calculate: '1',
-        as: 'True'
-      },
-      {
         joinaggregate: [{
           op: 'sum',
           field: 'total',
           as: 'totalCount'
-        }],
-        groupby: ['True']
+        }]
       },
       {
-        calculate: 'format(datum.total*100/datum.totalCount, ",.2f") + "%"',
+        calculate: 'format(100 * datum.total / datum.totalCount, ",.2f") + "%"',
         as: 'percent'
       },
       {
@@ -45,7 +47,10 @@ export function createPieSpec(variable: VariableData, distributionData: Distribu
       color: {
         field: 'value',
         type: 'nominal',
-        scale: { range: ['#77ACF0', '#2a4d87'] },
+        scale: {
+          domain: ['True', 'False'],
+          range: ['#77ACF0', '#2a4d87']
+        },
         legend: {
           orient: 'none',
           title: null,
@@ -60,8 +65,8 @@ export function createPieSpec(variable: VariableData, distributionData: Distribu
       {
         title: {
           text: `${variable.dataset} by ${variable.name}`,
-          dx: -520,
-          dy: 50
+          align: 'left',
+          anchor: 'start'
         },
         mark: { type: 'arc', outerRadius: 130, strokeWidth: 2, stroke: 'white' },
         encoding: {
@@ -129,7 +134,7 @@ export function createPieSpec(variable: VariableData, distributionData: Distribu
           values: [
             { y: 1.7, value: `${variable.type}` },
             { y: 1.6, value: `${variable.description}` },
-            { y: 1.5, value: `${variable.missingValues.toFixed(1)}%` }
+            { y: 1.5, value: `${variable.percentMissing.toFixed(1)}%` }
           ]
         },
         mark: {

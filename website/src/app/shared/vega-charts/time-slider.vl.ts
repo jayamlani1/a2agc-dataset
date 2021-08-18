@@ -1,10 +1,13 @@
 import { VisualizationSpec } from 'vega-embed';
-import { DistributionData } from '../data-distributions.component';
 
-export function createTimeSpec(distributionData: DistributionData[] = []): VisualizationSpec {
+import { DistributionDataEntry } from '../../core/models/distribution.model';
+
+
+export function createTimeSpec(distributionData: DistributionDataEntry[] = []): VisualizationSpec {
   return {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     height: 150,
+    width: 'container',
     data: {
       name: 'distribution'
     },

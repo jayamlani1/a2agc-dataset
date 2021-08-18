@@ -1,14 +1,36 @@
 import { VisualizationSpec } from 'vega-embed';
-import { VariableData, DistributionData } from '../data-distributions.component';
 
-export function createHorizBarSpec(variable: VariableData, distributionData: DistributionData[] = []): VisualizationSpec {
-  return createBarSpec(variable, distributionData, true);
+import { DatasetVariable } from '../../core/models/dataset.model';
+import { DistributionDataEntry } from '../../core/models/distribution.model';
+
+
+export interface BarChartExtraOptions {
+  xLabel?: string;
+  yLabel?: string;
+
+  flipAxes?: boolean;
 }
 
-export function createBarSpec(variable: VariableData, distributionData: DistributionData[] = [], flipAxes = false): VisualizationSpec {
+
+export function createHorizBarSpec(
+  variable: DatasetVariable,
+  distributionData: DistributionDataEntry[] = [],
+  options: BarChartExtraOptions = {}
+): VisualizationSpec {
+  return createBarSpec(variable, distributionData, { ...options, flipAxes: true });
+}
+
+export function createBarSpec(
+  variable: DatasetVariable,
+  distributionData: DistributionDataEntry[] = [],
+  options: BarChartExtraOptions = {}
+): VisualizationSpec {
   return {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    height: 300,
+    width: 'container',
+    autosize: {
+      resize: true
+    },
     data: {
       name: 'distribution'
     },
@@ -25,6 +47,8 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
       {
         title: {
           text: `${variable.dataset} by ${variable.name}`,
+          align: 'left',
+          anchor: 'start'
         },
         view: {
           strokeOpacity: 0,
@@ -64,7 +88,7 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
               values: [
                 { y: 1.7, value: `${variable.type}` },
                 { y: 1.55, value: `${variable.description}` },
-                { y: 1.4, value: `${variable.missingValues.toFixed(1)}%` }
+                { y: 1.4, value: `${variable.percentMissing.toFixed(1)}%` }
               ]
             },
             mark: {
@@ -108,7 +132,7 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
             as: 'totalFinal'
           }
         ],
-        encoding: !flipAxes ? {
+        encoding: !options.flipAxes ? {
           x: {
             field: 'value',
             type: 'nominal',
@@ -122,7 +146,7 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
               domainColor: '#757575',
               labelFlush: false,
               grid: false,
-              title: variable.xLabel,
+              title: options.xLabel,
               labelAngle: 0
             }
           },
@@ -139,7 +163,7 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
               tickColor: '#757575',
               domainColor: '#757575',
               labelFontSize: 10,
-              title: variable.yLabel
+              title: options.yLabel
             }
           }
         } : {
@@ -156,7 +180,7 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
               domainColor: '#757575',
               labelFlush: false,
               grid: false,
-              title: variable.yLabel
+              title: options.yLabel
             }
           },
           x: {
@@ -172,7 +196,7 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
               tickColor: '#757575',
               domainColor: '#757575',
               labelFontSize: 10,
-              title: variable.xLabel
+              title: options.xLabel
             }
           }
         },
@@ -184,16 +208,16 @@ export function createBarSpec(variable: VariableData, distributionData: Distribu
               color: '#77ACF0',
               strokeWidth: 1,
               stroke: 'white',
-              orient: flipAxes ? 'horizontal' : 'vertical'
+              orient: options.flipAxes ? 'horizontal' : 'vertical'
             }
           },
           {
             mark: {
               type: 'text',
-              align: flipAxes ? 'left' : 'center',
+              align: options.flipAxes ? 'left' : 'center',
               baseline: 'middle',
-              dx: flipAxes ? 3 : 0,
-              dy: flipAxes ? 0 : -10
+              dx: options.flipAxes ? 3 : 0,
+              dy: options.flipAxes ? 0 : -10
             },
             encoding: {
               text: { field: 'totalFinal', type: 'nominal' }

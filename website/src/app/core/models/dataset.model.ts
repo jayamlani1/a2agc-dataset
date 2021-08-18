@@ -1,38 +1,24 @@
-import { VisualizationSpec } from 'vega-embed';
-import { SummaryDistData } from './table-data.model';
+import { Distribution } from './distribution.model';
+
 
 export interface Dataset {
+  name: string;
+  description: string;
+  variables: string[];
+}
+
+export interface DatasetVariable {
   dataset: string;
-  dataVariables: string[];
-  description?: string;
-  subLabel?: string;
-  subDataVariables?: string[];
-  specs: Record<string, VisualizationSpec>;
-  columns: DatasetColumns;
+  name: string;
+  description: string;
+
+  type: string;
+  nonNullCount: number;
+  percentMissing: number;
+  distribution: Distribution;
 }
 
-export interface DatasetColumns {
-  [key: string]: DatasetColumn;
-}
-
-export interface DatasetSummary {
+export interface DatasetMetaEntry {
   label: string;
   value: string;
 }
-
-export interface DatasetColumn {
-  distData: string | VisualizationSpec | SummaryDistData;
-  distType: string;
-  nonNullCount: number;
-  name: string;
-  percentMissing: number;
-  remarks: string;
-  type: string;
-}
-
-export const EMPTY_DATASET: Dataset = {
-  dataset: '',
-  dataVariables: [],
-  specs: {},
-  columns: {}
-};
