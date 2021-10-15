@@ -3,7 +3,7 @@ import { Spec } from 'vega';
 
 import { createGeoZoomPatch } from '../../../shared/components/visualization-page/shared/geomap-zoom-patch';
 import { VisualizationOneView } from './../../../shared/components/visualization-page/shared/visualization1-data-handler';
-
+import { VisualizationSixView } from './../../../shared/components/visualization-page/shared/visualization6-data-handler';
 
 export interface Visualization {
   title: string;
@@ -107,7 +107,7 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health #3',
     description: 'Marion County Encounters Over Time (2010 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis3.vl.json',
-    options: { renderer: 'svg', actions: true, width: 1268 },
+    options: { renderer: 'svg', actions: true, width: 1268, viewClass: VisualizationSixView },
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
     csv: 'assets/generated/visualization6/data.csv'
