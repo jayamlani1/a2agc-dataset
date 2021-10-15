@@ -153,11 +153,11 @@
             "field": "TIME_BEFORE_DEATH",
             "as": "TIME_BEFORE_DEATH"
           }],
-          "groupby": ["RANK"]
+          "groupby": ["FINAL_RANK"]
         }
       ],
       "encoding": {
-        "y": {"field": "RANK", "axis": null},
+        "y": {"field": "FINAL_RANK", "axis": null},
         "x": {
           "field": "TIME_BEFORE_DEATH", "aggregate": "max",
           "title": "Years Before Death",
