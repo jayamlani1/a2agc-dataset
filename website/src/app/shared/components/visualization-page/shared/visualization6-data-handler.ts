@@ -4,7 +4,7 @@ import { loader, read, Runtime, View, ViewOptions } from 'vega';
 
 export class VisualizationSixDataHandler {
   srcData: Record<string, unknown>[] = [];
-  subsets: Record<string, Record<string, unknown>[]> = {};
+  caseRanks: Record<string, Record<string, number>> = {};
 
   constructor(private view: View) {
     this.setData();
@@ -17,7 +17,7 @@ export class VisualizationSixDataHandler {
   }
 
   async setData(): Promise<void> {
-    const data = this.srcData = await loader()
+    this.srcData = (await loader()
       .load('assets/generated/visualization6/data.csv')
       .then((csv_data: string) =>
         read(csv_data, {
@@ -35,32 +35,69 @@ export class VisualizationSixDataHandler {
             AGE_RANK: 'number'
           }
         }) as Record<string, unknown>[]
-      );
+      )).slice(0, 1000);
 
-    this.subsets['Overdoses'] = [...data]
-      .sort((rowA, rowB) => (rowA.OVERDOSE_RANK as number) - (rowB.OVERDOSE_RANK as number))
-      .map( x => ({ ...x, FINAL_RANK: x.OVERDOSE_RANK, RANK_TYPE: 'Overdoses' }));
-    this.subsets['Health encounters'] = [...data]
-      .sort((rowA, rowB) => (rowA.HEALTH_RANK as number) - (rowB.HEALTH_RANK as number))
-      .map( x => ({ ...x, FINAL_RANK: x.HEALTH_RANK, RANK_TYPE: 'Health encounters' }));
-    this.subsets['Age'] = [...data]
-      .sort((rowA, rowB) => (rowA.AGE_RANK as number) - (rowB.AGE_RANK as number))
-      .map( x => ({ ...x, FINAL_RANK: x.AGE_RANK, RANK_TYPE: 'Age' }));
+    const caseRanks = this.caseRanks;
+    for (const datum of this.srcData) {
+      const caseNumber = datum['CASE_NUMBER'] as string;
+      const ranks = caseRanks[caseNumber];
+      if (!ranks) {
+        caseRanks[caseNumber] = {
+          'OVERDOSE_RANK': datum['OVERDOSE_RANK'] as number,
+          'HEALTH_RANK': datum['HEALTH_RANK'] as number,
+          'AGE_RANK': datum['AGE_RANK'] as number
+        };
+      }
+    }
+    Object.values(caseRanks)
+      .sort((rowA, rowB) => (rowA.OVERDOSE_RANK) - (rowB.OVERDOSE_RANK))
+      .forEach((x, index) => (x.OVERDOSE_RANK = index + 1));
+    Object.values(caseRanks)
+      .sort((rowA, rowB) => (rowA.HEALTH_RANK) - (rowB.HEALTH_RANK))
+      .forEach((x, index) => (x.HEALTH_RANK = index + 1));
+    Object.values(caseRanks)
+      .sort((rowA, rowB) => (rowA.AGE_RANK) - (rowB.AGE_RANK))
+      .forEach((x, index) => (x.AGE_RANK = index + 1));
 
     this.updateDataVariable('Health encounters');
   }
 
   async updateDataVariable(dataVariable?: string): Promise<void> {
     if (dataVariable) {
-      const data = this.subsets[dataVariable] ?? [];
-      this.view.data('source', data);
+      const data = this.srcData;
+      const caseRanks = this.caseRanks;
+
+      let rankField = 'FINAL_RANK';
+      switch (dataVariable) {
+        case 'Overdoses':
+          rankField = 'OVERDOSE_RANK';
+          break;
+        case 'Health encounters':
+          rankField = 'HEALTH_RANK';
+          break;
+        case 'Age':
+          rankField = 'AGE_RANK';
+          break;
+      }
+
+      const otherDataLoaded = this.view.data('source')?.length > 0 ?? false;
+      if (otherDataLoaded) {
+        const update = this.view.changeset();
+        data.forEach(x => update.modify(x, 'FINAL_RANK', caseRanks[x['CASE_NUMBER'] as string][rankField]));
+        this.view.change('source', update);
+      } else {
+        data.forEach(x => (x['FINAL_RANK'] = caseRanks[x['CASE_NUMBER'] as string][rankField]));
+        this.view.data('source', data);
+      }
+
       this.view.resize();
       await this.view.runAsync();
     }
   }
 
   finalize(): void {
-    this.subsets = {};
+    this.srcData = [];
+    this.caseRanks = {};
   }
 }
 
