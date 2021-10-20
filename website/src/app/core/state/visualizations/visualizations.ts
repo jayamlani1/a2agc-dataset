@@ -1,7 +1,11 @@
 import { Options } from 'ngx-vega';
 import { Spec } from 'vega';
 
+import { DataHandlerView } from '../../../shared/components/visualization-page/shared/data-handler-view';
 import { createGeoZoomPatch } from '../../../shared/components/visualization-page/shared/geomap-zoom-patch';
+import {
+  Visualization6DataHandler,
+} from '../../../shared/components/visualization-page/shared/visualization-6-data-handler';
 import { VisualizationOneView } from './../../../shared/components/visualization-page/shared/visualization1-data-handler';
 
 
@@ -15,6 +19,7 @@ export interface Visualization {
   csv: string;
   id: string;
 }
+
 
 export const visualizations: Visualization[] = [
   {
@@ -87,7 +92,14 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health #1',
     description: 'Marion County Encounters Over Time (2004 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis.vl.json',
-    options: { renderer: 'svg', actions: true, width: 1268 },
+    options: {
+      renderer: 'canvas',
+      actions: true,
+      width: 1268,
+      viewClass: DataHandlerView.withDataHandlers([
+        Visualization6DataHandler
+      ])
+    },
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
     csv: 'assets/generated/visualization6/data.csv'
@@ -97,7 +109,14 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health #2',
     description: 'Marion County Encounters Over Time (2004 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis2.vl.json',
-    options: { renderer: 'svg', actions: true, width: 1268 },
+    options: {
+      renderer: 'canvas',
+      actions: true,
+      width: 1268,
+      viewClass: DataHandlerView.withDataHandlers([
+        Visualization6DataHandler
+      ])
+    },
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
     csv: 'assets/generated/visualization6/data.csv'
@@ -107,7 +126,14 @@ export const visualizations: Visualization[] = [
     title: 'Maps of Health #3',
     description: 'Marion County Encounters Over Time (2004 - 2018)',
     spec: 'assets/pages/vis6-maps-of-health/vis3.vl.json',
-    options: { renderer: 'svg', actions: true, width: 1268 },
+    options: {
+      renderer: 'canvas',
+      actions: true,
+      width: 1268,
+      viewClass: DataHandlerView.withDataHandlers([
+        Visualization6DataHandler
+      ])
+    },
     content: 'assets/pages/vis6-maps-of-health/README.md',
     sql: 'assets/pages/vis6-maps-of-health/data.sql',
     csv: 'assets/generated/visualization6/data.csv'
