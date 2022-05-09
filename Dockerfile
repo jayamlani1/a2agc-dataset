@@ -1,4 +1,5 @@
-FROM ubuntu:18.04
+# Use Latest Ubuntu version
+FROM ubuntu:22.04
 
 # Update and add universe repository
 RUN apt-get update && apt-get install -y \
@@ -43,9 +44,9 @@ RUN mkdir -p /opt/graphviz && \
 RUN mkdir -p /opt/sqlcipher && \
   cd /opt/sqlcipher && \
   chmod u+x /opt/sqlcipher && \
-  wget https://github.com/sqlcipher/sqlcipher/archive/v4.1.0.zip && \
-  unzip v4.1.0.zip && \
-  cd sqlcipher-4.1.0 && \
+  wget https://github.com/sqlcipher/sqlcipher/archive/v4.5.1.zip && \
+  unzip v4.5.1.zip && \
+  cd sqlcipher-4.5.1 && \
   ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" LDFLAGS="-lcrypto" --enable-readline && \
   make && \
   make install
